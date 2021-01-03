@@ -1,7 +1,16 @@
 from pandas.api.types import is_numeric_dtype
 
 
-def topBottomCoding(obj, value, replacement, kind="top", column='Null'):
+def topBottomCoding(obj, value, replacement, kind="top", column=None):
+    """
+    Replace extreme values, larger or lower than a threshold, by a different value.
+    :param obj: input data.
+    :param value: value that will be top or bottom coded
+    :param replacement: replacement value
+    :param kind: top or bottom
+    :param column: variable name
+    :return: top or bottom coded data.
+    """
     return TopBot(obj=obj, value=value, replacement=replacement, kind=kind, column=column).verify_errors()
 
 
