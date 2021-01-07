@@ -1,27 +1,20 @@
-from pandas.api.types import is_numeric_dtype
+import warnings
+import numpy as np
 
 
-def topBottomCoding(obj, value, replacement, kind="top", column=None):
+def topBottomCoding(obj):
     """
     Replace extreme values, larger or lower than a threshold, by a different value.
-    :param obj: input data.
-    :param value: value that will be top or bottom coded
-    :param replacement: replacement value
-    :param kind: top or bottom
-    :param column: variable name
+    :param obj: input dataframe.
     :return: top or bottom coded data.
     """
-    return TopBot(obj=obj, value=value, replacement=replacement, kind=kind, column=column).verify_errors()
+    return TopBot(obj=obj).verify_errors()
 
 
 class TopBot:
-    def __init__(self, obj, value, replacement, kind, column):
-        self.x = obj[[column]]
+    def __init__(self, obj):
         self.obj = obj
-        self.value = value
-        self.replacement = replacement
-        self.kind = kind
-        self.column = column
+        self.keyVars = self.obj.select_dtypes(include=np.number).columns
 
     def verify_errors(self):
         if isinstance(self.column, list):
@@ -43,3 +36,9 @@ class TopBot:
             column_transformed.iloc[column_transformed < self.value] = self.replacement
         return column_transformed
 
+        outliers_prob = []
+        for index, x in enumerate(self.obj[keyVar]):
+            if (x <= outer_fence_le or x >= outer_fence_ue) and outer_fence_le != outer_fence_ue:
+                outliers_prob.append(index)
+
+        return outliers_prob, outer_fence_le, outer_fence_ue
