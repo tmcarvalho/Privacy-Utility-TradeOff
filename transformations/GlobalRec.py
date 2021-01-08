@@ -27,25 +27,30 @@ class GlobalRec:
             return self.globalRec(keyVars)
 
     def find_range(self, keyVars):
-        all_ranges = [0, 1, 2]
+        all_ranges = []
+        magnitude = [0, 1, 2]
         for j in range(0, len(keyVars)):
-            sigma = np.std(keyVars[j])
-            all_ranges = [i * int(sigma) for i in all_ranges]
+            sigma = np.std(self.obj[keyVars[j]])
+            ranges = [i * int(sigma) for i in magnitude]
+            all_ranges.append(ranges)
         return all_ranges
 
     def globalRec(self, keyVars):
-        gen_fk = pd.DataFrame(columns=['fk_per_comb'])
+        # risk = pd.DataFrame(columns=['fk_per_comb', 'rl_per_comb'])
+        risk = pd.DataFrame(columns=['fk_per_comb'])
         df_gen = self.obj.copy()
         ranges = self.find_range(keyVars)
         comb = [i for i in itertools.product(*ranges)]
+        # comb = comb[6000:len(comb)]
         for index, x in enumerate(comb):
+            print('GlobalRec combs: ' + str(index) + '/' + str(len(comb)))
             if index == 0:
                 dif = [comb[index][len(comb[0]) - 1]]
-            elif (index == 0) & (index != len(comb) - 1):
-                dif = list(set(comb[1]) - set(comb[0]))
+            elif (index != 0) & (index != len(comb) - 1):
+                dif = list(set(comb[index]) - set(comb[index - 1]))
             else:
                 dif = [comb[index][0]]
-            if (len(dif) != 0) & (len(dif) < 2):
+            if len(dif) == 1:
                 def has_equal_element(list1, list2):
                     return [e1 == e2 for e1, e2 in zip(list1, list2)]
 
@@ -53,29 +58,29 @@ class GlobalRec:
                 if len(pos) == 0:
                     pass
                 elif x[pos[0]] == 0:
-                    df_gen[keyVars[pos[0] - 1]] = self.obj[keyVars[pos[0] - 1]]
+                    df_gen[keyVars[pos[0]]] = self.obj[keyVars[pos[0]]]
                 else:
-                    df_gen[keyVars[pos[0] - 1]] = pd.cut(self.obj[keyVars[pos[0] - 1]],
-                                                         bins=list(range(
-                                                             min(self.obj[keyVars[pos[0] - 1]]) - x[
-                                                                 pos[0]],
-                                                             max(self.obj[keyVars[pos[0] - 1]]) + x[
-                                                                 pos[0]],
-                                                             x[pos[0]])))
-                gen_fk.loc[index] = kAnon.calc_max_risk(df_gen)
+                    bins = list(range(min(self.obj[keyVars[pos[0]]]) - x[pos[0]],
+                                      max(self.obj[keyVars[pos[0]]]) + x[pos[0]], x[pos[0]]))
+                    labels = ['%d' % bins[i] for i in range(0, len(bins) - 1)]
+                    df_gen[keyVars[pos[0]]] = pd.cut(self.obj[keyVars[pos[0]]], bins=bins, labels=labels).astype(int)
 
-        if gen_fk['fk_per_comb'].min() == 100:
+                risk.loc[index, 'fk_per_comb'] = kAnon.calc_max_risk(df_gen)
+                # risk.loc[index, 'rl_per_comb'] = RecordLinkage.calcRL(df_gen, self.obj)
+
+        if risk['fk_per_comb'].min() == 100:
             warnings.warn("Dataframe is at max risk!")
-        elif gen_fk['fk_per_comb'].min() == 0:
+        elif risk['fk_per_comb'].min() == 0:
             warnings.warn("Dataframe does not have observations with max risk!")
-        idx_min = np.argmin(gen_fk['fk_per_comb'].values)
+        idx_min = np.argmin(risk['fk_per_comb'].values)
         comb_idx = comb[idx_min]
         for i in range(0, len(comb_idx)):
             if comb_idx[i] == 0:
                 pass
             else:
-                self.obj[keyVars[i]] = pd.cut(self.obj[keyVars[i]],
-                                              bins=list(range(min(self.obj[keyVars[i]]) - comb_idx[i],
-                                                              max(self.obj[keyVars[i]]) + comb_idx[i],
-                                                              comb_idx[i])))
+                bins = list(range(min(self.obj[keyVars[i]]) - comb_idx[i],
+                                  max(self.obj[keyVars[i]]) + comb_idx[i],
+                                  comb_idx[i]))
+                labels = ['%d' % bins[i] for i in range(0, len(bins) - 1)]
+                self.obj[keyVars[i]] = pd.cut(self.obj[keyVars[i]], bins=bins, labels=labels).astype(int)
         return self.obj
