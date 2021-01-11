@@ -19,6 +19,7 @@ class TopBot:
     def verify_errors(self):
         if len(self.keyVars) == 0:
             warnings.warn("Dataframe does not have any variable to apply Top & Bottom!")
+            return self.obj
         else:
             return self.topBotWork()
 

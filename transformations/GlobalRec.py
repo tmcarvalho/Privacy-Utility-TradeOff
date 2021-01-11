@@ -22,7 +22,8 @@ class GlobalRec:
         # get columns whose data type is int
         keyVars = self.obj.select_dtypes(include=np.int).columns
         if len(keyVars) == 0:
-            raise ValueError("No variables for global recoding. Only integer type is acceptable!\n")
+            warnings.warn("No variables for global recoding. Only integer type is acceptable!\n")
+            return self.obj
         else:
             return self.globalRec(keyVars)
 
@@ -41,9 +42,8 @@ class GlobalRec:
         df_gen = self.obj.copy()
         ranges = self.find_range(keyVars)
         comb = [i for i in itertools.product(*ranges)]
-        # comb = comb[6000:len(comb)]
+        print('GlobalRec combs: ' + str(len(comb)))
         for index, x in enumerate(comb):
-            print('GlobalRec combs: ' + str(index) + '/' + str(len(comb)))
             if index == 0:
                 dif = [comb[index][len(comb[0]) - 1]]
             elif (index != 0) & (index != len(comb) - 1):
@@ -84,3 +84,4 @@ class GlobalRec:
                 labels = ['%d' % bins[i] for i in range(0, len(bins) - 1)]
                 self.obj[keyVars[i]] = pd.cut(self.obj[keyVars[i]], bins=bins, labels=labels).astype(int)
         return self.obj
+

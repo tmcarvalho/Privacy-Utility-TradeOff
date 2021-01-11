@@ -1,5 +1,6 @@
 import numpy as np
 from pandas.api.types import is_float_dtype
+import warnings
 
 
 def addNoise(obj):
@@ -19,7 +20,7 @@ class Noise:
         # get columns whose data type is int
         keyVars = self.obj.select_dtypes(include=np.number).columns
         if len(keyVars) == 0:
-            raise ValueError("No variables for adding noise. Only integer type is acceptable!\n")
+            raise warnings.warn("No variables for adding noise. Only integer type is acceptable!\n")
         else:
             return self.noiseWork(keyVars)
 
@@ -29,7 +30,6 @@ class Noise:
         for col in keyVars:
             laplace = self.Laplace(ep)
             if is_float_dtype(df_noise[col]):
-                print(col)
                 df_noise[col] = df_noise[col] + laplace
                 df_noise[col] = df_noise[col].apply(lambda x: format(x, '.2f')).astype(float)
             else:

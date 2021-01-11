@@ -18,6 +18,7 @@ class Sup:
     def verify_errors(self):
         if len(self.obj.select_dtypes(exclude=np.float).columns) == 0:
             warnings.warn("Dataframe does not have any variable to suppress!")
+            return self.obj
         else:
             return self.supWork()
 

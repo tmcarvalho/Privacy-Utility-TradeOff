@@ -19,6 +19,7 @@ class Round:
         keyVars = self.obj.select_dtypes(include=np.float).columns
         if len(keyVars) == 0:
             warnings.warn("Dataframe does not have any floating point to round!")
+            return self.obj
         else:
             return self.roundWork(keyVars)
 
