@@ -6,34 +6,34 @@ import pandas as pd
 import time
 import numpy as np
 import ray
+from itertools import chain
+import pickle
 
 # %%
 ds = DeIdentification.load_data()  # 90 datasets
 # ds = random.choices(ds, k=3)
 
-df = ds[2].copy()
-
-# start Ray
-# num_cpus = psutil.cpu_count(logical=False)
-# ray.init(num_cpus=num_cpus)
-ray.init()
+df = ds[65].copy()
 
 dfs = []
-dfs.append(ds[17])
-# dfs = ds[0:10]
-df = ds[15].copy()
+dfs.append(ds[7])
+# dfs = ds[0:8]
+df = ds[7].copy()
 # [0, 7, 9, 11, 15, 17, 21, 22, 23, 28, 29, 30, 31, 34, 35, 37, 38]
 
 # test ranges
 all_ranges = []
-magnitude = [0, 1, 2]
-for j in range(0, 12):
+magnitude = [1, 2]
+df = DeIdentification.change_cols_types(df)
+vars = df.select_dtypes(include=float).columns
+for j in range(0, 24):
     all_ranges.append(magnitude)
 comb = [i for i in itertools.product(*all_ranges)]
 
 
 @ray.remote
-def process_single_df(df):
+def process_single_df(df, i):
+    print(i)
     # list to store the transformed dataframes
     transformations_combs = []
     # dataframe to store re-identification risk
@@ -42,9 +42,9 @@ def process_single_df(df):
     # keep target variable aside
     tgt = df.iloc[:, -1]
     # dataframe without target variable to apply transformation techniques
-    df_val = df[df.columns[:-1]]
+    df_val = df[df.columns[:-1]].copy()
     # create combinations adequate to the dataframe
-    comb = DeIdentification.define_combs(df_val)
+    comb = np.array(DeIdentification.define_combs(df_val), dtype='object')
     fk_var = 'fk_per'
     rl_var = 'rl_per'
     c = 0
@@ -55,14 +55,14 @@ def process_single_df(df):
             reID_risk.loc[index, 'initial_fk'] = CalcRisk.calc_max_fk(df_transf)
         else:
             # apply transformations
-            df_transf, c = DeIdentification.transformations(x, df_transf, c)
+            df_transf, c = DeIdentification.transformations(x, df_transf, c, i)
             if "sup" in x:
                 # make sure that both datasets has equal dtypes to all columns
-                check_types = df_val.dtypes == df_transf.dtypes
+                check_types = df_val.dtypes.eq('object') == df_transf.dtypes.eq('object')
                 idx = np.where(check_types == False)[0]
-                if len(idx) != 0:
-                    col = df_val.columns[idx[0]]
-                    df_val[col] = df_val[col].astype(str)
+                if len(idx) >= 1:
+                    cols = df_val.columns[idx]
+                    df_val.loc[:, cols] = df_val.loc[:, cols].astype(str)
                 else:
                     continue
             # recalculate re-identification risk with k-anonymity
@@ -90,16 +90,30 @@ def process_single_df(df):
 
         print('Tech combs: ' + str(index) + '/' + str(len(comb)))
 
+    pd.to_pickle(transformations_combs, 'Results_remote/transformations_' + str(i) + '.pkl')
+    pd.to_pickle(reID_risk, 'Results_remote/risk_' + str(i) + '.pkl')
+    pd.to_pickle(comb, 'Results_remote/comb_' + str(i) + '.pkl')
+
     return transformations_combs, reID_risk, comb
 
+
+# start Ray
+# num_cpus = psutil.cpu_count(logical=False)
+# ray.init(num_cpus=num_cpus)
+ray.init()
 
 start_time = time.time()
 result_ids = []
 for i in range(len(dfs)):
-    result_ids.append(process_single_df.remote(dfs[i]))
+    result_ids.append(process_single_df.remote(dfs[i], i))
+    # process_single_df.remote(dfs[i], i)
 
 end_time = time.time()
-total_time = end_time - start_time  # 6 datasets -> 18.83 min
+total_time = end_time - start_time
+
+x = pd.read_pickle('Results_remote/transformations_2.pkl')
+y = pd.read_pickle('Results_remote/risk_2.pkl')
+z = pd.read_pickle('Results_remote/relative_error_1.pkl')
 
 all_risk = []
 all_combs = []
@@ -112,6 +126,16 @@ for i in range(len(dfs)):
     all_risk.append(risk)
     all_combs.append(combs)
 
+pd.to_pickle(all_transf_combs, 'Final_results/all_transf_combs.pkl')
+pd.to_pickle(all_risk, 'Final_results/all_risk.pkl')
+pd.to_pickle(all_combs, 'Final_results/all_combs.pkl')
+
+x = pd.read_pickle('Final_results/all_transf_combs.pkl')
+all_x = []
+all_x.append(x)
+
+all_x = list(chain(*all_x))
+
 # close Ray
 ray.shutdown()
 
@@ -120,4 +144,3 @@ all_combs[4]
 
 # 7min -> 0
 # 2min -> 1
-

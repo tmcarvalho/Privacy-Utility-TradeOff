@@ -1,11 +1,10 @@
-import psutil
+import warnings
 from transformations import TopBot, GlobalRec, Suppression, RoundFloats, Noise
-from ReIdentificationRisk import kAnon, RecordLinkage, CalcRisk
+from ReIdentificationRisk import CalcRisk
 import numpy as np
 import itertools
 from decimal import Decimal
 import pandas as pd
-import time
 import ray
 
 
@@ -57,7 +56,7 @@ def define_combs(df):
     return comb
 
 
-def transformations(x, df_transf, c):
+def transformations(x, df_transf, c, i):
     """
     Apply transformation techniques to the dataframe.
     :param x: combination.
@@ -71,12 +70,15 @@ def transformations(x, df_transf, c):
     if 'round' in x:
         df_transf = RoundFloats.roundFloats(df_transf)
     if 'noise' in x:
-        df_transf = Noise.addNoise(df_transf)
+        rel_error = Noise.addNoise(df_transf)
+        df_transf = Noise.assign_best_ep(rel_error, df_transf)
+        pd.to_pickle(rel_error, 'Results_remote/relative_error_' + str(i) + '.pkl')
     if 'globalrec' in x:
         c += 1
         keyVars = comb = []
         if c == 1:
             keyVars, comb = GlobalRec.globalRecoding(df_transf)
+            pd.to_pickle(comb, 'Results_remote/GRcomb_' + str(i) + '.pkl')
             if len(comb) != 0:
                 df_transf = GlobalRec.best_bin_size(df_transf, keyVars, comb)
         else:
@@ -87,11 +89,9 @@ def transformations(x, df_transf, c):
 
 
 # %%
-# start Ray
-# ray.init()
-
-# @ray.remote
-def process_single_df(df):
+@ray.remote
+def process_single_df(df, i):
+    print("Dataset #" + str(i))
     # list to store the transformed dataframes
     transformations_combs = []
     # dataframe to store re-identification risk
@@ -101,7 +101,7 @@ def process_single_df(df):
     # keep target variable aside
     tgt = df.iloc[:, -1]
     # dataframe without target variable to apply transformation techniques
-    df_val = df[df.columns[:-1]]
+    df_val = df[df.columns[:-1]].copy()
     # create combinations adequate to the dataframe
     comb = define_combs(df_val)
     fk_var = 'fk_per'
@@ -113,14 +113,14 @@ def process_single_df(df):
             reID_risk.loc[index, 'initial_fk'] = CalcRisk.calc_max_fk(df_transf)
         else:
             # apply transformations
-            df_transf, c = transformations(x, df_transf, c)
+            df_transf, c = transformations(x, df_transf, c, i)
             if "sup" in x:
                 # make sure that both datasets has equal dtypes to all columns
-                check_types = df_val.dtypes == df_transf.dtypes
+                check_types = df_val.dtypes.eq('object') == df_transf.dtypes.eq('object')
                 idx = np.where(check_types == False)[0]
-                if len(idx) != 0:
-                    col = df_val.columns[idx[0]]
-                    df_val[col] = df_val[col].astype(str)
+                if len(idx) >= 1:
+                    cols = df_val.columns[idx]
+                    df_val.loc[:, cols] = df_val.loc[:, cols].astype(str)
                 else:
                     continue
             # recalculate re-identification risk with k-anonymity
@@ -129,9 +129,12 @@ def process_single_df(df):
             max_unique = max(df_transf.nunique())
             block_column = df_transf.columns[df_transf.nunique() == max_unique]
             # calculate record linkage
-            reID_risk.loc[index, rl_var] = CalcRisk.calc_max_rl(df_transf, df_val, block_column[0],
-                                                                indexer="block")
-
+            try:
+                reID_risk.loc[index, rl_var] = CalcRisk.calc_max_rl(df_transf, df_val, block_column[0],
+                                                                    indexer="block")
+            except:
+                warnings.warn("ERROR with record linkage on dataframe #" + str(i))
+                reID_risk.loc[index, rl_var] = np.nan
             # reset df_val because of dtype change due to the suppression
             df_val = df[df.columns[:-1]]
             # add target to the transformed dataset
@@ -141,24 +144,47 @@ def process_single_df(df):
 
         print('Tech combs: ' + str(index) + '/' + str(len(comb)))
 
+    pd.to_pickle(transformations_combs, 'Results_remote/transformations_' + str(i) + '.pkl')
+    pd.to_pickle(reID_risk, 'Results_remote/risk_' + str(i) + '.pkl')
+    pd.to_pickle(comb, 'Results_remote/comb_' + str(i) + '.pkl')
+
     return transformations_combs, reID_risk, comb
 
 
-ds = load_data()
-start_time = time.time()
+# %%
+ds = load_data()  # 87 datasets
+ds1 = ds[0:45]
+ds2 = ds[45:66]
+ds3 = ds[66:]
+
+# start Ray
+ray.init()
+
 result_ids = []
-# for i in range(len(ds)):
-#     result_ids.append(process_single_df.remote(ds[i]))
+c = 45  # to apply in second part
+for i in range(0, len(ds2)):
+    result_ids.append(process_single_df.remote(ds2[i], c))
+    c += 1
 
 all_risk = []
 all_combs = []
 all_transf_combs = []
 
-# for i in range(len(ds)):
-#     transf_combs, risk, combs = ray.get(result_ids[i])
-#     all_transf_combs.append(transf_combs)
-#     all_risk.append(risk)
-#     all_combs.append(combs)
+for i in range(len(ds2)):
+    # aggregate all of the results
+    transf_combs, risk, combs = ray.get(result_ids[i])
+    all_transf_combs.append(transf_combs)
+    all_risk.append(risk)
+    all_combs.append(combs)
+
+
+pd.to_pickle(all_transf_combs, 'Final_results/all_transf_combs_2.pkl')
+pd.to_pickle(all_risk, 'Final_results/all_risk_2.pkl')
+pd.to_pickle(all_combs, 'Final_results/all_combs_2.pkl')
+
+x = pd.read_pickle('Final_results/all_transf_combs_1.pkl')
+y = pd.read_pickle('Final_results/all_risk_1.pkl')
+z = pd.read_pickle('Final_results/all_combs_1.pkl')
 
 # close Ray
-# ray.shutdown()
+ray.shutdown()
