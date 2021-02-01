@@ -22,14 +22,14 @@ class GlobalRec:
         # get columns whose data type is int
         keyVars = self.obj.select_dtypes(include=np.int).columns
         if len(keyVars) == 0:
-            warnings.warn("No variables for global recoding. Only integer type is acceptable!\n")
+            # warnings.warn("No variables for global recoding. Only integer type is acceptable!\n")
             return self.obj
         else:
             return self.globalRec(keyVars)
 
     def find_range(self, keyVars):
         all_ranges = []
-        magnitude = [1, 2]
+        magnitude = [0.5, 1.5]
         for j in range(0, len(keyVars)):
             # define bin size with std and magnitude of std
             sigma = np.std(self.obj[keyVars[j]])
@@ -83,11 +83,6 @@ class GlobalRec:
                     risk.loc[index, 'fk_per_comb'] = CalcRisk.calc_max_fk(df_gen.select_dtypes(exclude=np.float))
                     # risk.loc[index, 'rl_per_comb'] = RecordLinkage.calcRL(df_gen, self.obj)
 
-            # find best bin size
-            if risk['fk_per_comb'].min() == 100:
-                warnings.warn("Dataframe is at max risk!")
-            elif risk['fk_per_comb'].min() == 0:
-                warnings.warn("Dataframe does not have observations with max risk!")
             # get the combination with minimum re-identification risk
             minimum = risk['fk_per_comb'].min()
             idx_min = risk[risk['fk_per_comb'] == minimum].index

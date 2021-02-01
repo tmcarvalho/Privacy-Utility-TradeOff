@@ -17,7 +17,7 @@ class Sup:
 
     def verify_errors(self):
         if len(self.obj.select_dtypes(exclude=np.float).columns) == 0:
-            warnings.warn("Dataframe does not have any variable to suppress!")
+            # warnings.warn("Dataframe does not have any variable to suppress!")
             return self.obj
         else:
             return self.supWork()
@@ -28,8 +28,12 @@ class Sup:
         # define maximum percentage
         uniques_max_per = uniques_per[uniques_per > 90]
         if len(uniques_max_per) != 0:
-            # assign columns with '*' to represent the suppression
-            self.obj.loc[:, self.obj.columns.isin(uniques_max_per.index)] = '*'
-        else:
-            warnings.warn("None of variables has unique values above 90%!")
+            # list of columns to suppress
+            cols = self.obj.columns[self.obj.columns.isin(uniques_max_per.index)].values
+            # create key : scalar value dictionary
+            scalar_dict = {c: '*' for c in cols}
+            # assign columns with '*' which represents the suppression
+            self.obj = self.obj.assign(**scalar_dict)
+        # else:
+            # warnings.warn("None of variables has unique values above 90%!")
         return self.obj

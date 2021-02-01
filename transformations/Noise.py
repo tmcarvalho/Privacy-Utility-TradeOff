@@ -22,20 +22,23 @@ class Noise:
         # get columns whose data type is float
         keyVars = self.obj.select_dtypes(include=np.float).columns
         if len(keyVars) == 0:
-            warnings.warn("No variables for adding noise. Only integer type is acceptable!\n")
+            # warnings.warn("No variables for adding noise. Only float type is acceptable!\n")
             return self.obj
         else:
             return self.noiseWork(keyVars)
 
     def noiseWork(self, keyVars):
-        ep = [0.5, 2, 4, 8]
+        ep = [0.5, 2, 4, 8, 16]
         # dataframe to store relative error
         relative_error = pd.DataFrame()
         df_noise = self.obj.copy()
         for col in keyVars:
             diam = df_noise[col].max() - df_noise[col].min()
-            if int(diam) == 0:
-                warnings.warn("Diameter of the variable is 0! No noise to be applied!\n")
+            diam = format(diam, '.3f')
+            diam = float(diam)
+            if diam == 0:
+                # int(diam) == 0
+                # warnings.warn("Diameter of the variable is 0! No noise to be applied!\n")
                 pass
             else:
                 for i in range(0, len(ep)):
@@ -60,19 +63,19 @@ def Laplace(diam, ep):
 
 
 def assign_best_ep(relative_error, df):
-    ep = [0.5, 2, 4, 8]
+    ep = [0.5, 2, 4, 8, 16]
     # assign best epsilon to the dataset
     keyVars = relative_error.columns
-    if len(keyVars) == 0:
-        warnings.warn("Noise cannot be applied because all columns have diameter zero!")
-    else:
+    # if len(keyVars) == 0:
+    # warnings.warn("Noise cannot be applied because all columns have diameter zero!")
+    if len(keyVars) != 0:
         for col in keyVars:
             diam = df[col].max() - df[col].min()
             min_val = min((abs(x), x) for x in relative_error[col])[1]
             idx = relative_error[col].tolist().index(min_val)
             if is_float_dtype(df[col]):
                 df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx]))
-                df[col] = df[col].apply(lambda x: format(x, '.2f')).astype(float)
+                # df[col] = df[col].apply(lambda x: format(x, '.2f')).astype(float)
             else:
                 df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx]))
                 df[col] = df[col].apply(lambda x: format(x, '.0f')).astype(int)
