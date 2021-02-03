@@ -1,4 +1,3 @@
-import time
 import warnings
 from transformations import TopBot, GlobalRec, Suppression, RoundFloats, Noise
 from ReIdentificationRisk import CalcRisk
@@ -7,6 +6,17 @@ import itertools
 from decimal import Decimal
 import pandas as pd
 import ray
+import resource
+import gc
+
+
+# %% Using resource package to increase memory
+def limit_memory(maxsize):
+    soft, hard = resource.getrlimit(resource.RLIMIT_AS)
+    resource.setrlimit(resource.RLIMIT_AS, (maxsize, hard))
+
+
+limit_memory(12000000)
 
 
 # %% All functions to processing
@@ -71,7 +81,7 @@ def GR_combination(df, i):
     if len(df_sup.select_dtypes(include=np.int).columns) != 0:
         try:
             keyVars, comb = GlobalRec.globalRecoding(df_sup)
-            pd.to_pickle(comb, 'Results_remote/GRcomb_' + str(i) + '.pkl')
+            pd.to_pickle(comb, 'Remote_results/GRcomb_' + str(i) + '.pkl')
         except:
             pass
 
@@ -100,7 +110,7 @@ def transformations(x, index, df_transf, gr_vars, gr_comb, i):
         rel_error = Noise.addNoise(df_transf)
         if (len(rel_error) != 0) and (not rel_error.equals(df_transf)):
             df_transf = Noise.assign_best_ep(rel_error, df_transf)
-            pd.to_pickle(rel_error, 'Results_remote/relative_error_' + str(i) + '_' + str(index) + '.pkl')
+            pd.to_pickle(rel_error, 'Remote_results/relative_error_' + str(i) + '_' + str(index) + '.pkl')
     if 'globalrec' in x:
         if (len(gr_vars) != 0) and (len(gr_comb) != 0):
             df_transf = GlobalRec.best_bin_size(df_transf, gr_vars, gr_comb)
@@ -133,7 +143,7 @@ def process_single_df(df, i):
     del comb[0]
     fk_var = 'fk_per'
     rl_var = 'rl_per'
-    gr_vars, gr_comb = GR_combination(df_val, i)
+    gr_vars, gr_comb = GR_combination(df_val, 200)
     # calculate initial re-identification risk with k-anonymity
     reID_risk.loc[-1, 'initial_fk'] = CalcRisk.calc_max_fk(df_val)
     drop_comb = []
@@ -185,8 +195,12 @@ def process_single_df(df, i):
             # avoid too many candidates to record linkage
             max_unique1 = list(set(df_transf.nunique()))
             if (max_unique >= len(df_transf) * 0.85) and (len(max_unique1) != 1):
-                max_unique1 = max_unique1[-2]
-                block_column = df_transf.columns[df_transf.nunique() == max_unique1]
+                max_unique1 = sorted(max_unique1)
+                idx = [i for i, v in enumerate(max_unique1) if v < len(df_transf) * 0.85]
+                if len(idx) != 0:
+                    block_column = df_transf.columns[df_transf.nunique() == max_unique1[idx[-1]]]
+                else:
+                    block_column = df_transf.columns[df_transf.nunique() == max_unique1[0]]
             else:
                 block_column = df_transf.columns[df_transf.nunique() == max_unique]
 
@@ -212,31 +226,28 @@ def process_single_df(df, i):
             # store all transformed results
             transformations_combs.append(df_transf)
 
+        gc.collect()
         print('Tech combs: ' + str(index) + '/' + str(len(comb)))
         index += 1
-
-    time.sleep(1)
-    # save results
-    pd.to_pickle(transformations_combs, 'Results_remote/transformations_' + str(i) + '.pkl')
-    pd.to_pickle(reID_risk, 'Results_remote/risk_' + str(i) + '.pkl')
-    pd.to_pickle(comb, 'Results_remote/comb_' + str(i) + '.pkl')
 
     return transformations_combs, reID_risk, comb
 
 
 # %%
-ds = load_data()  # 80 datasets
-ds1 = ds[0:45].copy()
-ds2 = ds[45:64].copy()
-ds3 = ds[64:69].copy()
+ds = load_data()  # 74 datasets
+ds1 = ds[0:34].copy()
+ds2 = ds[34:50].copy()
+ds3 = ds[50:63].copy()
+ds4 = ds[63:].copy()
+# ds4 = ds[69:].copy()
 
 # start ray
 ray.init()
 
 result_ids = []
-c = 45
-for i in range(0, len(ds2)):
-    result_ids.append(process_single_df.remote(ds2[i], c))
+c = 63
+for i in range(0, len(ds4)):
+    result_ids.append(process_single_df.remote(ds4[i], c))
     c += 1
 
 # get ray results
@@ -244,7 +255,7 @@ all_risk = []
 all_combs = []
 all_transf_combs = []
 
-for i in range(len(ds2)):
+for i in range(len(ds4)):
     # aggregate all of the results
     transf_combs, risk, combs = ray.get(result_ids[i])
     all_transf_combs.append(transf_combs)
@@ -252,49 +263,12 @@ for i in range(len(ds2)):
     all_combs.append(combs)
 
 # save ray results
-pd.to_pickle(all_transf_combs, 'Final_results/all_transf_combs_2.pkl')
-pd.to_pickle(all_risk, 'Final_results/all_risk_2.pkl')
-pd.to_pickle(all_combs, 'Final_results/all_combs_2.pkl')
+pd.to_pickle(all_transf_combs, 'Remote_results/all_transf_combs_4.pkl')
+pd.to_pickle(all_risk, 'Remote_results/all_risk_4.pkl')
+pd.to_pickle(all_combs, 'Remote_results/all_combs_4.pkl')
 
 # close Ray
 ray.shutdown()
-
-# after dataset nr 69, ray remote is too slow and limits the memory to the max!
-# run each dataset separately
-ds4 = ds[69:75].copy()
-ds5 = ds[75:].copy()
-dss = ds[69:].copy()
-
-c = 69
-for i in range(len(ds4)):
-    transf_combs, risk, combs = process_single_df(ds4[i], c)
-    # save results
-    pd.to_pickle(transf_combs, 'Results_remote/transformations_' + str(c) + '.pkl')
-    pd.to_pickle(risk, 'Results_remote/risk_' + str(c) + '.pkl')
-    pd.to_pickle(combs, 'Results_remote/comb_' + str(c) + '.pkl')
-    c += 1
-
-
-def join_separated_results():
-    all_transf_combs = []
-    all_risk = []
-    all_combs = []
-    c = 69
-    for i in range(0, len(dss)):
-        transf_combs = pd.read_pickle('Results_remote/transformations_' + str(c) + '.pkl')
-        risk = pd.read_pickle('Results_remote/risk_' + str(c) + '.pkl')
-        combs = pd.read_pickle('Results_remote/comb_' + str(c) + '.pkl')
-        all_transf_combs.append(transf_combs)
-        all_risk.append(risk)
-        all_combs.append(combs)
-        c += 1
-
-    pd.to_pickle(all_transf_combs, 'Final_results/all_transf_combs_4.pkl')
-    pd.to_pickle(all_risk, 'Final_results/all_risk_4.pkl')
-    pd.to_pickle(all_combs, 'Final_results/all_combs_4.pkl')
-
-
-join_separated_results()
 
 
 def join_all_results():
@@ -302,9 +276,9 @@ def join_all_results():
     final_risk = []
     final_combs = []
     for i in range(1, 5):
-        all_transf_combs = pd.read_pickle('Final_results/all_transf_combs_' + str(i) + '.pkl')
-        all_risk = pd.read_pickle('Final_results/all_risk_' + str(i) + '.pkl')
-        all_combs = pd.read_pickle('Final_results/all_combs_' + str(i) + '.pkl')
+        all_transf_combs = pd.read_pickle('Remote_results/all_transf_combs_' + str(i) + '.pkl')
+        all_risk = pd.read_pickle('Remote_results/all_risk_' + str(i) + '.pkl')
+        all_combs = pd.read_pickle('Remote_results/all_combs_' + str(i) + '.pkl')
         final_transf_combs.append(all_transf_combs)
         final_risk.append(all_risk)
         final_combs.append(all_combs)
@@ -313,9 +287,9 @@ def join_all_results():
     final_risk = list(itertools.chain(*final_risk))
     final_combs = list(itertools.chain(*final_combs))
 
-    pd.to_pickle(final_transf_combs, 'Final_results/final_transf_combs.pkl')
-    pd.to_pickle(final_risk, 'Final_results/final_risk.pkl')
-    pd.to_pickle(final_combs, 'Final_results/final_combs.pkl')
+    pd.to_pickle(final_transf_combs, 'Remote_results/final_transf_combs.pkl')
+    pd.to_pickle(final_risk, 'Remote_results/final_risk.pkl')
+    pd.to_pickle(final_combs, 'Remote_results/final_combs.pkl')
 
 
 join_all_results()

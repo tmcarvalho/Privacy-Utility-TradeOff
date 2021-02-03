@@ -36,12 +36,12 @@ class RL:
 
     def RLwork(self, cols_transf, cols_orig):
         indexer = recordlinkage.Index()
-        if self.rlIndexer == 'full':
-            indexer.full()
-        else:
-            indexer.block(left_on=self.block, right_on=self.block)
+        # if self.rlIndexer == 'full':
+        # indexer.full()
+        # else:
+        indexer.block(left_on=self.block, right_on=self.block)
         candidates = indexer.index(self.transfObj, self.origObj)
-        # print(len(candidates))
+        print(len(candidates))
         compare = recordlinkage.Compare()
         for i in range(0, len(cols_transf)):
             if is_numeric_dtype(self.transfObj[cols_transf[i]]):
@@ -51,7 +51,6 @@ class RL:
 
         linkage = compare.compute(candidates, self.transfObj, self.origObj)
 
-        # rl = self.RLwork(cols_transf, cols_orig)
         potential_matches = linkage[linkage.sum(axis=1) > 1].reset_index()
         potential_matches['Score'] = potential_matches.loc[:, potential_matches.columns[0]:potential_matches.columns[
             len(potential_matches.columns) - 1]].sum(axis=1)

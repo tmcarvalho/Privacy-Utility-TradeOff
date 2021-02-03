@@ -23,12 +23,14 @@ df = ds[7].copy()
 
 # test ranges
 all_ranges = []
-magnitude = [1, 2]
+magnitude = [0.5, 1.5]
 df = DeIdentification.change_cols_types(df)
-vars = df.select_dtypes(include=float).columns
-for j in range(0, 24):
-    all_ranges.append(magnitude)
-comb = [i for i in itertools.product(*all_ranges)]
+vars = df.select_dtypes(include=int).columns
+for j in range(0, len(vars)):
+    sigma = np.std(df[vars[j]])
+    ranges = [int(i * sigma) for i in magnitude]
+    all_ranges.append(ranges)
+combos = [i for i in itertools.product(*all_ranges)]
 
 
 @ray.remote
@@ -111,9 +113,9 @@ for i in range(len(dfs)):
 end_time = time.time()
 total_time = end_time - start_time
 
-x = pd.read_pickle('Results_remote/transformations_2.pkl')
-y = pd.read_pickle('Results_remote/risk_2.pkl')
-z = pd.read_pickle('Results_remote/relative_error_1.pkl')
+x = pd.read_pickle('Final_results/final_transf_combs.pkl')
+y = pd.read_pickle('Final_results/final_risk.pkl')
+z = pd.read_pickle('Final_results/relative_error_1.pkl')
 
 all_risk = []
 all_combs = []
@@ -130,11 +132,6 @@ pd.to_pickle(all_transf_combs, 'Final_results/all_transf_combs.pkl')
 pd.to_pickle(all_risk, 'Final_results/all_risk.pkl')
 pd.to_pickle(all_combs, 'Final_results/all_combs.pkl')
 
-x = pd.read_pickle('Final_results/all_transf_combs.pkl')
-all_x = []
-all_x.append(x)
-
-all_x = list(chain(*all_x))
 
 # close Ray
 ray.shutdown()
@@ -144,3 +141,16 @@ all_combs[4]
 
 # 7min -> 0
 # 2min -> 1
+
+"""
+for i in range(len(ds2)):
+    df = ds2[i][ds2[i].columns[:-1]].copy()
+    all_ranges = []
+    magnitude = [1, 2]
+    df = change_cols_types(df)
+    vars = df.select_dtypes(include=int).columns
+    for j in range(0, len(vars)):
+        all_ranges.append(magnitude)
+    comb = [i for i in itertools.product(*all_ranges)]
+    print(str(len(comb)) + ' - ' + str(i))
+"""

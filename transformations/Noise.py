@@ -34,8 +34,8 @@ class Noise:
         df_noise = self.obj.copy()
         for col in keyVars:
             diam = df_noise[col].max() - df_noise[col].min()
-            diam = format(diam, '.3f')
-            diam = float(diam)
+            # diam = format(diam, '.3f')
+            # diam = float(diam)
             if diam == 0:
                 # int(diam) == 0
                 # warnings.warn("Diameter of the variable is 0! No noise to be applied!\n")
