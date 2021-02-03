@@ -25,6 +25,6 @@ class Round:
 
     def roundWork(self, keyVars):
         for col in keyVars:
-            self.obj[col] = round(self.obj[col], 2)
+            self.obj[col] = round(self.obj[col], 3)
 
         return self.obj
