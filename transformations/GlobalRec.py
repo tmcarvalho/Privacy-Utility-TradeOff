@@ -43,11 +43,12 @@ class GlobalRec:
         df_gen = self.obj.copy()
         dif = []
         comb = []
-        # remove columns that have only two uniques
-        vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 2].columns
+        # remove columns that have only one unique
+        vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 1].columns
         keyVars = list(set(keyVars) - set(vars_two_uniques))
+        # keyVars = self.obj.select_dtypes(include=np.int).columns
         if len(keyVars) == 0:
-            warnings.warn("KeyVars is empty!")
+            # warnings.warn("KeyVars is empty!")
             return keyVars, comb
         else:
             # bin size for each column
@@ -88,20 +89,21 @@ class GlobalRec:
             idx_min = risk[risk['fk_per_comb'] == minimum].index
             # get the best combination
             comb_idx = comb[idx_min[0]]
+
             return keyVars, comb_idx
 
 
 def best_bin_size(df, keyVars, comb_idx):
     # assign best combination of bin size to the dataset
     for i in range(0, len(comb_idx)):
-        if comb_idx[i] == 0:
-            pass
-        else:
-            bins = list(range(min(df[keyVars[i]]),
-                              max(df[keyVars[i]]) + comb_idx[i],
-                              comb_idx[i]))
-            labels = ['%d' % bins[i] for i in range(0, len(bins) - 1)]
-            df[keyVars[i]] = pd.cut(df[keyVars[i]], bins=bins, labels=labels,
-                                    include_lowest=True).astype(int)
+        if (all(df[keyVars[i]] != '*')) and (df[keyVars[i]].nunique() != 1):
+            if comb_idx[i] == 0:
+                pass
+            else:
+                bins = list(range(min(df[keyVars[i]]),
+                                  max(df[keyVars[i]]) + comb_idx[i],
+                                  comb_idx[i]))
+                labels = ['%d' % bins[i] for i in range(0, len(bins) - 1)]
+                df[keyVars[i]] = pd.cut(df[keyVars[i]], bins=bins, labels=labels,
+                                        include_lowest=True).astype(int)
     return df
-
