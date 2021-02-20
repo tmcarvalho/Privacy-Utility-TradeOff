@@ -41,7 +41,7 @@ class RL:
         # else:
         indexer.block(left_on=self.block, right_on=self.block)
         candidates = indexer.index(self.transfObj, self.origObj)
-        print(len(candidates))
+        # print(len(candidates))
         compare = recordlinkage.Compare()
         for i in range(0, len(cols_transf)):
             if is_numeric_dtype(self.transfObj[cols_transf[i]]):
