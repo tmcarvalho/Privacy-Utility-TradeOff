@@ -44,8 +44,7 @@ class Noise:
                 for i in range(0, len(ep)):
                     if is_float_dtype(df_noise[col]):
                         df_noise[col] = df_noise[col].apply(lambda x: x + Laplace(diam, ep[i])).astype(float)
-                    else:
-                        df_noise[col] = df_noise[col].apply(lambda x: x + Laplace(diam, ep[i])).astype(float)
+                        # df_noise[col] = df_noise[col].apply(lambda x: format(x, '.3f')).astype(float)
 
                     rel_error = CalcRisk.relative_error(self.obj[col], df_noise[col])
                     # replace inf values caused by denominator = zero
@@ -53,6 +52,8 @@ class Noise:
                         relative_error.loc[i, col] = 0
                     elif max(rel_error) == np.inf:
                         rel_error.replace([np.inf], max(rel_error.replace(np.inf, np.nan)), inplace=True)
+                        relative_error.loc[i, col] = np.mean(rel_error)
+                    else:
                         relative_error.loc[i, col] = np.mean(rel_error)
 
         return relative_error
@@ -70,15 +71,15 @@ def assign_best_ep(relative_error, df):
     # warnings.warn("Noise cannot be applied because all columns have diameter zero!")
     if len(keyVars) != 0:
         for col in keyVars:
-            diam = df[col].max() - df[col].min()
-            min_val = min((abs(x), x) for x in relative_error[col])[1]
-            idx = relative_error[col].tolist().index(min_val)
-            if is_float_dtype(df[col]):
-                df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx]))
-                # df[col] = df[col].apply(lambda x: format(x, '.2f')).astype(float)
-            else:
-                df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx]))
-                df[col] = df[col].apply(lambda x: format(x, '.0f')).astype(int)
+            if all(df[col] != '*'):
+                diam = df[col].max() - df[col].min()
+                min_val = min((abs(x), x) for x in relative_error[col])[1]
+                idx = relative_error[col].tolist().index(min_val)
+                if is_float_dtype(df[col]):
+                    df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx])).astype(float)
+                    # df[col] = df[col].apply(lambda x: format(x, '.3f')).astype(float)
+                # else:
+                #     df[col] = df[col].apply(lambda x: x + Laplace(diam, ep[idx]))
+                #     df[col] = df[col].apply(lambda x: format(x, '.0f')).astype(int)
 
     return df
-
