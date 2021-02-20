@@ -42,9 +42,11 @@ class TopBot:
                         out_prob, outer_le, outer_ue = self.tukeys_method(self.keyVars[j], of)
                         if len(out_prob) != 0:
                             if data_to_transform[self.keyVars[j]].dtype == np.int:
-                                data_to_transform.loc[data_to_transform[self.keyVars[j]] <= outer_le, self.keyVars[j]] = int(
+                                data_to_transform.loc[
+                                    data_to_transform[self.keyVars[j]] <= outer_le, self.keyVars[j]] = int(
                                     outer_le)
-                                data_to_transform.loc[data_to_transform[self.keyVars[j]] >= outer_ue, self.keyVars[j]] = int(
+                                data_to_transform.loc[
+                                    data_to_transform[self.keyVars[j]] >= outer_ue, self.keyVars[j]] = int(
                                     outer_ue)
                             else:
                                 data_to_transform.loc[
@@ -74,7 +76,7 @@ class TopBot:
                     block_column = data_to_transform.columns[data_to_transform.nunique() == max_unique]
 
                 risk.loc[of, 'rl_per_comb'] = CalcRisk.calc_max_rl(data_to_transform, df_org, block_column[0],
-                                                                  indexer="block")
+                                                                   indexer="block")
                 data_to_transform = self.obj.copy()
                 df_org = self.origObj.copy()
 
