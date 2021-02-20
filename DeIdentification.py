@@ -54,88 +54,24 @@ def define_combs(df):
     return comb
 
 
-def GR_combination(df, i, index):
-    """
-    Finding global recoding combinations.
-    :param df: input dataframe.
-    :param i: index of dataframe.
-    :param index: index of combination.
-    :return: variables to apply global recoding and corresponding discretization size.
-    """
-    df_sup = df.copy()
-    keyVars = comb = []
-    uniques_per = df_sup.select_dtypes(exclude=np.float).apply(lambda col: col.nunique() * 100 / len(df_sup))
-    # define maximum percentage
-    uniques_max_per = uniques_per[uniques_per > 90]
-    cols = df_sup.columns[df_sup.columns.isin(uniques_max_per.index)].values
-    if len(cols) != 0:
-        df_sup.drop(cols, axis=1, inplace=True)
-    if len(df_sup.select_dtypes(include=np.int).columns) != 0:
-        try:
-            keyVars, comb = GlobalRec.globalRecoding(df_sup)
-            pd.to_pickle(comb, 'Remote_results/GRcomb_' + str(i) + '_' + str(index) + '.pkl')
-            # comb = pd.read_pickle('Remote_results/GRcomb_' + str(i) + '.pkl')
-        except:
-            pass
-
-    return keyVars, comb
-
-
-def parameters(x, obj, orgObj, i, params, index):
-    """
-    Collect the best parameters to apply the transformations.
-    :param x: combination of techniques.
-    :param obj: input dataset.
-    :param orgObj: original object to compare with transformed dataset.
-    :param i: index of dataset.
-    :param params: parameters from previous iterations.
-    :param index: index of combination.
-    :return: list of parameters.
-    """
-    if 'sup' in x:
-        per = Suppression.suppression(obj, orgObj, uniq_per=[0.7, 0.8, 0.9])
-        params['per'] = per
-    if 'topbot' in x:
-        outer_fence, keyVarsT = TopBot.topBottomCoding(obj, orgObj)
-        params['keyVarsT'] = keyVarsT
-        params['outer_fence'] = outer_fence
-    if 'round' in x:
-        base, keyVarsR = Rounding.rounding(obj, orgObj)
-        params['keyVarsR'] = keyVarsR
-        params['base'] = base
-    if 'globalrec' in x:
-        gr_vars, gr_comb = GR_combination(obj, i, index)
-        params['gr_vars'] = gr_vars
-        params['gr_comb'] = gr_comb
-
-    return params
-
-
-def transformations(x, index, df_transf, i, params):
+def transformations(x, df_transf, df_org):
     """
     Apply transformation techniques to the dataframe.
     :param x: combination of techniques.
-    :param index: index of combination.
     :param df_transf: input dataframe.
-    :param i: index of dataframe.
-    :param params: best parameters to apply the transformations.
+    :param df_org: original dataframe to compare with the transformed.
     :return: transformed dataframe.
     """
     if 'sup' in x:
-        df_transf = Suppression.best_per_sup(df_transf, params['per'])
+        df_transf = Suppression.suppression(df_transf, df_org, uniq_per=[0.7, 0.8, 0.9])
     if 'topbot' in x:
-        df_transf = TopBot.best_outer_fence(df_transf, params['keyVarsT'], params['outer_fence'])
+        df_transf = TopBot.topBottomCoding(df_transf, df_org, outlier=[1.5, 3])
     if 'noise' in x:
-        rel_error = Noise.addNoise(df_transf)
-        if (len(rel_error) != 0) and (not rel_error.equals(df_transf)):
-            df_transf = Noise.assign_best_ep(rel_error, df_transf)
-            pd.to_pickle(rel_error, 'Remote_results/relative_error_' + str(i) + '_' + str(index) + '.pkl')
+        df_transf = Noise.addNoise(df_transf, ep=[0.5, 2, 4, 8, 16])
     if 'round' in x:
-        df_transf = Rounding.best_base_round(df_transf, params['keyVarsR'], params['base'])
+        df_transf = Rounding.rounding(df_transf, df_org, base=[0.2, 5, 10])
     if 'globalrec' in x:
-        # gr_vars, gr_comb = GR_combination(df_transf, i, index)
-        if(len(params['gr_vars']) != 0) and (len(params['gr_comb']) != 0):
-            df_transf = GlobalRec.best_bin_size(df_transf, params['gr_vars'], params['gr_comb'])
+        df_transf = GlobalRec.globalRecoding(df_transf, std_magnitude=[0.5, 1.5])
 
     return df_transf
 
@@ -170,15 +106,12 @@ def process_single_df(df, i):
     drop_comb = []
     drop_index = []
     drop_index_risk = []
-    params = {}
     index = 0
     while index < len(comb):
         df_transf = df_val.copy()
         if len(comb[index]) < 2:
-            # get best parameters
-            params = parameters(comb[index], df_transf, df_val, i, params, index)
             # apply transformations
-            df_transf = transformations(comb[index], index, df_transf, i, params)
+            df_transf = transformations(comb[index], df_transf, df_val)
             # store index of resulted transformations that have not suffer any change
             if df_transf.equals(df_val):
                 drop_comb.append(comb[index])
@@ -207,10 +140,9 @@ def process_single_df(df, i):
             drop_index_risk = []
 
         if (len(comb) > 1) and (len(comb) != index):
-            # params = parameters(comb[index], df_transf, df_val, i, params, index)
             # apply transformations after updating combinations
             if (len(drop_comb) == 0) and (len(comb[index]) > 1):
-                df_transf = transformations(comb[index], index, df_transf, i, params)
+                df_transf = transformations(comb[index], df_transf, df_val)
 
         # recalculate re-identification risk with k-anonymity
         reID_risk.loc[index, fk_var] = CalcRisk.calc_max_fk(df_transf)

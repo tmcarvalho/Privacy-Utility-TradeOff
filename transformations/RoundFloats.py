@@ -14,17 +14,17 @@ def roundFloats(obj):
 class Round:
     def __init__(self, obj):
         self.obj = obj
+        self.keyVars = self.obj.select_dtypes(include=np.float).columns
 
     def verify_errors(self):
-        keyVars = self.obj.select_dtypes(include=np.float).columns
-        if len(keyVars) == 0:
+        if len(self.keyVars) == 0:
             # warnings.warn("Dataframe does not have any floating point to round!")
             return self.obj
         else:
-            return self.roundWork(keyVars)
+            return self.roundWork()
 
-    def roundWork(self, keyVars):
-        for col in keyVars:
+    def roundWork(self):
+        for col in self.keyVars:
             self.obj[col] = round(self.obj[col], 3)
 
         return self.obj
