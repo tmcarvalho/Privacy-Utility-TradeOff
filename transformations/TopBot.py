@@ -4,7 +4,7 @@ import pandas as pd
 from ReIdentificationRisk import CalcRisk
 
 
-def topBottomCoding(obj, origObj):
+def topBottomCoding(obj, origObj, outlier=1.5):
     """
     Replace extreme values, larger or lower than a threshold, by a different value.
     :param obj: input dataframe.
