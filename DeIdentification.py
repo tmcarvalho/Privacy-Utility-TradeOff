@@ -1,5 +1,5 @@
 import warnings
-from transformations import TopBot, GlobalRec, Suppression, Rounding, Noise, RoundFloats
+from transformations import TopBot, GlobalRec, Suppression, Rounding, Noise
 from ReIdentificationRisk import CalcRisk
 import numpy as np
 import itertools
@@ -11,7 +11,7 @@ import gc
 
 # %% All functions to processing
 def load_data():
-    dss = np.load('DS_clean1.npy', allow_pickle=True)
+    dss = np.load('Data/DS_clean1.npy', allow_pickle=True)
     ds = dss.copy()
     return ds
 
@@ -64,6 +64,13 @@ def transformations(x, df_transf, df_org):
     """
     if 'sup' in x:
         df_transf = Suppression.suppression(df_transf, df_org, uniq_per=[0.7, 0.8, 0.9])
+        # make sure that both datasets has equal dtypes to all columns for record linkage work
+        check_types = df_org.dtypes.eq('object') == df_transf.dtypes.eq('object')
+        idx = np.where(check_types == False)[0]
+        if len(idx) >= 1:
+            cols = df_org.columns[idx]
+            for col in cols:
+                df_org[col] = df_org[col].astype(str)
     if 'topbot' in x:
         df_transf = TopBot.topBottomCoding(df_transf, df_org, outlier=[1.5, 3])
     if 'noise' in x:
@@ -161,14 +168,6 @@ def process_single_df(df, i):
         else:
             block_column = df_transf.columns[df_transf.nunique() == max_unique]
 
-        if "sup" in comb[index]:
-            # make sure that both datasets has equal dtypes to all columns for record linkage work
-            check_types = df_val.dtypes.eq('object') == df_transf.dtypes.eq('object')
-            idx = np.where(check_types == False)[0]
-            if len(idx) >= 1:
-                cols = df_val.columns[idx]
-                for col in cols:
-                    df_val[col] = df_val[col].astype(str)
         # calculate re-identification risk with record linkage
         try:
             reID_risk.loc[index, rl_var] = CalcRisk.calc_max_rl(df_transf, df_val, block_column[0],
@@ -219,9 +218,9 @@ for i in range(len(ds3)):
     all_combs.append(combs)
 
 # save ray results
-pd.to_pickle(all_transf_combs, 'Remote_results/all_transf_combs_3.pkl')
-pd.to_pickle(all_risk, 'Remote_results/all_risk_3.pkl')
-pd.to_pickle(all_combs, 'Remote_results/all_combs_3.pkl')
+pd.to_pickle(all_transf_combs, 'Data/Remote_results/all_transf_combs_3.pkl')
+pd.to_pickle(all_risk, 'Data/Remote_results/all_risk_3.pkl')
+pd.to_pickle(all_combs, 'Data/Remote_results/all_combs_3.pkl')
 
 # close Ray
 ray.shutdown()
@@ -231,9 +230,9 @@ ds4 = ds[58:63].copy()
 c = 58
 for i in range(len(list)):
     tr, r, cb = process_single_df(ds4[i].copy(), c)
-    pd.to_pickle(tr, 'Remote_results/transf_combs_' + str(c) + '.pkl')
-    pd.to_pickle(r, 'Remote_results/risk_' + str(c) + '.pkl')
-    pd.to_pickle(cb, 'Remote_results/combs_' + str(c) + '.pkl')
+    pd.to_pickle(tr, 'Data/Remote_results/transf_combs_' + str(c) + '.pkl')
+    pd.to_pickle(r, 'Data/Remote_results/risk_' + str(c) + '.pkl')
+    pd.to_pickle(cb, 'Data/Remote_results/combs_' + str(c) + '.pkl')
     c += 1
 
 
@@ -242,9 +241,9 @@ def separeted_results():
     final_risk = []
     final_combs = []
     for j in range(58, 63):
-        all_transf = pd.read_pickle('Remote_results/transf_combs_' + str(j) + '.pkl')
-        all_risk = pd.read_pickle('Remote_results/risk_' + str(j) + '.pkl')
-        all_combs = pd.read_pickle('Remote_results/combs_' + str(j) + '.pkl')
+        all_transf = pd.read_pickle('Data/Remote_results/transf_combs_' + str(j) + '.pkl')
+        all_risk = pd.read_pickle('Data/Remote_results/risk_' + str(j) + '.pkl')
+        all_combs = pd.read_pickle('Data/Remote_results/combs_' + str(j) + '.pkl')
         # if (j==58) or (j==59):
             # all_transf = list(itertools.chain(*all_transf))
             # all_risk = all_risk[0]
@@ -256,9 +255,9 @@ def separeted_results():
     # final_risk = list(itertools.chain(*final_risk))
     # final_combs = list(itertools.chain(*final_combs))
 
-    pd.to_pickle(final_transf_combs, 'Remote_results/all_transf_combs_4.pkl')
-    pd.to_pickle(final_risk, 'Remote_results/all_risk_4.pkl')
-    pd.to_pickle(final_combs, 'Remote_results/all_combs_4.pkl')
+    pd.to_pickle(final_transf_combs, 'Data/Remote_results/all_transf_combs_4.pkl')
+    pd.to_pickle(final_risk, 'Data/Remote_results/all_risk_4.pkl')
+    pd.to_pickle(final_combs, 'Data/Remote_results/all_combs_4.pkl')
 
 
 separeted_results()
@@ -270,9 +269,9 @@ def join_all_results():
     final_risk = []
     final_combs = []
     for i in range(1, 6):
-        all_transf_combs = pd.read_pickle('Remote_results/all_transf_combs_' + str(i) + '.pkl')
-        all_risk = pd.read_pickle('Remote_results/all_risk_' + str(i) + '.pkl')
-        all_combs = pd.read_pickle('Remote_results/all_combs_' + str(i) + '.pkl')
+        all_transf_combs = pd.read_pickle('Data/Remote_results/all_transf_combs_' + str(i) + '.pkl')
+        all_risk = pd.read_pickle('Data/Remote_results/all_risk_' + str(i) + '.pkl')
+        all_combs = pd.read_pickle('Data/Remote_results/all_combs_' + str(i) + '.pkl')
         final_transf_combs.append(all_transf_combs)
         final_risk.append(all_risk)
         final_combs.append(all_combs)
@@ -281,9 +280,20 @@ def join_all_results():
     final_risk = list(itertools.chain(*final_risk))
     final_combs = list(itertools.chain(*final_combs))
 
-    pd.to_pickle(final_transf_combs, 'Final_results/final_transf_combs5.pkl')
-    pd.to_pickle(final_risk, 'Final_results/final_risk5.pkl')
-    pd.to_pickle(final_combs, 'Final_results/final_combs5.pkl')
+    pd.to_pickle(final_transf_combs, 'Data/Final_results/final_transf_combs5.pkl')
+    pd.to_pickle(final_risk, 'Data/Final_results/final_risk5.pkl')
+    pd.to_pickle(final_combs, 'Data/Final_results/final_combs5.pkl')
 
 
 join_all_results()
+
+# repeat_list = [1, 9, 16, 17, 18, 31, 34, 41, 44, 49, 53, 55, 56]
+# list_no_tgt = [25, 26, 51, 57, 60, 61, 26, 31]
+#
+# create a folder with all csv file
+# for j in range(len(ds)):
+#     ds[j].to_csv("Data/Final_results/AllinputFiles/ds" + str(j) + '.csv', index=False)
+#
+# for i in range(len(transf6)):
+#     for j in range(len(transf6[i])):
+#         transf6[i][j].to_csv("Data/Final_results/AllinputFiles/ds" + str(i) + '_transf' + str(j) + '.csv', index=False)
