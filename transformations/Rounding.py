@@ -36,7 +36,8 @@ class Rounding:
         if isinstance(self.base, list):
             for b in self.base:
                 for col in self.keyVars:
-                    df_round[col] = df_round[col].apply(lambda x: b * round(x/b))
+                    if all(df_round[col] != '*'):
+                        df_round[col] = df_round[col].apply(lambda x: b * round(x/b))
 
                 # if variable is float, with base=5 or base=10, the variable type will change to int
                 # and record linkage will not work well

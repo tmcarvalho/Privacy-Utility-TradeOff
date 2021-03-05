@@ -2,18 +2,20 @@ import warnings
 import numpy as np
 
 
-def roundFloats(obj):
+def roundFloats(obj, n_round):
     """
     Limit floats to two decimal points.
     :param obj: input dataframe.
+    :param n_round: number to round.
     :return: dataframe with rounded floats.
     """
-    return Round(obj=obj).verify_errors()
+    return Round(obj=obj, n_round=n_round).verify_errors()
 
 
 class Round:
-    def __init__(self, obj):
+    def __init__(self, obj, n_round):
         self.obj = obj
+        self.n_round = n_round
         self.keyVars = self.obj.select_dtypes(include=np.float).columns
 
     def verify_errors(self):
@@ -25,6 +27,6 @@ class Round:
 
     def roundWork(self):
         for col in self.keyVars:
-            self.obj[col] = round(self.obj[col], 3)
+            self.obj[col] = round(self.obj[col], self.n_round)
 
         return self.obj

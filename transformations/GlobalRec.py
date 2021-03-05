@@ -47,8 +47,8 @@ class GlobalRec:
         df_gen = self.obj.copy()
         dif = []
         comb = []
-        # remove columns that have only one unique
-        vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 1].columns
+        # remove columns that have only two unique
+        vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 2].columns
         self.keyVars = list(set(self.keyVars) - set(vars_two_uniques))
         if len(self.keyVars) != 0:
             # bin size for each column
@@ -84,13 +84,15 @@ class GlobalRec:
 
                         risk.loc[index, 'fk_per_comb'] = CalcRisk.calc_max_fk(df_gen.select_dtypes(exclude=np.float))
                         # risk.loc[index, 'rl_per_comb'] = RecordLinkage.calcRL(df_gen, self.obj)
-
-                # get the combination with minimum re-identification risk
-                minimum = risk['fk_per_comb'].min()
-                idx_min = risk[risk['fk_per_comb'] == minimum].index
-                # get the best combination
-                comb_idx = comb[idx_min[0]]
-                return self.best_bin_size(comb_idx)
+                if len(risk) != 0:
+                    # get the combination with minimum re-identification risk
+                    minimum = risk['fk_per_comb'].min()
+                    idx_min = risk[risk['fk_per_comb'] == minimum].index
+                    # get the best combination
+                    comb_idx = comb[idx_min[0]]
+                    return self.best_bin_size(comb_idx)
+                else:
+                    return self.obj
 
             else:
                 return self.best_bin_size(ranges)

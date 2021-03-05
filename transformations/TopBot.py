@@ -37,7 +37,7 @@ class TopBot:
         if isinstance(self.outlier, list):
             for of in self.outlier:
                 for j in range(0, len(self.keyVars)):
-                    if all(self.obj[self.keyVars[j]]) != '*':
+                    if all(data_to_transform[self.keyVars[j]]) != '*':
                         # outliers detection with Tukey's method
                         out_prob, outer_le, outer_ue = self.tukeys_method(self.keyVars[j], of)
                         if len(out_prob) != 0:
