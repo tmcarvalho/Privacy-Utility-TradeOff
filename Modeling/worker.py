@@ -42,9 +42,10 @@ def modeling(file, rep):
 
     # output
     try:
+        output_folder = f'{args.output_folder}/{file.split(".")[0]}'
+        if not os.path.isdir(output_folder):
+            os.mkdir(output_folder)
         output_file = f'{args.output_folder}/{file.split(".")[0]}/{file.split(".")[0]}_res{str(rep)}.npy'
-        # if not os.path.isdir(output_file):
-        #     os.mkdir(output_file)
         # f = open(output_file, 'w')
         # f.write(res)
         np.save(output_file, res)
