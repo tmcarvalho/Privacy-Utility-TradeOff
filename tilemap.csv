@@ -1,0 +1,1075 @@
+ds	comb	fk	rl	rank
+ds0	round	100.0	1.3	8.0
+ds0	globalrec	100.0	100.0	15.0
+ds0	sup	99.6	92.9	14.0
+ds0	topbot	100.0	92.8	12.5
+ds0	globalrec, round	100.0	1.0	3.5
+ds0	round, sup	98.9	1.1	5.5
+ds0	round, topbot	100.0	1.2	7.0
+ds0	globalrec, sup	99.4	5.1	9.5
+ds0	globalrec, topbot	100.0	92.8	12.5
+ds0	sup, topbot	99.6	90.8	11.0
+ds0	globalrec, round, sup	98.9	1.1	5.5
+ds0	globalrec, round, topbot	100.0	0.9	1.5
+ds0	round, sup, topbot	98.9	0.9	1.5
+ds0	globalrec, sup, topbot	99.4	5.1	9.5
+ds0	globalrec, round, sup, topbot	98.9	1.0	3.5
+ds1	topbot	100.0	100.0	7.0
+ds1	noise	100.0	0.0	3.5
+ds1	round	0.1	0.0	3.5
+ds1	noise, topbot	100.0	0.0	3.5
+ds1	round, topbot	0.1	0.0	3.5
+ds1	noise, round	100.0	0.0	3.5
+ds1	noise, round, topbot	100.0	0.0	3.5
+ds2	round	99.23298178331736	0.0	11.5
+ds2	topbot	100.0	85.81016299137104	29.0
+ds2	globalrec	100.0	41.80249280920422	28.0
+ds2	noise	100.0	0.0	11.5
+ds2	sup	100.0	90.9875359539789	31.0
+ds2	round, topbot	99.0412272291467	0.0	11.5
+ds2	globalrec, round	99.0412272291467	0.0	11.5
+ds2	noise, round	100.0	0.0	11.5
+ds2	round, sup	87.44007670182167	0.0	11.5
+ds2	globalrec, topbot	100.0	36.91275167785235	27.0
+ds2	noise, topbot	100.0	1.5340364333652925	24.0
+ds2	sup, topbot	100.0	86.09779482262704	30.0
+ds2	globalrec, noise	100.0	0.0	11.5
+ds2	globalrec, sup	100.0	22.24352828379674	26.0
+ds2	noise, sup	100.0	0.0	11.5
+ds2	globalrec, round, topbot	98.65771812080537	0.0	11.5
+ds2	noise, round, topbot	100.0	0.0	11.5
+ds2	round, sup, topbot	87.24832214765101	0.0	11.5
+ds2	globalrec, noise, round	100.0	0.0	11.5
+ds2	globalrec, round, sup	84.27612655800576	0.0	11.5
+ds2	noise, round, sup	100.0	0.0	11.5
+ds2	globalrec, noise, topbot	100.0	0.0	11.5
+ds2	globalrec, sup, topbot	100.0	20.038350910834133	25.0
+ds2	noise, sup, topbot	100.0	1.1505273250239694	23.0
+ds2	globalrec, noise, sup	100.0	0.0	11.5
+ds2	globalrec, noise, round, topbot	100.0	0.0	11.5
+ds2	globalrec, round, sup, topbot	83.89261744966443	0.0	11.5
+ds2	noise, round, sup, topbot	100.0	0.0	11.5
+ds2	globalrec, noise, round, sup	100.0	0.0	11.5
+ds2	globalrec, noise, sup, topbot	100.0	0.0	11.5
+ds2	globalrec, noise, round, sup, topbot	100.0	0.0	11.5
+ds3	sup	99.43127962085308	76.49289099526067	28.0
+ds3	topbot	99.43127962085308	81.70616113744076	30.0
+ds3	noise	100.0	0.0	12.0
+ds3	round	17.061611374407583	0.0	12.0
+ds3	globalrec	99.43127962085308	86.72985781990522	31.0
+ds3	sup, topbot	99.43127962085308	73.45971563981043	26.0
+ds3	noise, sup	100.0	0.0	12.0
+ds3	round, sup	16.587677725118482	0.0	12.0
+ds3	globalrec, sup	99.43127962085308	76.39810426540285	27.0
+ds3	noise, topbot	100.0	0.0947867298578199	24.0
+ds3	round, topbot	6.161137440758294	0.0	12.0
+ds3	globalrec, topbot	99.43127962085308	79.43127962085308	29.0
+ds3	noise, round	100.0	0.0	12.0
+ds3	globalrec, noise	100.0	0.0	12.0
+ds3	globalrec, round	17.061611374407583	0.0	12.0
+ds3	noise, sup, topbot	100.0	0.0	12.0
+ds3	round, sup, topbot	6.161137440758294	0.0	12.0
+ds3	globalrec, sup, topbot	99.43127962085308	68.81516587677726	25.0
+ds3	noise, round, sup	100.0	0.0	12.0
+ds3	globalrec, noise, sup	100.0	0.0	12.0
+ds3	globalrec, round, sup	16.587677725118482	0.0	12.0
+ds3	noise, round, topbot	100.0	0.0	12.0
+ds3	globalrec, noise, topbot	100.0	0.0	12.0
+ds3	globalrec, round, topbot	6.161137440758294	0.0	12.0
+ds3	globalrec, noise, round	100.0	0.0	12.0
+ds3	noise, round, sup, topbot	100.0	0.0	12.0
+ds3	globalrec, noise, sup, topbot	100.0	0.0	12.0
+ds3	globalrec, round, sup, topbot	6.161137440758294	0.0	12.0
+ds3	globalrec, noise, round, sup	100.0	0.0	12.0
+ds3	globalrec, noise, round, topbot	100.0	0.0	12.0
+ds3	globalrec, noise, round, sup, topbot	100.0	0.0	12.0
+ds4	sup	100.0	100.0	15.0
+ds4	globalrec	100.0	0.0	6.5
+ds4	round	100.0	0.0	6.5
+ds4	topbot	100.0	93.10986964618249	14.0
+ds4	globalrec, sup	91.80633147113593	0.0	6.5
+ds4	round, sup	100.0	0.0	6.5
+ds4	sup, topbot	100.0	80.63314711359403	13.0
+ds4	globalrec, round	100.0	0.0	6.5
+ds4	globalrec, topbot	100.0	0.0	6.5
+ds4	round, topbot	100.0	0.0	6.5
+ds4	globalrec, round, sup	89.8510242085661	0.0	6.5
+ds4	globalrec, sup, topbot	91.15456238361266	0.0	6.5
+ds4	round, sup, topbot	100.0	0.0	6.5
+ds4	globalrec, round, topbot	100.0	0.0	6.5
+ds4	globalrec, round, sup, topbot	87.33705772811918	0.0	6.5
+ds5	topbot	100.0	82.82265552460538	29.0
+ds5	round	99.25719591457754	0.0	11.5
+ds5	noise	100.0	0.0	11.5
+ds5	globalrec	99.62859795728876	15.506035283194057	28.0
+ds5	sup	100.0	91.27205199628598	31.0
+ds5	round, topbot	99.07149489322191	0.0	11.5
+ds5	noise, topbot	100.0	1.2070566388115134	23.0
+ds5	globalrec, topbot	99.62859795728876	13.277623026926648	27.0
+ds5	sup, topbot	100.0	85.70102135561746	30.0
+ds5	noise, round	100.0	0.0	11.5
+ds5	globalrec, round	97.40018570102136	0.0	11.5
+ds5	round, sup	87.83658310120705	0.0	11.5
+ds5	globalrec, noise	100.0	0.0	11.5
+ds5	noise, sup	100.0	0.0	11.5
+ds5	globalrec, sup	99.62859795728876	3.714020427112349	26.0
+ds5	noise, round, topbot	100.0	0.0	11.5
+ds5	globalrec, round, topbot	97.21448467966574	0.0	11.5
+ds5	round, sup, topbot	87.65088207985144	0.0	11.5
+ds5	globalrec, noise, topbot	100.0	0.0	11.5
+ds5	noise, sup, topbot	100.0	2.4141132776230267	24.0
+ds5	globalrec, sup, topbot	99.62859795728876	3.4354688950789227	25.0
+ds5	globalrec, noise, round	100.0	0.0	11.5
+ds5	noise, round, sup	100.0	0.0	11.5
+ds5	globalrec, round, sup	78.55153203342618	0.0	11.5
+ds5	globalrec, noise, sup	100.0	0.0	11.5
+ds5	globalrec, noise, round, topbot	100.0	0.0	11.5
+ds5	noise, round, sup, topbot	100.0	0.0	11.5
+ds5	globalrec, round, sup, topbot	78.36583101207057	0.0	11.5
+ds5	globalrec, noise, sup, topbot	100.0	0.0	11.5
+ds5	globalrec, noise, round, sup	100.0	0.0	11.5
+ds5	globalrec, noise, round, sup, topbot	100.0	0.0	11.5
+ds6	globalrec	75.56357078449054	71.77637511271416	30.0
+ds6	topbot	77.0063119927863	59.69341749323715	28.0
+ds6	round	73.39945897204689	0.0	12.5
+ds6	sup	77.36699729486024	72.22723174030658	31.0
+ds6	noise	100.0	0.0	12.5
+ds6	globalrec, topbot	75.11271415689811	57.07844905320108	26.0
+ds6	globalrec, round	72.31740306582506	0.0	12.5
+ds6	globalrec, sup	75.56357078449054	58.52119026149684	27.0
+ds6	globalrec, noise	100.0	0.0	12.5
+ds6	round, topbot	72.1370604147881	0.0	12.5
+ds6	sup, topbot	77.0063119927863	60.05410279531109	29.0
+ds6	noise, topbot	100.0	0.0	12.5
+ds6	round, sup	61.947700631199275	0.0	12.5
+ds6	noise, round	100.0	0.0	12.5
+ds6	noise, sup	100.0	0.0	12.5
+ds6	globalrec, round, topbot	71.05500450856627	0.0	12.5
+ds6	globalrec, sup, topbot	75.11271415689811	48.512173128944994	25.0
+ds6	globalrec, noise, topbot	100.0	0.0	12.5
+ds6	globalrec, round, sup	59.06221821460775	0.0	12.5
+ds6	globalrec, noise, round	100.0	0.0	12.5
+ds6	globalrec, noise, sup	100.0	0.0	12.5
+ds6	round, sup, topbot	60.595130748422	0.0	12.5
+ds6	noise, round, topbot	100.0	0.0	12.5
+ds6	noise, sup, topbot	100.0	0.0	12.5
+ds6	noise, round, sup	100.0	0.0	12.5
+ds6	globalrec, round, sup, topbot	57.70964833183048	0.0	12.5
+ds6	globalrec, noise, round, topbot	100.0	0.0	12.5
+ds6	globalrec, noise, sup, topbot	100.0	0.0	12.5
+ds6	globalrec, noise, round, sup	100.0	0.0	12.5
+ds6	noise, round, sup, topbot	100.0	0.0	12.5
+ds6	globalrec, noise, round, sup, topbot	100.0	0.0	12.5
+ds7	topbot	100.0	86.50519031141869	7.0
+ds7	round	100.0	23.01038062283737	6.0
+ds7	noise	100.0	0.0	1.5
+ds7	round, topbot	100.0	22.92387543252595	5.0
+ds7	noise, topbot	100.0	0.0	1.5
+ds7	noise, round	100.0	1.643598615916955	3.0
+ds7	noise, round, topbot	100.0	5.968858131487889	4.0
+ds8	round	100.0	0.0	11.0
+ds8	topbot	100.0	97.72727272727273	29.0
+ds8	noise	100.0	99.77272727272727	30.0
+ds8	globalrec	100.0	0.07575757575757576	23.0
+ds8	sup	100.0	100.0	31.0
+ds8	round, topbot	100.0	0.0	11.0
+ds8	noise, round	100.0	0.0	11.0
+ds8	globalrec, round	100.0	0.0	11.0
+ds8	round, sup	100.0	0.0	11.0
+ds8	noise, topbot	100.0	95.68181818181819	27.0
+ds8	globalrec, topbot	100.0	0.07575757575757576	23.0
+ds8	sup, topbot	100.0	95.9090909090909	28.0
+ds8	globalrec, noise	100.0	0.0	11.0
+ds8	noise, sup	100.0	95.3030303030303	26.0
+ds8	globalrec, sup	100.0	0.07575757575757576	23.0
+ds8	noise, round, topbot	100.0	0.0	11.0
+ds8	globalrec, round, topbot	100.0	0.0	11.0
+ds8	round, sup, topbot	100.0	0.0	11.0
+ds8	globalrec, noise, round	100.0	0.0	11.0
+ds8	noise, round, sup	100.0	0.0	11.0
+ds8	globalrec, round, sup	98.48484848484848	0.0	11.0
+ds8	globalrec, noise, topbot	100.0	0.0	11.0
+ds8	noise, sup, topbot	100.0	91.51515151515152	25.0
+ds8	globalrec, sup, topbot	100.0	0.0	11.0
+ds8	globalrec, noise, sup	100.0	0.0	11.0
+ds8	globalrec, noise, round, topbot	100.0	0.0	11.0
+ds8	noise, round, sup, topbot	100.0	0.0	11.0
+ds8	globalrec, round, sup, topbot	98.03030303030303	0.0	11.0
+ds8	globalrec, noise, round, sup	98.48484848484848	0.0	11.0
+ds8	globalrec, noise, sup, topbot	100.0	0.0	11.0
+ds8	globalrec, noise, round, sup, topbot	98.03030303030303	0.0	11.0
+ds9	sup	97.01166180758017	0.0	7.5
+ds9	topbot	97.01166180758017	90.74344023323616	15.0
+ds9	noise	100.0	0.0	7.5
+ds9	round	94.24198250728863	0.0	7.5
+ds9	sup, topbot	97.01166180758017	0.0	7.5
+ds9	noise, sup	100.0	0.0	7.5
+ds9	round, sup	88.26530612244898	0.0	7.5
+ds9	noise, topbot	100.0	0.0	7.5
+ds9	round, topbot	94.24198250728863	0.0	7.5
+ds9	noise, round	100.0	0.0	7.5
+ds9	noise, sup, topbot	100.0	0.0	7.5
+ds9	round, sup, topbot	86.88046647230321	0.0	7.5
+ds9	noise, round, sup	100.0	0.0	7.5
+ds9	noise, round, topbot	100.0	0.0	7.5
+ds9	noise, round, sup, topbot	100.0	0.0	7.5
+ds10	topbot	88.13443072702331	62.55144032921811	29.0
+ds10	round	79.76680384087791	0.13717421124828533	13.0
+ds10	noise	100.0	0.205761316872428	15.5
+ds10	globalrec	88.54595336076818	22.290809327846365	28.0
+ds10	sup	87.99725651577504	72.70233196159123	31.0
+ds10	round, topbot	78.66941015089164	0.06858710562414266	10.5
+ds10	noise, topbot	100.0	7.20164609053498	25.0
+ds10	globalrec, topbot	88.13443072702331	19.478737997256516	27.0
+ds10	sup, topbot	87.58573388203018	62.89437585733882	30.0
+ds10	noise, round	100.0	0.0	5.0
+ds10	globalrec, round	77.84636488340192	0.13717421124828533	13.0
+ds10	round, sup	54.25240054869685	1.2345679012345678	18.5
+ds10	globalrec, noise	100.0	0.0	5.0
+ds10	noise, sup	100.0	1.5089163237311385	20.0
+ds10	globalrec, sup	87.65432098765432	3.978052126200274	24.0
+ds10	noise, round, topbot	100.0	0.0	5.0
+ds10	globalrec, round, topbot	76.61179698216735	0.13717421124828533	13.0
+ds10	round, sup, topbot	53.01783264746228	1.2345679012345678	18.5
+ds10	globalrec, noise, topbot	100.0	0.5486968449931413	17.0
+ds10	noise, sup, topbot	100.0	12.62002743484225	26.0
+ds10	globalrec, sup, topbot	87.24279835390946	3.635116598079561	23.0
+ds10	globalrec, noise, round	100.0	0.0	5.0
+ds10	noise, round, sup	100.0	0.0	5.0
+ds10	globalrec, round, sup	44.99314128943759	3.017832647462277	21.5
+ds10	globalrec, noise, sup	100.0	0.0	5.0
+ds10	globalrec, noise, round, topbot	100.0	0.0	5.0
+ds10	noise, round, sup, topbot	99.039780521262	0.0	5.0
+ds10	globalrec, round, sup, topbot	42.93552812071331	3.017832647462277	21.5
+ds10	globalrec, noise, sup, topbot	100.0	0.205761316872428	15.5
+ds10	globalrec, noise, round, sup	100.0	0.0	5.0
+ds10	globalrec, noise, round, sup, topbot	98.69684499314128	0.06858710562414266	10.5
+ds11	round	29.87101154107264	20.162932790224033	1.5
+ds11	globalrec	63.95112016293279	20.23082145281738	3.5
+ds11	topbot	85.6754921928038	43.92396469789545	7.0
+ds11	globalrec, round	24.507807196198236	23.014256619144604	5.5
+ds11	round, topbot	29.803122878479293	20.162932790224033	1.5
+ds11	globalrec, topbot	63.815342837746094	20.23082145281738	3.5
+ds11	globalrec, round, topbot	24.43991853360489	23.014256619144604	5.5
+ds12	round	85.15674984005118	0.0	10.5
+ds12	topbot	87.71593090211132	66.47472808701215	30.0
+ds12	globalrec	86.50031989763276	35.956493921944976	28.0
+ds12	noise	100.0	0.0	10.5
+ds12	sup	87.71593090211132	74.15227127319258	31.0
+ds12	round, topbot	85.02879078694818	0.0	10.5
+ds12	globalrec, round	83.36532309660909	0.0	10.5
+ds12	noise, round	100.0	0.0	10.5
+ds12	round, sup	68.58605246321177	0.2559181062060141	22.0
+ds12	globalrec, topbot	86.37236084452975	30.646193218170186	27.0
+ds12	noise, topbot	100.0	0.2559181062060141	22.0
+ds12	sup, topbot	87.71593090211132	64.36340371081253	29.0
+ds12	globalrec, noise	100.0	0.0	10.5
+ds12	globalrec, sup	86.24440179142674	4.414587332053743	26.0
+ds12	noise, sup	100.0	0.0	10.5
+ds12	globalrec, round, topbot	82.98144593730007	0.0	10.5
+ds12	noise, round, topbot	100.0	0.0	10.5
+ds12	round, sup, topbot	68.13819577735124	0.2559181062060141	22.0
+ds12	globalrec, noise, round	100.0	0.0	10.5
+ds12	globalrec, round, sup	61.61228406909789	0.0	10.5
+ds12	noise, round, sup	100.0	0.0	10.5
+ds12	globalrec, noise, topbot	100.0	0.0	10.5
+ds12	globalrec, sup, topbot	86.11644273832374	4.030710172744722	25.0
+ds12	noise, sup, topbot	100.0	0.5758157389635317	24.0
+ds12	globalrec, noise, sup	100.0	0.0	10.5
+ds12	globalrec, noise, round, topbot	100.0	0.0	10.5
+ds12	globalrec, round, sup, topbot	60.14075495841331	0.0	10.5
+ds12	noise, round, sup, topbot	100.0	0.0	10.5
+ds12	globalrec, noise, round, sup	100.0	0.0	10.5
+ds12	globalrec, noise, sup, topbot	100.0	0.0	10.5
+ds12	globalrec, noise, round, sup, topbot	100.0	0.0	10.5
+ds13	round	100.0	0.0	5.5
+ds13	topbot	100.0	93.02200751476114	15.0
+ds13	noise	100.0	0.322061191626409	13.0
+ds13	globalrec	100.0	0.10735373054213634	11.5
+ds13	round, topbot	100.0	0.0	5.5
+ds13	noise, round	100.0	0.0	5.5
+ds13	globalrec, round	100.0	0.0	5.5
+ds13	noise, topbot	100.0	1.3419216317767042	14.0
+ds13	globalrec, topbot	100.0	0.10735373054213634	11.5
+ds13	globalrec, noise	100.0	0.0	5.5
+ds13	noise, round, topbot	100.0	0.0	5.5
+ds13	globalrec, round, topbot	100.0	0.0	5.5
+ds13	globalrec, noise, round	100.0	0.0	5.5
+ds13	globalrec, noise, topbot	100.0	0.0	5.5
+ds13	globalrec, noise, round, topbot	100.0	0.0	5.5
+ds14	round	99.89696032972695	0.0	10.5
+ds14	sup	100.0	96.34209170530654	29.0
+ds14	globalrec	100.0	99.89696032972695	30.0
+ds14	noise	100.0	0.5151983513652756	21.0
+ds14	topbot	100.0	89.5414734672849	26.5
+ds14	round, sup	98.24832560535806	0.0	10.5
+ds14	globalrec, round	99.89696032972695	0.0	10.5
+ds14	noise, round	100.0	0.0	10.5
+ds14	round, topbot	99.69088098918084	0.0	10.5
+ds14	globalrec, sup	100.0	100.0	31.0
+ds14	noise, sup	100.0	1.545595054095827	22.0
+ds14	sup, topbot	100.0	89.5414734672849	26.5
+ds14	globalrec, noise	100.0	0.0	10.5
+ds14	globalrec, topbot	100.0	92.52962390520351	28.0
+ds14	noise, topbot	100.0	5.151983513652756	24.0
+ds14	globalrec, round, sup	74.24008243173621	0.0	10.5
+ds14	noise, round, sup	100.0	0.0	10.5
+ds14	round, sup, topbot	85.31684698608964	0.0	10.5
+ds14	globalrec, noise, round	100.0	0.0	10.5
+ds14	globalrec, round, topbot	99.33024214322514	0.0	10.5
+ds14	noise, round, topbot	99.89696032972695	0.0	10.5
+ds14	globalrec, noise, sup	100.0	0.0	10.5
+ds14	globalrec, sup, topbot	100.0	82.74085522926326	25.0
+ds14	noise, sup, topbot	100.0	2.3183925811437405	23.0
+ds14	globalrec, noise, topbot	100.0	0.0	10.5
+ds14	globalrec, noise, round, sup	99.79392065945389	0.0	10.5
+ds14	globalrec, round, sup, topbot	66.87274600721278	0.0	10.5
+ds14	noise, round, sup, topbot	96.90880989180835	0.0	10.5
+ds14	globalrec, noise, round, topbot	100.0	0.0	10.5
+ds14	globalrec, noise, sup, topbot	100.0	0.0	10.5
+ds14	globalrec, noise, round, sup, topbot	94.43585780525503	0.0	10.5
+ds15	noise	100.0	0.0	14.5
+ds15	topbot	88.8	88.55	31.0
+ds15	round	43.35	0.0	14.5
+ds15	globalrec	88.8	42.1	29.5
+ds15	sup	82.9	0.0	14.5
+ds15	noise, topbot	100.0	0.0	14.5
+ds15	noise, round	99.7	0.0	14.5
+ds15	globalrec, noise	100.0	0.0	14.5
+ds15	noise, sup	100.0	0.0	14.5
+ds15	round, topbot	43.35	0.0	14.5
+ds15	globalrec, topbot	88.8	42.1	29.5
+ds15	sup, topbot	82.9	0.0	14.5
+ds15	globalrec, round	43.15	0.0	14.5
+ds15	round, sup	24.4	0.0	14.5
+ds15	globalrec, sup	82.9	0.0	14.5
+ds15	noise, round, topbot	99.9	0.0	14.5
+ds15	globalrec, noise, topbot	100.0	0.0	14.5
+ds15	noise, sup, topbot	100.0	0.0	14.5
+ds15	globalrec, noise, round	100.0	0.0	14.5
+ds15	noise, round, sup	92.15	0.0	14.5
+ds15	globalrec, noise, sup	100.0	0.0	14.5
+ds15	globalrec, round, topbot	43.15	0.0	14.5
+ds15	round, sup, topbot	24.4	0.0	14.5
+ds15	globalrec, sup, topbot	82.9	0.0	14.5
+ds15	globalrec, round, sup	24.15	0.0	14.5
+ds15	globalrec, noise, round, topbot	99.9	0.0	14.5
+ds15	noise, round, sup, topbot	91.5	0.0	14.5
+ds15	globalrec, noise, sup, topbot	100.0	0.0	14.5
+ds15	globalrec, noise, round, sup	92.55	0.0	14.5
+ds15	globalrec, round, sup, topbot	24.15	0.0	14.5
+ds15	globalrec, noise, round, sup, topbot	91.6	0.0	14.5
+ds16	sup	99.4	0.0	7.5
+ds16	topbot	99.4	68.55	15.0
+ds16	noise	100.0	0.0	7.5
+ds16	round	99.3	0.0	7.5
+ds16	sup, topbot	99.4	0.0	7.5
+ds16	noise, sup	100.0	0.0	7.5
+ds16	round, sup	97.85	0.0	7.5
+ds16	noise, topbot	100.0	0.0	7.5
+ds16	round, topbot	99.3	0.0	7.5
+ds16	noise, round	100.0	0.0	7.5
+ds16	noise, sup, topbot	100.0	0.0	7.5
+ds16	round, sup, topbot	97.85	0.0	7.5
+ds16	noise, round, sup	100.0	0.0	7.5
+ds16	noise, round, topbot	100.0	0.0	7.5
+ds16	noise, round, sup, topbot	100.0	0.0	7.5
+ds17	sup	88.9	0.0	7.5
+ds17	topbot	99.4	85.95	15.0
+ds17	noise	100.0	0.0	7.5
+ds17	round	88.9	0.0	7.5
+ds17	sup, topbot	86.95	0.0	7.5
+ds17	noise, sup	100.0	0.0	7.5
+ds17	round, sup	0.0	0.0	7.5
+ds17	noise, topbot	100.0	0.0	7.5
+ds17	round, topbot	88.9	0.0	7.5
+ds17	noise, round	100.0	0.0	7.5
+ds17	noise, sup, topbot	100.0	0.0	7.5
+ds17	round, sup, topbot	0.0	0.0	7.5
+ds17	noise, round, sup	21.7	0.0	7.5
+ds17	noise, round, topbot	100.0	0.0	7.5
+ds17	noise, round, sup, topbot	7.4	0.0	7.5
+ds18	sup	99.4	99.4	14.0
+ds18	topbot	99.4	99.4	14.0
+ds18	noise	100.0	0.0	6.5
+ds18	round	99.3	0.0	6.5
+ds18	sup, topbot	99.4	99.4	14.0
+ds18	noise, sup	100.0	0.0	6.5
+ds18	round, sup	99.3	0.0	6.5
+ds18	noise, topbot	100.0	0.0	6.5
+ds18	round, topbot	99.3	0.0	6.5
+ds18	noise, round	100.0	0.0	6.5
+ds18	noise, sup, topbot	100.0	0.0	6.5
+ds18	round, sup, topbot	99.3	0.0	6.5
+ds18	noise, round, sup	100.0	0.0	6.5
+ds18	noise, round, topbot	100.0	0.0	6.5
+ds18	noise, round, sup, topbot	100.0	0.0	6.5
+ds19	round	100.0	0.0	3.5
+ds19	noise	100.0	0.0	3.5
+ds19	topbot	100.0	99.1	7.0
+ds19	noise, round	100.0	0.0	3.5
+ds19	round, topbot	100.0	0.0	3.5
+ds19	noise, topbot	100.0	0.0	3.5
+ds19	noise, round, topbot	100.0	0.0	3.5
+ds20	round	36.36794689426269	0.0	6.5
+ds20	topbot	47.13134186818397	27.833096254148884	14.0
+ds20	globalrec	46.799431009957324	39.16548127074443	15.0
+ds20	noise	100.0	0.0	6.5
+ds20	round, topbot	26.220957799905168	0.0	6.5
+ds20	globalrec, round	36.36794689426269	0.0	6.5
+ds20	noise, round	100.0	0.0	6.5
+ds20	globalrec, topbot	46.70459933617828	25.177809388335703	13.0
+ds20	noise, topbot	100.0	0.0	6.5
+ds20	globalrec, noise	100.0	0.0	6.5
+ds20	globalrec, round, topbot	26.220957799905168	0.0	6.5
+ds20	noise, round, topbot	100.0	0.0	6.5
+ds20	globalrec, noise, round	100.0	0.0	6.5
+ds20	globalrec, noise, topbot	100.0	0.0	6.5
+ds20	globalrec, noise, round, topbot	100.0	0.0	6.5
+ds21	topbot	80.6926406926407	70.51948051948052	29.0
+ds21	round	75.41125541125541	0.9523809523809523	25.5
+ds21	noise	100.0	0.0	10.5
+ds21	globalrec	79.26406926406926	78.57142857142857	30.0
+ds21	sup	80.6926406926407	80.6926406926407	31.0
+ds21	round, topbot	74.45887445887446	0.9523809523809523	25.5
+ds21	noise, topbot	100.0	0.0	10.5
+ds21	globalrec, topbot	79.26406926406926	40.995670995671	27.0
+ds21	sup, topbot	80.6926406926407	55.84415584415584	28.0
+ds21	noise, round	100.0	0.0	10.5
+ds21	globalrec, round	47.35930735930736	0.08658008658008658	21.5
+ds21	round, sup	75.32467532467533	0.12987012987012986	23.5
+ds21	globalrec, noise	100.0	0.0	10.5
+ds21	noise, sup	100.0	0.0	10.5
+ds21	globalrec, sup	79.26406926406926	0.0	10.5
+ds21	noise, round, topbot	100.0	0.0	10.5
+ds21	globalrec, round, topbot	44.891774891774894	0.08658008658008658	21.5
+ds21	round, sup, topbot	74.37229437229438	0.12987012987012986	23.5
+ds21	globalrec, noise, topbot	100.0	0.0	10.5
+ds21	noise, sup, topbot	100.0	0.0	10.5
+ds21	globalrec, sup, topbot	79.26406926406926	0.0	10.5
+ds21	globalrec, noise, round	100.0	0.0	10.5
+ds21	noise, round, sup	100.0	0.0	10.5
+ds21	globalrec, round, sup	47.056277056277054	0.0	10.5
+ds21	globalrec, noise, sup	100.0	0.0	10.5
+ds21	globalrec, noise, round, topbot	100.0	0.0	10.5
+ds21	noise, round, sup, topbot	100.0	0.0	10.5
+ds21	globalrec, round, sup, topbot	44.76190476190476	0.0	10.5
+ds21	globalrec, noise, sup, topbot	100.0	0.0	10.5
+ds21	globalrec, noise, round, sup	100.0	0.0	10.5
+ds21	globalrec, noise, round, sup, topbot	100.0	0.0	10.5
+ds22	noise	100.0	0.0	7.0
+ds22	topbot	100.0	55.5233760860571	15.0
+ds22	sup	100.0	0.0	7.0
+ds22	round	100.0	0.0	7.0
+ds22	noise, topbot	100.0	4.468349193214729	14.0
+ds22	noise, sup	100.0	0.0	7.0
+ds22	noise, round	100.0	0.0	7.0
+ds22	sup, topbot	100.0	0.0	7.0
+ds22	round, topbot	100.0	0.0	7.0
+ds22	round, sup	82.58171286719073	0.0	7.0
+ds22	noise, sup, topbot	100.0	0.0	7.0
+ds22	noise, round, topbot	99.75175837815473	0.0	7.0
+ds22	noise, round, sup	100.0	0.0	7.0
+ds22	round, sup, topbot	81.67149358709143	0.0	7.0
+ds22	noise, round, sup, topbot	100.0	0.0	7.0
+ds23	topbot	100.0	55.5233760860571	15.0
+ds23	noise	100.0	0.16549441456350847	13.0
+ds23	sup	100.0	0.0	6.5
+ds23	round	100.0	0.0	6.5
+ds23	noise, topbot	100.0	3.0202730657840298	14.0
+ds23	sup, topbot	100.0	0.0	6.5
+ds23	round, topbot	100.0	0.0	6.5
+ds23	noise, sup	100.0	0.0	6.5
+ds23	noise, round	100.0	0.0	6.5
+ds23	round, sup	80.67852709971038	0.0	6.5
+ds23	noise, sup, topbot	100.0	0.0	6.5
+ds23	noise, round, topbot	97.14522134877947	0.0	6.5
+ds23	round, sup, topbot	79.31319817956144	0.0	6.5
+ds23	noise, round, sup	100.0	0.0	6.5
+ds23	noise, round, sup, topbot	100.0	0.0	6.5
+ds24	noise	100.0	0.0	3.5
+ds24	round	99.13180741910024	0.0	3.5
+ds24	topbot	99.52644041041832	95.46172059984215	7.0
+ds24	noise, round	100.0	0.0	3.5
+ds24	noise, topbot	100.0	0.0	3.5
+ds24	round, topbot	99.13180741910024	0.0	3.5
+ds24	noise, round, topbot	100.0	0.0	3.5
+ds25	round	100.0	0.8378016085790885	9.0
+ds25	topbot	100.0	41.25335120643432	14.0
+ds25	noise	100.0	1.0723860589812333	10.0
+ds25	globalrec	100.0	43.498659517426276	15.0
+ds25	round, topbot	100.0	0.0	3.0
+ds25	noise, round	100.0	0.0	3.0
+ds25	globalrec, round	100.0	0.40214477211796246	8.0
+ds25	noise, topbot	100.0	0.06702412868632708	6.0
+ds25	globalrec, topbot	100.0	41.18632707774799	13.0
+ds25	globalrec, noise	100.0	1.4075067024128687	11.0
+ds25	noise, round, topbot	100.0	0.0	3.0
+ds25	globalrec, round, topbot	100.0	0.0	3.0
+ds25	globalrec, noise, round	100.0	1.9101876675603218	12.0
+ds25	globalrec, noise, topbot	100.0	0.3351206434316354	7.0
+ds25	globalrec, noise, round, topbot	100.0	0.0	3.0
+ds26	topbot	99.9355462455688	83.20979697067354	13.0
+ds26	globalrec	99.8710924911376	98.35642926200451	15.0
+ds26	noise	100.0	0.0	3.5
+ds26	round	62.03673864002578	6.993232355784724	12.0
+ds26	globalrec, topbot	99.80663873670642	85.20786335804061	14.0
+ds26	noise, topbot	100.0	0.12890750886239125	8.0
+ds26	round, topbot	61.00547856912665	6.284241057041573	11.0
+ds26	globalrec, noise	100.0	0.0	3.5
+ds26	globalrec, round	46.245568804382856	5.768611021592008	10.0
+ds26	noise, round	100.0	0.0	3.5
+ds26	globalrec, noise, topbot	100.0	0.0	3.5
+ds26	globalrec, round, topbot	44.85981308411215	5.6719303899452145	9.0
+ds26	noise, round, topbot	99.9355462455688	0.0	3.5
+ds26	globalrec, noise, round	100.0	0.0	3.5
+ds26	globalrec, noise, round, topbot	100.0	0.06445375443119562	7.0
+ds27	noise	100.0	0.0	2.5
+ds27	topbot	99.9355462455688	83.20979697067354	13.0
+ds27	round	62.03673864002578	6.993232355784724	12.0
+ds27	globalrec	99.8710924911376	98.35642926200451	15.0
+ds27	noise, topbot	100.0	0.06445375443119562	7.0
+ds27	noise, round	100.0	0.0	2.5
+ds27	globalrec, noise	100.0	0.0	2.5
+ds27	round, topbot	61.00547856912665	6.284241057041573	11.0
+ds27	globalrec, topbot	99.80663873670642	85.20786335804061	14.0
+ds27	globalrec, round	46.245568804382856	5.768611021592008	10.0
+ds27	noise, round, topbot	100.0	0.12890750886239125	8.0
+ds27	globalrec, noise, topbot	100.0	0.03222687721559781	5.5
+ds27	globalrec, noise, round	100.0	0.0	2.5
+ds27	globalrec, round, topbot	44.85981308411215	5.6719303899452145	9.0
+ds27	globalrec, noise, round, topbot	100.0	0.03222687721559781	5.5
+ds28	noise	100.0	0.0	16.0
+ds28	round	100.0	0.0	16.0
+ds28	sup	99.80688767299645	0.0	16.0
+ds28	globalrec	100.0	0.0	16.0
+ds28	topbot	100.0	0.0	16.0
+ds28	noise, round	100.0	0.0	16.0
+ds28	noise, sup	100.0	0.0	16.0
+ds28	globalrec, noise	100.0	0.0	16.0
+ds28	noise, topbot	100.0	0.0	16.0
+ds28	round, sup	1.4805278403604762	0.0	16.0
+ds28	globalrec, round	9.687801738010943	0.0	16.0
+ds28	round, topbot	97.68265207595752	0.0	16.0
+ds28	globalrec, sup	99.80688767299645	0.0	16.0
+ds28	sup, topbot	99.29192146765368	0.0	16.0
+ds28	globalrec, topbot	99.80688767299645	0.0	16.0
+ds28	noise, round, sup	94.75378178307048	0.0	16.0
+ds28	globalrec, noise, round	98.9056968136466	0.0	16.0
+ds28	noise, round, topbot	99.93562922433215	0.0	16.0
+ds28	globalrec, noise, sup	100.0	0.0	16.0
+ds28	noise, sup, topbot	100.0	0.0	16.0
+ds28	globalrec, noise, topbot	100.0	0.0	16.0
+ds28	globalrec, round, sup	1.4805278403604762	0.0	16.0
+ds28	round, sup, topbot	0.321853878339234	0.0	16.0
+ds28	globalrec, round, topbot	6.53363373028645	0.0	16.0
+ds28	globalrec, sup, topbot	99.29192146765368	0.0	16.0
+ds28	globalrec, noise, round, sup	94.39974251689733	0.0	16.0
+ds28	noise, round, sup, topbot	76.98744769874477	0.0	16.0
+ds28	globalrec, noise, round, topbot	95.55841647891857	0.0	16.0
+ds28	globalrec, noise, sup, topbot	100.0	0.0	16.0
+ds28	globalrec, round, sup, topbot	0.321853878339234	0.0	16.0
+ds28	globalrec, noise, round, sup, topbot	76.63340843257161	0.0	16.0
+ds29	topbot	100.0	97.86902286902287	7.0
+ds29	noise	100.0	0.0	3.5
+ds29	round	98.36278586278586	0.0	3.5
+ds29	noise, topbot	100.0	0.0	3.5
+ds29	round, topbot	98.36278586278586	0.0	3.5
+ds29	noise, round	100.0	0.0	3.5
+ds29	noise, round, topbot	100.0	0.0	3.5
+ds30	topbot	99.85531709669641	0.7716421509524958	5.0
+ds30	globalrec	99.85531709669641	2.2425850012056907	7.0
+ds30	round	86.13455510007235	0.024113817217265493	3.5
+ds30	globalrec, topbot	99.80708946226187	1.1092355919942127	6.0
+ds30	round, topbot	83.04798649626235	0.0	1.5
+ds30	globalrec, round	81.4805883771401	0.024113817217265493	3.5
+ds30	globalrec, round, topbot	73.25777670605257	0.0	1.5
+ds31	noise	100.0	0.0	3.5
+ds31	topbot	99.32966243715585	97.41441225760114	7.0
+ds31	round	0.4548719176442423	0.0	3.5
+ds31	noise, topbot	100.0	0.0	3.5
+ds31	noise, round	99.09025616471152	0.0	3.5
+ds31	round, topbot	0.35910940866650704	0.0	3.5
+ds31	noise, round, topbot	92.41082116351448	0.0	3.5
+ds32	topbot	100.0	61.421546714349574	14.0
+ds32	sup	91.93115780062584	50.983459991059455	13.0
+ds32	globalrec	100.0	1.4081358962896737	4.0
+ds32	round	99.95529727313367	27.89450156459544	12.0
+ds32	sup, topbot	90.38891372373715	61.48860080464908	15.0
+ds32	globalrec, topbot	100.0	2.7715690657130083	7.0
+ds32	round, topbot	99.95529727313367	27.08985248100134	11.0
+ds32	globalrec, sup	84.24228877961556	0.20116227089852481	1.0
+ds32	round, sup	61.779168529280284	20.831470719713902	10.0
+ds32	globalrec, round	99.95529727313367	2.32454179704962	6.0
+ds32	globalrec, sup, topbot	84.8010728654448	1.6540008940545374	5.0
+ds32	round, sup, topbot	60.348681269557446	20.295037997317838	9.0
+ds32	globalrec, round, topbot	99.95529727313367	3.643272239606616	8.0
+ds32	globalrec, round, sup	56.370138578453286	0.2682163611980331	2.0
+ds32	globalrec, round, sup, topbot	55.23021904336164	1.2516763522574876	3.0
+ds33	topbot	100.0	86.24198186241982	7.0
+ds33	round	99.91152399911525	7.299270072992701	6.0
+ds33	globalrec	99.95576199955762	0.17695200176952003	1.5
+ds33	round, topbot	99.91152399911525	6.746295067462951	5.0
+ds33	globalrec, topbot	99.91152399911525	0.17695200176952003	1.5
+ds33	globalrec, round	99.3364299933643	0.79628400796284	4.0
+ds33	globalrec, round, topbot	98.6728599867286	0.6635700066357001	3.0
+ds34	noise	100.0	0.0	6.5
+ds34	globalrec	81.9169745707455	0.0869376222560313	14.0
+ds34	round	27.146272549445772	0.0	6.5
+ds34	topbot	82.54727233210171	50.119539230602044	15.0
+ds34	globalrec, noise	100.0	0.0	6.5
+ds34	noise, round	100.0	0.0	6.5
+ds34	noise, topbot	100.0	0.0	6.5
+ds34	globalrec, round	2.1734405564007826	0.0	6.5
+ds34	globalrec, topbot	78.74375135840035	0.04346881112801565	13.0
+ds34	round, topbot	16.99630515105412	0.0	6.5
+ds34	globalrec, noise, round	100.0	0.0	6.5
+ds34	globalrec, noise, topbot	100.0	0.0	6.5
+ds34	noise, round, topbot	64.29037165833515	0.0	6.5
+ds34	globalrec, round, topbot	0.0	0.0	6.5
+ds34	globalrec, noise, round, topbot	27.47228863290589	0.0	6.5
+ds35	sup	99.1733829303575	0.0	7.5
+ds35	topbot	99.1733829303575	90.08059516429014	15.0
+ds35	noise	100.0	0.0	7.5
+ds35	round	90.59723083281669	0.0	7.5
+ds35	sup, topbot	98.90473238272371	0.0	7.5
+ds35	noise, sup	100.0	0.0	7.5
+ds35	round, sup	99.1733829303575	0.0	7.5
+ds35	noise, topbot	100.0	0.0	7.5
+ds35	round, topbot	99.1733829303575	0.0	7.5
+ds35	noise, round	100.0	0.0	7.5
+ds35	noise, sup, topbot	100.0	0.0	7.5
+ds35	round, sup, topbot	98.67741268857202	0.0	7.5
+ds35	noise, round, sup	100.0	0.0	7.5
+ds35	noise, round, topbot	100.0	0.0	7.5
+ds35	noise, round, sup, topbot	100.0	0.0	7.5
+ds36	round	43.4	0.0	3.5
+ds36	noise	100.0	0.0	3.5
+ds36	topbot	100.0	100.0	7.0
+ds36	noise, round	100.0	0.0	3.5
+ds36	round, topbot	43.34	0.0	3.5
+ds36	noise, topbot	100.0	0.0	3.5
+ds36	noise, round, topbot	100.0	0.0	3.5
+ds37	round	100.0	0.0	13.0
+ds37	noise	100.0	0.02	26.5
+ds37	sup	100.0	100.0	31.0
+ds37	topbot	100.0	99.32	29.5
+ds37	globalrec	100.0	0.0	13.0
+ds37	noise, round	100.0	0.0	13.0
+ds37	round, sup	100.0	0.0	13.0
+ds37	round, topbot	100.0	0.0	13.0
+ds37	globalrec, round	100.0	0.0	13.0
+ds37	noise, sup	100.0	0.0	13.0
+ds37	noise, topbot	100.0	0.1	28.0
+ds37	globalrec, noise	100.0	0.0	13.0
+ds37	sup, topbot	100.0	99.32	29.5
+ds37	globalrec, sup	100.0	0.0	13.0
+ds37	globalrec, topbot	100.0	0.02	26.5
+ds37	noise, round, sup	100.0	0.0	13.0
+ds37	noise, round, topbot	100.0	0.0	13.0
+ds37	globalrec, noise, round	100.0	0.0	13.0
+ds37	round, sup, topbot	100.0	0.0	13.0
+ds37	globalrec, round, sup	100.0	0.0	13.0
+ds37	globalrec, round, topbot	100.0	0.0	13.0
+ds37	noise, sup, topbot	100.0	0.0	13.0
+ds37	globalrec, noise, sup	100.0	0.0	13.0
+ds37	globalrec, noise, topbot	100.0	0.0	13.0
+ds37	globalrec, sup, topbot	100.0	0.0	13.0
+ds37	noise, round, sup, topbot	100.0	0.0	13.0
+ds37	globalrec, noise, round, sup	100.0	0.0	13.0
+ds37	globalrec, noise, round, topbot	100.0	0.0	13.0
+ds37	globalrec, round, sup, topbot	100.0	0.0	13.0
+ds37	globalrec, noise, sup, topbot	100.0	0.0	13.0
+ds37	globalrec, noise, round, sup, topbot	100.0	0.0	13.0
+ds38	topbot	97.81643227239083	75.77720207253886	7.0
+ds38	noise	100.0	0.0	3.5
+ds38	round	60.64026646928201	0.0	3.5
+ds38	noise, topbot	100.0	0.0	3.5
+ds38	round, topbot	55.310880829015545	0.0	3.5
+ds38	noise, round	100.0	0.0	3.5
+ds38	noise, round, topbot	100.0	0.0	3.5
+ds39	topbot	97.71606066142883	69.6692855837749	15.0
+ds39	globalrec	97.71606066142883	0.0	7.0
+ds39	noise	100.0	0.0	7.0
+ds39	round	57.09848346427919	0.0	7.0
+ds39	globalrec, topbot	95.92545221998904	0.0	7.0
+ds39	noise, topbot	100.0	0.01827151470856934	14.0
+ds39	round, topbot	46.33656130093185	0.0	7.0
+ds39	globalrec, noise	100.0	0.0	7.0
+ds39	globalrec, round	26.822583592179793	0.0	7.0
+ds39	noise, round	100.0	0.0	7.0
+ds39	globalrec, noise, topbot	100.0	0.0	7.0
+ds39	globalrec, round, topbot	14.745112369815457	0.0	7.0
+ds39	noise, round, topbot	90.20646811620684	0.0	7.0
+ds39	globalrec, noise, round	100.0	0.0	7.0
+ds39	globalrec, noise, round, topbot	69.85200073086058	0.0	7.0
+ds40	topbot	100.0	98.75266200182537	14.0
+ds40	round	94.50867052023122	0.0	6.5
+ds40	globalrec	100.0	100.0	15.0
+ds40	noise	100.0	0.0	6.5
+ds40	round, topbot	94.47824764222696	0.0	6.5
+ds40	globalrec, topbot	100.0	97.29236385762093	13.0
+ds40	noise, topbot	100.0	0.0	6.5
+ds40	globalrec, round	92.77456647398844	0.0	6.5
+ds40	noise, round	100.0	0.0	6.5
+ds40	globalrec, noise	100.0	0.0	6.5
+ds40	globalrec, round, topbot	92.71372071797992	0.0	6.5
+ds40	noise, round, topbot	100.0	0.0	6.5
+ds40	globalrec, noise, topbot	100.0	0.0	6.5
+ds40	globalrec, noise, round	100.0	0.0	6.5
+ds40	globalrec, noise, round, topbot	100.0	0.0	6.5
+ds41	globalrec	99.2320819112628	1.5216154721274175	1.0
+ds41	topbot	99.97155858930603	76.94823663253698	7.0
+ds41	round	99.47383390216154	41.95108077360637	6.0
+ds41	globalrec, topbot	99.20364050056882	1.5358361774744027	2.0
+ds41	globalrec, round	99.30318543799773	2.7303754266211606	4.0
+ds41	round, topbot	99.44539249146757	41.62400455062571	5.0
+ds41	globalrec, round, topbot	99.27474402730375	2.716154721274175	3.0
+ds42	topbot	100.0	99.51351351351352	7.0
+ds42	noise	100.0	0.0	3.5
+ds42	round	3.2162162162162162	0.0	3.5
+ds42	noise, topbot	100.0	0.0	3.5
+ds42	round, topbot	3.2162162162162162	0.0	3.5
+ds42	noise, round	100.0	0.0	3.5
+ds42	noise, round, topbot	100.0	0.0	3.5
+ds43	globalrec	99.59849435382685	0.5269761606022585	1.5
+ds43	round	99.67377666248431	48.94604767879548	6.0
+ds43	topbot	99.94981179422835	69.58594730238394	7.0
+ds43	globalrec, round	99.59849435382685	3.0489335006273524	4.0
+ds43	globalrec, topbot	99.15934755332496	0.5269761606022585	1.5
+ds43	round, topbot	99.49811794228356	47.94228356336261	5.0
+ds43	globalrec, round, topbot	99.15934755332496	2.685069008782936	3.0
+ds44	noise	100.0	0.15869140625	27.0
+ds44	globalrec	100.0	99.31640625	31.0
+ds44	round	0.1220703125	0.0	12.5
+ds44	sup	100.0	0.0	12.5
+ds44	topbot	100.0	99.15771484375	30.0
+ds44	globalrec, noise	100.0	0.1220703125	26.0
+ds44	noise, round	100.0	0.0	12.5
+ds44	noise, sup	100.0	0.0	12.5
+ds44	noise, topbot	100.0	0.09765625	25.0
+ds44	globalrec, round	0.1220703125	0.0	12.5
+ds44	globalrec, sup	100.0	0.0	12.5
+ds44	globalrec, topbot	100.0	93.66455078125	29.0
+ds44	round, sup	43.84765625	0.0	12.5
+ds44	round, topbot	0.0	0.0	12.5
+ds44	sup, topbot	100.0	0.0	12.5
+ds44	globalrec, noise, round	19.95849609375	0.0	12.5
+ds44	globalrec, noise, sup	100.0	0.0	12.5
+ds44	globalrec, noise, topbot	100.0	0.25634765625	28.0
+ds44	noise, round, sup	99.951171875	0.0	12.5
+ds44	noise, round, topbot	100.0	0.0	12.5
+ds44	noise, sup, topbot	100.0	0.0	12.5
+ds44	globalrec, round, sup	32.80029296875	0.0	12.5
+ds44	globalrec, round, topbot	0.0	0.0	12.5
+ds44	globalrec, sup, topbot	100.0	0.0	12.5
+ds44	round, sup, topbot	43.84765625	0.0	12.5
+ds44	globalrec, noise, round, sup	99.853515625	0.0	12.5
+ds44	globalrec, noise, round, topbot	100.0	0.0	12.5
+ds44	globalrec, noise, sup, topbot	100.0	0.0	12.5
+ds44	noise, round, sup, topbot	100.0	0.0	12.5
+ds44	globalrec, round, sup, topbot	32.80029296875	0.0	12.5
+ds44	globalrec, noise, round, sup, topbot	99.12109375	0.0	12.5
+ds45	globalrec	100.0	0.01220703125	28.0
+ds45	round	100.0	0.0	14.0
+ds45	topbot	100.0	89.0625	31.0
+ds45	sup	100.0	0.0	14.0
+ds45	noise	100.0	0.0244140625	29.0
+ds45	globalrec, round	100.0	0.0	14.0
+ds45	globalrec, topbot	100.0	0.0	14.0
+ds45	globalrec, sup	96.8994140625	0.0	14.0
+ds45	globalrec, noise	100.0	0.0	14.0
+ds45	round, topbot	100.0	0.0	14.0
+ds45	round, sup	99.90234375	0.0	14.0
+ds45	noise, round	100.0	0.0	14.0
+ds45	sup, topbot	99.951171875	0.0	14.0
+ds45	noise, topbot	100.0	2.13623046875	30.0
+ds45	noise, sup	100.0	0.0	14.0
+ds45	globalrec, round, topbot	100.0	0.0	14.0
+ds45	globalrec, round, sup	88.65966796875	0.0	14.0
+ds45	globalrec, noise, round	100.0	0.0	14.0
+ds45	globalrec, sup, topbot	93.9208984375	0.0	14.0
+ds45	globalrec, noise, topbot	100.0	0.0	14.0
+ds45	globalrec, noise, sup	100.0	0.0	14.0
+ds45	round, sup, topbot	97.76611328125	0.0	14.0
+ds45	noise, round, topbot	100.0	0.0	14.0
+ds45	noise, round, sup	100.0	0.0	14.0
+ds45	noise, sup, topbot	100.0	0.0	14.0
+ds45	globalrec, round, sup, topbot	81.35986328125	0.0	14.0
+ds45	globalrec, noise, round, topbot	100.0	0.0	14.0
+ds45	globalrec, noise, round, sup	100.0	0.0	14.0
+ds45	globalrec, noise, sup, topbot	100.0	0.0	14.0
+ds45	noise, round, sup, topbot	100.0	0.0	14.0
+ds45	globalrec, noise, round, sup, topbot	99.609375	0.0	14.0
+ds46	topbot	100.0	90.2099609375	30.0
+ds46	globalrec	100.0	8.9599609375	28.0
+ds46	sup	100.0	100.0	31.0
+ds46	noise	100.0	0.0	13.5
+ds46	round	100.0	0.0	13.5
+ds46	globalrec, topbot	100.0	7.8125	27.0
+ds46	sup, topbot	100.0	67.2119140625	29.0
+ds46	noise, topbot	100.0	0.0	13.5
+ds46	round, topbot	100.0	0.0	13.5
+ds46	globalrec, sup	98.98681640625	0.0	13.5
+ds46	globalrec, noise	100.0	0.0	13.5
+ds46	globalrec, round	100.0	0.0	13.5
+ds46	noise, sup	100.0	0.0	13.5
+ds46	round, sup	99.71923828125	0.0	13.5
+ds46	noise, round	100.0	0.0	13.5
+ds46	globalrec, sup, topbot	97.69287109375	0.0	13.5
+ds46	globalrec, noise, topbot	100.0	0.0	13.5
+ds46	globalrec, round, topbot	100.0	0.0	13.5
+ds46	noise, sup, topbot	100.0	0.0	13.5
+ds46	round, sup, topbot	96.61865234375	0.0	13.5
+ds46	noise, round, topbot	100.0	0.0	13.5
+ds46	globalrec, noise, sup	100.0	0.0	13.5
+ds46	globalrec, round, sup	93.7744140625	0.0	13.5
+ds46	globalrec, noise, round	100.0	0.0	13.5
+ds46	noise, round, sup	100.0	0.0	13.5
+ds46	globalrec, noise, sup, topbot	100.0	0.0	13.5
+ds46	globalrec, round, sup, topbot	90.576171875	0.0	13.5
+ds46	globalrec, noise, round, topbot	100.0	0.0	13.5
+ds46	noise, round, sup, topbot	100.0	0.0	13.5
+ds46	globalrec, noise, round, sup	100.0	0.0	13.5
+ds46	globalrec, noise, round, sup, topbot	100.0	0.0	13.5
+ds47	topbot	100.0	99.8291015625	29.0
+ds47	round	16.7724609375	0.0	14.5
+ds47	sup	100.0	0.0	14.5
+ds47	globalrec	100.0	99.89013671875	31.0
+ds47	noise	100.0	0.0	14.5
+ds47	round, topbot	14.16015625	0.0	14.5
+ds47	sup, topbot	100.0	0.0	14.5
+ds47	globalrec, topbot	100.0	99.84130859375	30.0
+ds47	noise, topbot	100.0	0.0	14.5
+ds47	round, sup	100.0	0.0	14.5
+ds47	globalrec, round	16.7724609375	0.0	14.5
+ds47	noise, round	100.0	0.0	14.5
+ds47	globalrec, sup	100.0	0.0	14.5
+ds47	noise, sup	100.0	0.0	14.5
+ds47	globalrec, noise	100.0	0.0	14.5
+ds47	round, sup, topbot	100.0	0.0	14.5
+ds47	globalrec, round, topbot	14.16015625	0.0	14.5
+ds47	noise, round, topbot	100.0	0.0	14.5
+ds47	globalrec, sup, topbot	100.0	0.0	14.5
+ds47	noise, sup, topbot	100.0	0.0	14.5
+ds47	globalrec, noise, topbot	100.0	0.0	14.5
+ds47	globalrec, round, sup	99.9755859375	0.0	14.5
+ds47	noise, round, sup	100.0	0.0	14.5
+ds47	globalrec, noise, round	100.0	0.0	14.5
+ds47	globalrec, noise, sup	100.0	0.0	14.5
+ds47	globalrec, round, sup, topbot	99.9755859375	0.0	14.5
+ds47	noise, round, sup, topbot	100.0	0.0	14.5
+ds47	globalrec, noise, round, topbot	100.0	0.0	14.5
+ds47	globalrec, noise, sup, topbot	100.0	0.0	14.5
+ds47	globalrec, noise, round, sup	100.0	0.0	14.5
+ds47	globalrec, noise, round, sup, topbot	100.0	0.0	14.5
+ds48	sup	99.88427265362806	0.0	7.5
+ds48	topbot	100.0	99.21305404467076	15.0
+ds48	round	71.0102997338271	0.0	7.5
+ds48	noise	100.0	0.0	7.5
+ds48	sup, topbot	99.7569725726189	0.0	7.5
+ds48	round, sup	23.643096863788912	0.0	7.5
+ds48	noise, sup	100.0	0.0	7.5
+ds48	round, topbot	70.30436292095823	0.0	7.5
+ds48	noise, topbot	100.0	0.0	7.5
+ds48	noise, round	99.97685453072562	0.0	7.5
+ds48	round, sup, topbot	22.925587316282837	0.0	7.5
+ds48	noise, sup, topbot	100.0	0.0	7.5
+ds48	noise, round, sup	98.79643559773174	0.0	7.5
+ds48	noise, round, topbot	99.7916907765305	0.0	7.5
+ds48	noise, round, sup, topbot	98.35667168151835	0.0	7.5
+ds49	noise	100.0	0.0	7.0
+ds49	topbot	100.0	95.37669433645056	15.0
+ds49	round	13.932962067878533	0.0	7.0
+ds49	globalrec	100.0	0.031522538615109806	14.0
+ds49	noise, topbot	100.0	0.0	7.0
+ds49	noise, round	94.42051066512556	0.0	7.0
+ds49	globalrec, noise	100.0	0.0	7.0
+ds49	round, topbot	13.207943679731008	0.0	7.0
+ds49	globalrec, topbot	100.0	0.0	7.0
+ds49	globalrec, round	12.052117263843648	0.0	7.0
+ds49	noise, round, topbot	96.85825365136073	0.0	7.0
+ds49	globalrec, noise, topbot	100.0	0.0	7.0
+ds49	globalrec, noise, round	92.71829357990964	0.0	7.0
+ds49	globalrec, round, topbot	10.12924240832195	0.0	7.0
+ds49	globalrec, noise, round, topbot	99.07533886729011	0.0	7.0
+ds50	topbot	100.0	80.1525951209718	29.0
+ds50	round	100.0	0.0	7.0
+ds50	globalrec	100.0	80.09236020479871	28.0
+ds50	noise	100.0	0.44172271860254997	18.0
+ds50	sup	100.0	99.61851219757052	31.0
+ds50	round, topbot	99.87953016765385	0.0	7.0
+ds50	globalrec, topbot	100.0	80.0823210521032	27.0
+ds50	noise, topbot	100.0	0.10039152695512499	17.0
+ds50	sup, topbot	100.0	99.40768999096477	30.0
+ds50	globalrec, round	84.13813874109026	8.191948599538199	24.0
+ds50	noise, round	100.0	0.010039152695512499	14.5
+ds50	round, sup	99.63859050296155	0.030117458086537496	16.0
+ds50	globalrec, noise	100.0	1.0942676438108623	20.0
+ds50	globalrec, sup	100.0	10.430679650637487	25.0
+ds50	noise, sup	100.0	0.0	7.0
+ds50	globalrec, round, topbot	86.2664391125389	7.9811263929324365	23.0
+ds50	noise, round, topbot	100.0	0.0	7.0
+ds50	round, sup, topbot	99.14667202088144	2.228691898403775	21.0
+ds50	globalrec, noise, topbot	100.0	0.4618010239935749	19.0
+ds50	globalrec, sup, topbot	100.0	11.113342033932335	26.0
+ds50	noise, sup, topbot	100.0	0.0	7.0
+ds50	globalrec, noise, round	100.0	0.0	7.0
+ds50	globalrec, round, sup	60.556169059331395	0.0	7.0
+ds50	noise, round, sup	100.0	0.0	7.0
+ds50	globalrec, noise, sup	100.0	0.0	7.0
+ds50	globalrec, noise, round, topbot	100.0	0.0	7.0
+ds50	globalrec, round, sup, topbot	69.35046682060035	6.525449252083124	22.0
+ds50	noise, round, sup, topbot	100.0	0.0	7.0
+ds50	globalrec, noise, sup, topbot	100.0	0.010039152695512499	14.5
+ds50	globalrec, noise, round, sup	100.0	0.0	7.0
+ds50	globalrec, noise, round, sup, topbot	100.0	0.0	7.0
+ds51	noise	100.0	0.0	7.5
+ds51	round	71.0102997338271	0.0	7.5
+ds51	topbot	100.0	99.21305404467076	15.0
+ds51	sup	99.88427265362806	0.0	7.5
+ds51	noise, round	100.0	0.0	7.5
+ds51	noise, topbot	100.0	0.0	7.5
+ds51	noise, sup	100.0	0.0	7.5
+ds51	round, topbot	70.30436292095823	0.0	7.5
+ds51	round, sup	23.643096863788912	0.0	7.5
+ds51	sup, topbot	99.7569725726189	0.0	7.5
+ds51	noise, round, topbot	100.0	0.0	7.5
+ds51	noise, round, sup	98.63441731281102	0.0	7.5
+ds51	noise, sup, topbot	100.0	0.0	7.5
+ds51	round, sup, topbot	22.925587316282837	0.0	7.5
+ds51	noise, round, sup, topbot	98.62284457817383	0.0	7.5
+ds52	topbot	100.0	99.98180494905385	7.0
+ds52	round	99.16302765647744	0.009097525473071324	5.5
+ds52	globalrec	89.27401746724891	0.0	2.5
+ds52	round, topbot	99.07205240174673	0.009097525473071324	5.5
+ds52	globalrec, topbot	88.89192139737992	0.0	2.5
+ds52	globalrec, round	87.38173216885008	0.0	2.5
+ds52	globalrec, round, topbot	87.19068413391558	0.0	2.5
+ds53	topbot	100.0	93.17818181818181	15.0
+ds53	noise	100.0	0.08727272727272728	9.0
+ds53	globalrec	99.97090909090909	0.07272727272727272	8.0
+ds53	round	29.134545454545453	1.6654545454545455	12.5
+ds53	noise, topbot	100.0	36.35636363636364	14.0
+ds53	globalrec, topbot	100.0	0.02181818181818182	3.5
+ds53	round, topbot	27.505454545454544	1.6654545454545455	12.5
+ds53	globalrec, noise	100.0	0.0	1.0
+ds53	noise, round	61.941818181818185	0.8290909090909091	10.0
+ds53	globalrec, round	4.858181818181818	0.02909090909090909	6.0
+ds53	globalrec, noise, topbot	100.0	0.02909090909090909	6.0
+ds53	noise, round, topbot	55.96363636363636	0.9672727272727273	11.0
+ds53	globalrec, round, topbot	2.9745454545454546	0.02909090909090909	6.0
+ds53	globalrec, noise, round	72.23272727272727	0.007272727272727273	2.0
+ds53	globalrec, noise, round, topbot	27.847272727272728	0.02181818181818182	3.5
+ds54	topbot	98.21762349799732	88.42456608811749	7.0
+ds54	noise	100.0	0.0	3.5
+ds54	round	99.79973297730307	0.0	3.5
+ds54	noise, topbot	100.0	0.0	3.5
+ds54	round, topbot	97.36315086782376	0.0	3.5
+ds54	noise, round	100.0	0.0	3.5
+ds54	noise, round, topbot	100.0	0.0	3.5
+ds55	topbot	100.0	88.71662914120296	7.0
+ds55	round	91.86233515599871	0.03859761981344484	5.5
+ds55	globalrec	68.97394660662593	0.0	2.5
+ds55	round, topbot	91.73367642328724	0.03859761981344484	5.5
+ds55	globalrec, topbot	68.89031843036346	0.0	2.5
+ds55	globalrec, round	64.20714055966549	0.0	2.5
+ds55	globalrec, round, topbot	64.12351238340302	0.0	2.5
+ds56	topbot	100.0	90.45123200192782	15.0
+ds56	round	26.110006626905236	9.392132056147961	12.0
+ds56	noise	100.0	37.496234712934516	14.0
+ds56	globalrec	100.0	0.024097837219109585	4.0
+ds56	round, topbot	25.20031327188385	9.422254352671848	13.0
+ds56	noise, topbot	100.0	8.289656003373697	10.0
+ds56	globalrec, topbot	100.0	0.018073377914332188	3.0
+ds56	noise, round	91.8187842641123	0.8313753840592807	6.0
+ds56	globalrec, round	5.126814868365564	2.0001204891860955	8.0
+ds56	globalrec, noise	100.0	0.0	1.0
+ds56	noise, round, topbot	29.40538586661847	8.946322067594433	11.0
+ds56	globalrec, round, topbot	3.63274896078077	5.940116874510513	9.0
+ds56	globalrec, noise, topbot	100.0	0.012048918609554793	2.0
+ds56	globalrec, noise, round	32.4899090306645	0.608470389782517	5.0
+ds56	globalrec, noise, round, topbot	44.67739020422917	1.5844327971564551	7.0
+ds57	topbot	100.0	89.87381703470031	15.0
+ds57	round	100.0	0.0	7.5
+ds57	sup	89.67928496319664	0.0	7.5
+ds57	noise	100.0	0.0	7.5
+ds57	round, topbot	100.0	0.0	7.5
+ds57	sup, topbot	89.03259726603575	0.0	7.5
+ds57	noise, topbot	100.0	0.0	7.5
+ds57	round, sup	0.0	0.0	7.5
+ds57	noise, round	100.0	0.0	7.5
+ds57	noise, sup	100.0	0.0	7.5
+ds57	round, sup, topbot	0.0	0.0	7.5
+ds57	noise, round, topbot	100.0	0.0	7.5
+ds57	noise, sup, topbot	100.0	0.0	7.5
+ds57	noise, round, sup	0.12092534174553102	0.0	7.5
+ds57	noise, round, sup, topbot	0.0946372239747634	0.0	7.5
+ds58	globalrec	99.98062015503876	0.0	7.5
+ds58	round	100.0	0.0	7.5
+ds58	topbot	100.0	85.41666666666667	15.0
+ds58	noise	100.0	0.0	7.5
+ds58	globalrec, round	85.4312015503876	0.0	7.5
+ds58	globalrec, topbot	99.49612403100775	0.0	7.5
+ds58	globalrec, noise	100.0	0.0	7.5
+ds58	round, topbot	99.85949612403101	0.0	7.5
+ds58	noise, round	100.0	0.0	7.5
+ds58	noise, topbot	100.0	0.0	7.5
+ds58	globalrec, round, topbot	83.90988372093024	0.0	7.5
+ds58	globalrec, noise, round	99.36046511627907	0.0	7.5
+ds58	globalrec, noise, topbot	100.0	0.0	7.5
+ds58	noise, round, topbot	100.0	0.0	7.5
+ds58	globalrec, noise, round, topbot	98.78875968992249	0.0	7.5
+ds59	sup	96.85744382022472	0.0	11.0
+ds59	round	4.608497191011236	0.215063202247191	24.5
+ds59	noise	100.0	0.013167134831460673	22.0
+ds59	globalrec	99.99122191011236	99.65765449438203	31.0
+ds59	topbot	99.97366573033707	88.79915730337079	30.0
+ds59	round, sup	3.7965238764044944	0.0	11.0
+ds59	noise, sup	100.0	0.0	11.0
+ds59	globalrec, sup	95.14571629213484	0.0	11.0
+ds59	sup, topbot	96.64238061797752	0.0	11.0
+ds59	noise, round	28.28300561797753	0.09216994382022473	23.0
+ds59	globalrec, round	0.0175561797752809	0.0	11.0
+ds59	round, topbot	0.3950140449438202	0.215063202247191	24.5
+ds59	globalrec, noise	100.0	0.0	11.0
+ds59	noise, topbot	100.0	4.182759831460674	28.0
+ds59	globalrec, topbot	99.9341643258427	66.98999297752809	29.0
+ds59	noise, round, sup	4.964009831460674	0.0	11.0
+ds59	globalrec, round, sup	0.013167134831460673	0.0	11.0
+ds59	round, sup, topbot	0.0	0.0	11.0
+ds59	globalrec, noise, sup	100.0	0.0	11.0
+ds59	noise, sup, topbot	100.0	0.0	11.0
+ds59	globalrec, sup, topbot	94.23279494382022	0.0	11.0
+ds59	globalrec, noise, round	1.0007022471910112	0.0	11.0
+ds59	noise, round, topbot	2.5324789325842696	0.21945224719101122	26.0
+ds59	globalrec, round, topbot	0.0	0.0	11.0
+ds59	globalrec, noise, topbot	100.0	1.7863412921348314	27.0
+ds59	globalrec, noise, round, sup	0.10533707865168539	0.0	11.0
+ds59	noise, round, sup, topbot	0.24578651685393257	0.0	11.0
+ds59	globalrec, round, sup, topbot	0.0	0.0	11.0
+ds59	globalrec, noise, sup, topbot	100.0	0.0	11.0
+ds59	globalrec, noise, round, topbot	0.0175561797752809	0.0	11.0
+ds59	globalrec, noise, round, sup, topbot	0.004389044943820225	0.0	11.0
+ds60	sup	99.95094191522763	0.0	7.5
+ds60	globalrec	100.0	100.0	15.0
+ds60	round	95.55533751962324	0.0	7.5
+ds60	noise	100.0	0.0	7.5
+ds60	globalrec, sup	98.2927786499215	0.0	7.5
+ds60	round, sup	0.014717425431711145	0.0	7.5
+ds60	noise, sup	100.0	0.0	7.5
+ds60	globalrec, round	78.16424646781789	0.0	7.5
+ds60	globalrec, noise	100.0	0.0	7.5
+ds60	noise, round	100.0	0.0	7.5
+ds60	globalrec, round, sup	0.0	0.0	7.5
+ds60	globalrec, noise, sup	100.0	0.0	7.5
+ds60	noise, round, sup	4.680141287284145	0.0	7.5
+ds60	globalrec, noise, round	99.74980376766091	0.0	7.5
+ds60	globalrec, noise, round, sup	0.7604003139717426	0.0	7.5
+ds61	topbot	100.0	31.413961258861246	7.0
+ds61	noise	100.0	0.0	3.5
+ds61	round	94.08610647040231	0.0	3.5
+ds61	noise, topbot	100.0	0.0	3.5
+ds61	round, topbot	82.07657922066194	0.0	3.5
+ds61	noise, round	100.0	0.0	3.5
+ds61	noise, round, topbot	100.0	0.0	3.5
