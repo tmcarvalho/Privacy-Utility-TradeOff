@@ -1,4 +1,4 @@
-## Trade-off between privacy and predictive performance
+## Trade-off between data privacy and predictive performance
 
 **Requirements** 
 
@@ -7,10 +7,11 @@ Python version >= 3.7
 **Install dependecies**
 
 Install python dependencies using pip
-```python
+```
 pip install -r requirements.txt
 ```
 
-### To-Do List
+**Data**
 
-Rien.
+The original datasets and all generated transformations are available on [Kaggle](https://www.kaggle.com/up201204722/deidentified-data).
+
