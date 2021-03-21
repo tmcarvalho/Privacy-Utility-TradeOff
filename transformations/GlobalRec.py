@@ -31,14 +31,21 @@ class GlobalRec:
     def find_range(self):
         all_ranges = []
         # magnitude = [0.5, 1.5]
-        for j in range(0, len(self.keyVars)):
+        for j, var in enumerate(self.keyVars):
             # define bin size with std and magnitude of std
             sigma = np.std(self.obj[self.keyVars[j]])
             if isinstance(self.std_magnitude, list):
                 ranges = [int(i * sigma) for i in self.std_magnitude]
             else:
                 ranges = int(self.std_magnitude * sigma)
-            all_ranges.append(ranges)
+            # remove variables with no global recoding
+            if (isinstance(ranges, list)) and (all(a != 0 for a in ranges)):
+                all_ranges.append(ranges)
+            elif not isinstance(ranges, list):
+                all_ranges.append(ranges)
+            else:
+                self.keyVars.remove(var)
+
         return all_ranges
 
     def globalRec(self):
@@ -48,8 +55,8 @@ class GlobalRec:
         dif = []
         comb = []
         # remove columns that have only two unique
-        vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 2].columns
-        self.keyVars = list(set(self.keyVars) - set(vars_two_uniques))
+        # vars_two_uniques = self.obj.loc[:, self.obj.apply(pd.Series.nunique) == 2].columns
+        # self.keyVars = list(set(self.keyVars) - set(vars_two_uniques))
         if len(self.keyVars) != 0:
             # bin size for each column
             ranges = self.find_range()
