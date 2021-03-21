@@ -11,7 +11,7 @@ import gc
 
 # %% All functions to processing
 def load_data():
-    dss = np.load('Data/DS_clean1.npy', allow_pickle=True)
+    dss = np.load('Data/DS_clean2.npy', allow_pickle=True)
     ds = dss.copy()
     return ds
 
@@ -245,9 +245,9 @@ def separeted_results():
         all_risk = pd.read_pickle('Data/Remote_results/risk_' + str(j) + '.pkl')
         all_combs = pd.read_pickle('Data/Remote_results/combs_' + str(j) + '.pkl')
         # if (j==58) or (j==59):
-            # all_transf = list(itertools.chain(*all_transf))
-            # all_risk = all_risk[0]
-            # all_combs = list(itertools.chain(*all_combs))
+        # all_transf = list(itertools.chain(*all_transf))
+        # all_risk = all_risk[0]
+        # all_combs = list(itertools.chain(*all_combs))
         final_transf_combs.append(all_transf)
         final_risk.append(all_risk)
         final_combs.append(all_combs)
@@ -280,9 +280,9 @@ def join_all_results():
     final_risk = list(itertools.chain(*final_risk))
     final_combs = list(itertools.chain(*final_combs))
 
-    pd.to_pickle(final_transf_combs, 'Data/Final_results/final_transf_combs5.pkl')
-    pd.to_pickle(final_risk, 'Data/Final_results/final_risk5.pkl')
-    pd.to_pickle(final_combs, 'Data/Final_results/final_combs5.pkl')
+    pd.to_pickle(final_transf_combs, 'Data/Final_results/final_transf_combs.pkl')
+    pd.to_pickle(final_risk, 'Data/Final_results/final_risk.pkl')
+    pd.to_pickle(final_combs, 'Data/Final_results/final_combs.pkl')
 
 
 join_all_results()
@@ -296,4 +296,5 @@ join_all_results()
 #
 # for i in range(len(transf6)):
 #     for j in range(len(transf6[i])):
-#         transf6[i][j].to_csv("Data/Final_results/AllinputFiles/ds" + str(i) + '_transf' + str(j) + '.csv', index=False)
+#         transf6[i][j].to_csv("Data/Final_results/AllinputFiles/ds" + str(i) + '_transf' + str(j) + '.csv',
+#         index=False)
