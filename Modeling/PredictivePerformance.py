@@ -1,3 +1,4 @@
+from decimal import Decimal
 import pandas as pd
 import numpy as np
 from sklearn.ensemble import RandomForestClassifier, BaggingClassifier
@@ -10,6 +11,18 @@ from sklearn.neural_network import MLPClassifier
 from xgboost import XGBClassifier
 
 
+# %%
+def change_cols_types(df):
+    cols = df.select_dtypes(include=np.number).columns.values
+    for col in cols:
+        df[col] = df[col].apply(Decimal).astype(str)
+        if any('.' in s for s in df[col]):
+            df[col] = df[col].astype('float')
+        else:
+            df[col] = df[col].astype('int')
+    return df
+
+
 # %% Functions to modeling
 def prepare_data(df):
     # deal with categorical attributes
@@ -17,7 +30,6 @@ def prepare_data(df):
     df = df[df.columns[:-1]]
     # too many levels
     uniques_per = df.select_dtypes(exclude=np.number).apply(lambda col: col.nunique() / len(df))
-    # cols = df.select_dtypes(exclude=np.number).columns
     uniques_max_per = uniques_per[uniques_per > 0.7]
     cols = df.columns[df.columns.isin(uniques_max_per.index)].values
     df_dummie = df.copy()
@@ -25,6 +37,16 @@ def prepare_data(df):
         for col in cols:
             df_dummie[col] = OrdinalEncoder().fit_transform(df_dummie[[col]])
             # df[col] = df[col].astype('category').cat.codes
+
+    # remove continuous attributes with many uniques
+    df_aux = df_dummie.copy()
+    df_aux = change_cols_types(df_aux)
+    uniques_per_cont = df_aux.select_dtypes(incldude=np.int).apply(lambda col: col.nunique() / len(df))
+    uniques_max_per_cont = uniques_per[uniques_per_cont > 0.9]
+    cols_cont = df_aux.columns[df_aux.columns.isin(uniques_max_per_cont.index)].values
+    print(cols_cont)
+    if len(uniques_max_per) != 0:
+        del df_dummie[cols_cont[0]]
 
     # one-hot encode the data using pandas get_dummies
     df_dummie = pd.get_dummies(df_dummie)
@@ -124,11 +146,3 @@ def evaluate_model(X, y, res):
         print('Test set accuracy score for best params: %.3f ' % balanced_accuracy_score(y_test, y_pred))
 
     return res
-
-# %% Prepare baseline
-# initial_data = ds[0].copy()
-# X, y = prepare_data(initial_data)
-# store results from all grids
-# baseline = {}
-# baseline = evaluate_model(X, y, baseline)
-# res_df = pd.DataFrame.from_dict(baseline['cv_results_Random Forest'])
