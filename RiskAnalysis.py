@@ -14,7 +14,7 @@ for idx, comb in enumerate(combs):
         lst_all_solutions.append(idx)  # 18 datasets with all solutions
 
 
-risk = pd.read_csv('tilemap1.csv', sep='\t')
+risk = pd.read_csv('Data/tilemap.csv', sep='\t')
 risk['comparisson'] = 'All datasets'
 
 for i in range(0, len(risk)):
