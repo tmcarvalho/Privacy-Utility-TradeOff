@@ -141,7 +141,7 @@ def each_transf(transf):
             if f'ds{t[0]}_transf{t[1]}' == t_folder:
                 _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
                 solution = join_res(files, t_folder)
-                solution['ds'] = t[0]
+                solution['ds'] = f'ds{t[0]}_transf{t[1]}'
                 sol = pd.concat([sol, solution])
 
     return sol
@@ -190,6 +190,7 @@ def add_solution_name(lst_sol):
 
 
 all_results = add_solution_name([])
+# all_results.to_csv('Data/all_solutions.csv', sep='\t', index=False)
 
 # %%
 # all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
@@ -206,13 +207,13 @@ g.set_titles('{col_name}')
 g.set_axis_labels('Weighted Fscore', '')
 g.set(xticks=ticks, xticklabels=labels)
 plt.gca().invert_xaxis()
-# plt.show()
+plt.show()
 plt.tight_layout()
-plt.savefig(f'Plots/bodega2.pdf')
+# plt.savefig(f'Plots/bodega2.pdf')
 
 # %% plot all solutions with just the 18 datasets
 sol_30 = add_solution_name(lst_all_solutions)
-# sol_30.to_csv('Data/sol_30.csv', sep='\t')
+# sol_30.to_csv('Data/sol_30.csv', sep='\t', index=False)
 # sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
 
 all_results['comparisson'] = 'All datasets'
@@ -236,9 +237,9 @@ g.add_legend(loc='lower center', ncol=2, bbox_to_anchor=(0.5, -0.05))
 g.fig.subplots_adjust(top=0.9)  # adjust the Figure in rp
 g.fig.suptitle('Percentage difference of weighted Fscore', fontsize=14)
 # plt.legend(bbox_to_anchor=(0.5, -0.1), loc='lower center', ncol=2, borderaxespad=0.)
-# plt.show()
 plt.tight_layout()
-plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
+plt.show()
+# plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
 
 # %% table with rank - performance
 all_results_max = two_comparissons.groupby(['ds', 'model', 'solution', 'comparisson'])['mean_test_f1_weighted'].max().reset_index()
@@ -270,6 +271,7 @@ g = g.map_dataframe(facet_heatmap)
 g.set_titles("{row_name}")
 g.set_xticklabels(rotation=30)
 sns.set(font_scale=1.5)
+plt.show()
 # plt.savefig(f'Plots/bodega60.pdf')
 
 
