@@ -1,4 +1,5 @@
 # %%
+import re
 from os import walk
 import numpy as np
 import pandas as pd
@@ -12,6 +13,9 @@ combs = pd.read_pickle('Data/Final_results/final_combs.pkl')
 transf_folder = 'Data/Final_results/AlloutputFiles/Transformed'
 _, transf_folders, _ = next(walk(transf_folder))
 
+org_folder = 'Data/Final_results/AlloutputFiles/Originals'
+_, org_folders, _ = next(walk(org_folder))
+
 # %%
 # store the position of the datasets that have the 5 solutions at the same time
 lst_all_solutions = []
@@ -21,13 +25,13 @@ for idx, comb in enumerate(combs):
 
 
 # %%
-def join_res(files, t_folder):
+def join_res(files, master_folder, folder):
     rf_lst = bag_lst = xgb_lst = logr_lst = nn_lst = []
     r = b = x = l = n = 0
     lst_file = []
     for file in files:
         if 'rf' in file:
-            rf = pd.read_csv(f'{transf_folder}/{t_folder}/{file}', sep='\t')
+            rf = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
             rf['model'] = "RF"
             # if len(rf[rf['mean_test_f1_perdif'] >= 100]):
             #    lst_file.append(file)
@@ -37,7 +41,7 @@ def join_res(files, t_folder):
             else:
                 rf_lst = pd.concat([rf_lst, rf])
         if 'bag' in file:
-            bag = pd.read_csv(f'{transf_folder}/{t_folder}/{file}', sep='\t')
+            bag = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
             bag['model'] = "Bag"
             if b == 0:
                 bag_lst = bag
@@ -45,7 +49,7 @@ def join_res(files, t_folder):
             else:
                 bag_lst = pd.concat([bag_lst, bag])
         if 'xgb' in file:
-            xgb = pd.read_csv(f'{transf_folder}/{t_folder}/{file}', sep='\t')
+            xgb = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
             xgb['model'] = "XGB"
             if x == 0:
                 xgb_lst = xgb
@@ -53,7 +57,7 @@ def join_res(files, t_folder):
             else:
                 xgb_lst = pd.concat([xgb_lst, xgb])
         if 'logr' in file:
-            logr = pd.read_csv(f'{transf_folder}/{t_folder}/{file}', sep='\t')
+            logr = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
             logr['model'] = "LogR"
             if l == 0:
                 logr_lst = logr
@@ -61,7 +65,7 @@ def join_res(files, t_folder):
             else:
                 logr_lst = pd.concat([logr_lst, logr])
         if 'nn' in file:
-            nn = pd.read_csv(f'{transf_folder}/{t_folder}/{file}', sep='\t')
+            nn = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
             nn['model'] = "NN"
             if n == 0:
                 nn_lst = nn
@@ -134,15 +138,30 @@ def ploting(data, transf_name):
 
 # %%
 # Each solution in ONE plot
-def each_transf(transf):
+def each_transf(flag, transf, master_folder, folders):
+    """
+    Concatenate all results and assign dataset name
+    :param flag: 0 - transformed folder; 1- original folder
+    :param transf: list with original and transformed indexes
+    :param master_folder: folder that indicates the initial path
+    :param folders: each folder from master_folder
+    :return: dataframe with concatenated results and dataset name
+    """
     sol = pd.DataFrame()
-    for t_folder in transf_folders:
-        for t in transf:
-            if f'ds{t[0]}_transf{t[1]}' == t_folder:
-                _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
-                solution = join_res(files, t_folder)
-                solution['ds'] = f'ds{t[0]}_transf{t[1]}'
-                sol = pd.concat([sol, solution])
+    for folder in folders:
+        if flag == 0:
+            for t in transf:
+                if f'ds{t[0]}_transf{t[1]}' == folder:
+                    _, _, files = next(walk(f'{master_folder}/{folder}'))
+                    solution = join_res(files, master_folder, folder)
+                    solution['ds'] = f'ds{t[0]}_transf{t[1]}'
+                    sol = pd.concat([sol, solution])
+        else:
+            _, _, files = next(walk(f'{master_folder}/{folder}'))
+            solution = join_res(files, master_folder, folder)
+            nr = int(int(re.search(r'\d+', folder)[0]))
+            solution['ds'] = f'ds{nr}'
+            sol = pd.concat([sol, solution])
 
     return sol
 
@@ -165,6 +184,12 @@ transfs = ['G', 'N', 'R', 'S', 'T', 'R, N', 'G, R', 'G, S',
 
 
 def lst_ds_(transf_name, lst_all_solutions):
+    """
+    List with indices of original and transformed dataset
+    :param transf_name: transformation (solution) name
+    :param lst_all_solutions: list with indices of the 18 datasets that contains all solutions
+    :return: list with original and transformed indexes
+    """
     lst = []
     for idx, comb in enumerate(cb):
         for i, c in enumerate(cb[idx]):
@@ -179,21 +204,38 @@ def lst_ds_(transf_name, lst_all_solutions):
     return lst
 
 
-def add_solution_name(lst_sol):
+def add_solution_name(flag, lst_sol, master_folder, folders):
+    """
+    Add solution name and concatenate all results
+    :param flag: 0 - transformed folder; 1- original folder
+    :param lst_sol: list with indexes of the 18 datasets that contains all solutions
+    :param master_folder: folder that indicates the initial path
+    :param folders: each folder from master_folder
+    :return: concatenated dataframe with all ML algorithms and solutions
+    """
     df = pd.DataFrame()
-    for t in transfs:
-        lst = lst_ds_(t, lst_sol)
-        tr_res = each_transf(lst)
-        tr_res['solution'] = t
+    if flag == 0:
+        for t in transfs:
+            lst = lst_ds_(t, lst_sol)
+            tr_res = each_transf(0, lst, master_folder, folders)
+            tr_res['solution'] = t
+            df = pd.concat([df, tr_res])
+    else:
+        tr_res = each_transf(1, [], master_folder, folders)
         df = pd.concat([df, tr_res])
+
     return df
 
 
-all_results = add_solution_name([])
+# transformed results
+all_results = add_solution_name(0, [], transf_folder, transf_folders)
 # all_results.to_csv('Data/all_solutions.csv', sep='\t', index=False)
+# baseline results
+# original_results = add_solution_name(1, [], org_folder, org_folders)
+# original_results.to_csv('Data/baseline_results.csv', sep='\t', index=False)
 
 # %%
-# all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
+all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
 
 all_results_melt = all_results.melt(id_vars=['solution', 'model'], value_vars=['mean_test_f1_weighted_perdif'],
                                     var_name='sol', value_name='values')
@@ -212,7 +254,7 @@ plt.tight_layout()
 # plt.savefig(f'Plots/bodega2.pdf')
 
 # %% plot all solutions with just the 18 datasets
-sol_30 = add_solution_name(lst_all_solutions)
+sol_30 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
 # sol_30.to_csv('Data/sol_30.csv', sep='\t', index=False)
 # sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
 
@@ -248,6 +290,11 @@ all_results_max['rank'] = all_results_max.groupby(['model', 'comparisson'])['mea
 
 
 def custom_key(str):
+    """
+    Order string by length
+    :param str: string
+    :return: ordered string
+    """
     return len(str), str.lower()
 
 
