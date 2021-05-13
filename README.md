@@ -13,5 +13,5 @@ pip install -r requirements.txt
 
 **Data**
 
-The original datasets and all generated transformations are available on [Kaggle](https://www.kaggle.com/up201204722/deidentified-data).
+The original datasets and all generated transformations, as well as other auxiliary datasets are available on [Kaggle](https://www.kaggle.com/up201204722/deidentified-data).
 
