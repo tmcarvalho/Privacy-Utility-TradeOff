@@ -6,7 +6,7 @@ _task_ and _worker_: distributed system to perform the learning tasks.
 
 _PredictivePerformance.py_: build classifiers and evaluate them.
 
-_AvgPerformance_: generate csv files with average results for each learning algorithm.
+_ConcatPerformance_: generate csv files with the concatenated results - 5 * 5 CV - for each learning algorithm.
 
 _PerformanceAnalysis_: analyse the averaged results obtained after modeling. 
 
