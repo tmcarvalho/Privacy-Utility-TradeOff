@@ -174,7 +174,7 @@ for i in range(len(cb)):
     cb[i] = [tuple(s if s != "sup" else "S" for s in tup) for tup in cb[i]]
     cb[i] = [tuple(s if s != "topbot" else "T" for s in tup) for tup in cb[i]]
 
-transfs = ['G', 'N', 'R', 'S', 'T', 'R, N', 'G, R', 'G, S',
+transfs = ['G', 'N', 'R', 'S', 'T', 'R, N', 'G, R', 'G, S', 'G, N',
            'G, T', 'N, R', 'N, S', 'N, T', 'R, S', 'R, T',
            'S, T', 'G, N, R', 'G, N, S', 'G, N, T',
            'G, R, S', 'G, R, T', 'G, S, T', 'N, R, S',
@@ -228,7 +228,7 @@ def add_solution_name(flag, lst_sol, master_folder, folders):
 
 
 # transformed results
-all_results = add_solution_name(0, [], transf_folder, transf_folders)
+# all_results = add_solution_name(0, [], transf_folder, transf_folders)
 # all_results.to_csv('Data/all_solutions.csv', sep='\t', index=False)
 # baseline results
 # original_results = add_solution_name(1, [], org_folder, org_folders)
@@ -249,14 +249,14 @@ g.set_titles('{col_name}')
 g.set_axis_labels('Weighted Fscore', '')
 g.set(xticks=ticks, xticklabels=labels)
 plt.gca().invert_xaxis()
-plt.show()
 plt.tight_layout()
+plt.show()
 # plt.savefig(f'Plots/bodega2.pdf')
 
 # %% plot all solutions with just the 18 datasets
-sol_30 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
+# sol_30 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
 # sol_30.to_csv('Data/sol_30.csv', sep='\t', index=False)
-# sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
+sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
 
 all_results['comparisson'] = 'All datasets'
 sol_30['comparisson'] = '18 datasets'
@@ -280,8 +280,8 @@ g.fig.subplots_adjust(top=0.9)  # adjust the Figure in rp
 g.fig.suptitle('Percentage difference of weighted Fscore', fontsize=14)
 # plt.legend(bbox_to_anchor=(0.5, -0.1), loc='lower center', ncol=2, borderaxespad=0.)
 plt.tight_layout()
-plt.show()
-# plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
+# plt.show()
+plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
 
 # %% table with rank - performance
 all_results_max = two_comparissons.groupby(['ds', 'model', 'solution', 'comparisson'])['mean_test_f1_weighted'].max().reset_index()
