@@ -25,56 +25,63 @@ for idx, comb in enumerate(combs):
 
 
 # %%
-def join_res(files, master_folder, folder):
+def join_res(flag, files, master_folder, folder):
     rf_lst = bag_lst = xgb_lst = logr_lst = nn_lst = []
     r = b = x = l = n = 0
-    lst_file = []
     for file in files:
-        if 'rf' in file:
-            rf = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            rf['model'] = "RF"
-            # if len(rf[rf['mean_test_f1_perdif'] >= 100]):
-            #    lst_file.append(file)
-            if r == 0:
-                rf_lst = rf
-                r += 1
-            else:
-                rf_lst = pd.concat([rf_lst, rf])
-        if 'bag' in file:
-            bag = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            bag['model'] = "Bag"
-            if b == 0:
-                bag_lst = bag
-                b += 1
-            else:
-                bag_lst = pd.concat([bag_lst, bag])
-        if 'xgb' in file:
-            xgb = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            xgb['model'] = "XGB"
-            if x == 0:
-                xgb_lst = xgb
-                x += 1
-            else:
-                xgb_lst = pd.concat([xgb_lst, xgb])
-        if 'logr' in file:
-            logr = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            logr['model'] = "LogR"
-            if l == 0:
-                logr_lst = logr
-                l += 1
-            else:
-                logr_lst = pd.concat([logr_lst, logr])
-        if 'nn' in file:
-            nn = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            nn['model'] = "NN"
-            if n == 0:
-                nn_lst = nn
-                n += 1
-            else:
-                nn_lst = pd.concat([nn_lst, nn])
+        if (flag == 0) and ('_diff' in file):
+            f = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+            return f
+        elif (flag != 0) and ('csv' in file) and ('_diff' not in file):
+            if 'rf' in file:
+                rf = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+                rf['model'] = "RF"
+                # if len(rf[rf['mean_test_f1_perdif'] >= 100]):
+                #    lst_file.append(file)
+                if r == 0:
+                    rf_lst = rf
+                    r += 1
+                else:
+                    rf_lst = pd.concat([rf_lst, rf])
+            if 'bag' in file:
+                bag = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+                bag['model'] = "Bag"
+                if b == 0:
+                    bag_lst = bag
+                    b += 1
+                else:
+                    bag_lst = pd.concat([bag_lst, bag])
+            if 'xgb' in file:
+                xgb = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+                xgb['model'] = "XGB"
+                if x == 0:
+                    xgb_lst = xgb
+                    x += 1
+                else:
+                    xgb_lst = pd.concat([xgb_lst, xgb])
+            if 'logr' in file:
+                logr = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+                logr['model'] = "LogR"
+                if l == 0:
+                    logr_lst = logr
+                    l += 1
+                else:
+                    logr_lst = pd.concat([logr_lst, logr])
+            if 'nn' in file:
+                nn = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
+                nn['model'] = "NN"
+                if n == 0:
+                    nn_lst = nn
+                    n += 1
+                else:
+                    nn_lst = pd.concat([nn_lst, nn])
 
-    res = pd.concat([rf_lst, bag_lst, xgb_lst, logr_lst, nn_lst])
-    return res
+        else:
+            pass
+
+    if len(rf_lst) != 0:
+        res = pd.concat([rf_lst, bag_lst, xgb_lst, logr_lst, nn_lst])
+        return res
 
 
 # %% plot the 5 solutions together
@@ -97,7 +104,6 @@ plt.show()
 for t_folder in transf_folders:
     _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
     all_solutions = join_res(files, t_folder)
-
 
 ax = sns.boxplot(x='model', y='mean_test_f1_weighted_perdif', data=all_solutions)
 ax.set_yscale('symlog')
@@ -141,7 +147,7 @@ def ploting(data, transf_name):
 def each_transf(flag, transf, master_folder, folders):
     """
     Concatenate all results and assign dataset name
-    :param flag: 0 - transformed folder; 1- original folder
+    :param flag: 0 - transformed folder; 1- original folder; other - testing results
     :param transf: list with original and transformed indexes
     :param master_folder: folder that indicates the initial path
     :param folders: each folder from master_folder
@@ -153,15 +159,24 @@ def each_transf(flag, transf, master_folder, folders):
             for t in transf:
                 if f'ds{t[0]}_transf{t[1]}' == folder:
                     _, _, files = next(walk(f'{master_folder}/{folder}'))
-                    solution = join_res(files, master_folder, folder)
+                    solution = join_res(1, files, master_folder, folder)
                     solution['ds'] = f'ds{t[0]}_transf{t[1]}'
                     sol = pd.concat([sol, solution])
-        else:
+        elif flag == 1:
             _, _, files = next(walk(f'{master_folder}/{folder}'))
-            solution = join_res(files, master_folder, folder)
+            solution = join_res(1, files, master_folder, folder)
             nr = int(int(re.search(r'\d+', folder)[0]))
             solution['ds'] = f'ds{nr}'
             sol = pd.concat([sol, solution])
+
+        else:
+            for t in transf:
+                if f'ds{t[0]}_transf{t[1]}' == folder:
+                    print(f'ds{t[0]}_transf{t[1]}')
+                    _, _, files = next(walk(f'{master_folder}/{folder}'))
+                    solution = join_res(0, files, master_folder, folder)
+                    solution['ds'] = f'ds{t[0]}_transf{t[1]}'
+                    sol = pd.concat([sol, solution])
 
     return sol
 
@@ -174,7 +189,7 @@ for i in range(len(cb)):
     cb[i] = [tuple(s if s != "sup" else "S" for s in tup) for tup in cb[i]]
     cb[i] = [tuple(s if s != "topbot" else "T" for s in tup) for tup in cb[i]]
 
-transfs = ['G', 'N', 'R', 'S', 'T', 'R, N', 'G, R', 'G, S', 'G, N',
+transfs = ['G', 'N', 'R', 'S', 'T', 'G, N', 'G, R', 'G, S',
            'G, T', 'N, R', 'N, S', 'N, T', 'R, S', 'R, T',
            'S, T', 'G, N, R', 'G, N, S', 'G, N, T',
            'G, R, S', 'G, R, T', 'G, S, T', 'N, R, S',
@@ -207,7 +222,7 @@ def lst_ds_(transf_name, lst_all_solutions):
 def add_solution_name(flag, lst_sol, master_folder, folders):
     """
     Add solution name and concatenate all results
-    :param flag: 0 - transformed folder; 1- original folder
+    :param flag: 0 - transformed folder; 1- original folder; other - testing
     :param lst_sol: list with indexes of the 18 datasets that contains all solutions
     :param master_folder: folder that indicates the initial path
     :param folders: each folder from master_folder
@@ -220,9 +235,17 @@ def add_solution_name(flag, lst_sol, master_folder, folders):
             tr_res = each_transf(0, lst, master_folder, folders)
             tr_res['solution'] = t
             df = pd.concat([df, tr_res])
-    else:
+
+    elif flag == 1:
         tr_res = each_transf(1, [], master_folder, folders)
         df = pd.concat([df, tr_res])
+
+    else:
+        for t in transfs:
+            lst = lst_ds_(t, lst_sol)
+            tr_res = each_transf(2, lst, master_folder, folders)
+            tr_res['solution'] = t
+            df = pd.concat([df, tr_res])
 
     return df
 
@@ -233,6 +256,9 @@ def add_solution_name(flag, lst_sol, master_folder, folders):
 # baseline results
 # original_results = add_solution_name(1, [], org_folder, org_folders)
 # original_results.to_csv('Data/baseline_results.csv', sep='\t', index=False)
+# testing results
+# testing_results = add_solution_name(2, [], transf_folder, transf_folders)
+# testing_results.to_csv('Data/testing_results.csv', sep='\t', index=False)
 
 # %%
 all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
@@ -251,7 +277,7 @@ g.set(xticks=ticks, xticklabels=labels)
 plt.gca().invert_xaxis()
 plt.tight_layout()
 plt.show()
-# plt.savefig(f'Plots/bodega2.pdf')
+# plt.savefig(f'Plots/bodega2.pdf', bbox_inches='tight')
 
 # %% plot all solutions with just the 18 datasets
 # sol_30 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
@@ -280,13 +306,22 @@ g.fig.subplots_adjust(top=0.9)  # adjust the Figure in rp
 g.fig.suptitle('Percentage difference of weighted Fscore', fontsize=14)
 # plt.legend(bbox_to_anchor=(0.5, -0.1), loc='lower center', ncol=2, borderaxespad=0.)
 plt.tight_layout()
-# plt.show()
-plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
+plt.show()
+# plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
 
 # %% table with rank - performance
-all_results_max = two_comparissons.groupby(['ds', 'model', 'solution', 'comparisson'])['mean_test_f1_weighted'].max().reset_index()
-all_results_max = two_comparissons.groupby(['model', 'solution', 'comparisson'])['mean_test_f1_weighted'].mean().reset_index()
-all_results_max['rank'] = all_results_max.groupby(['model', 'comparisson'])['mean_test_f1_weighted'].rank().astype(int)
+all_results_max = two_comparissons.groupby(['ds', 'model', 'solution', 'comparisson'])[
+    'mean_test_f1_weighted'].max().reset_index()
+all_results_max = two_comparissons.groupby(['model', 'solution', 'comparisson'])[
+    'mean_test_f1_weighted'].mean().reset_index()
+all_results_max['rank'] = all_results_max.groupby(['model', 'comparisson'])['mean_test_f1_weighted'].rank(
+    ascending=False).astype(int)
+
+all_results_max['model'] = np.where(all_results_max['model'] == 'Bag', 'Bagging', all_results_max['model'])
+all_results_max['model'] = np.where(all_results_max['model'] == 'RF', 'Random Forest', all_results_max['model'])
+all_results_max['model'] = np.where(all_results_max['model'] == 'NN', 'Neural Network', all_results_max['model'])
+all_results_max['model'] = np.where(all_results_max['model'] == 'XGB', 'XGBoost', all_results_max['model'])
+all_results_max['model'] = np.where(all_results_max['model'] == 'LogR', 'Logistic Regresison', all_results_max['model'])
 
 
 def custom_key(str):
@@ -307,18 +342,20 @@ def facet_heatmap(data, color, **kws):
     data = data.pivot_table(index=['comparisson'], columns='solution', values='rank')
     data = data.reindex(row, axis=1)
     # pass kwargs to heatmap
-    sns.heatmap(data, cmap='YlGnBu', cbar=False, annot=True, annot_kws={"size": 15}, square=True, **kws)
+    sns.heatmap(data, square=True, **kws)
 
 
 sns.set_style("darkgrid")
 fig, ax = plt.subplots(figsize=(20, 10))
 g = sns.FacetGrid(all_results_max, row="model", aspect=8)
-# cbar_ax = g.fig.add_axes([.92, .3, .02, .4])
-g = g.map_dataframe(facet_heatmap)
+
+cbar_ax = g.fig.add_axes([0.3, 0.05, .4, .02])
+g = g.map_dataframe(facet_heatmap, annot=True, annot_kws={"size": 20}, cmap='YlGnBu', cbar_ax=cbar_ax, cbar_kws=dict(
+    pad=0.1, shrink=0.3, label='Rank of performance', orientation='horizontal'))
 g.set_titles("{row_name}")
+# g.fig.subplots_adjust(bottom=.2)
 g.set_xticklabels(rotation=30)
-sns.set(font_scale=1.5)
-plt.show()
-# plt.savefig(f'Plots/bodega60.pdf')
-
-
+sns.set(font_scale=1.8)
+# plt.tight_layout()
+# plt.show()
+plt.savefig(f'Plots/bodega60.pdf', bbox_inches='tight')
