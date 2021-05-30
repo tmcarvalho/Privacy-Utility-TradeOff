@@ -13,7 +13,6 @@ for idx, comb in enumerate(combs):
     if len(comb) == 31:
         lst_all_solutions.append(idx)  # 18 datasets with all solutions
 
-
 risk = pd.read_csv('Data/tilemap.csv', sep='\t')
 risk['comparisson'] = 'All datasets'
 
@@ -54,11 +53,11 @@ plt.xticks(rotation=30)
 plt.xlabel("")
 plt.ylabel("Percentage difference")
 plt.legend(loc='lower center', ncol=2, bbox_to_anchor=(0.5, -0.18), borderaxespad=0.)
-# plt.show()
-plt.tight_layout()
+plt.show()
+# plt.tight_layout()
 # plt.savefig(f'Plots/bodega4.pdf', bbox_inches='tight')
 
-# Table with rank
+# %% Table with rank
 heatmap = pd.pivot_table(risk_mean, values='rank', index=['comb'], columns='comparisson')
 row = risk_mean.comb.values.tolist()
 row = sorted(set(row), key=custom_key)
@@ -68,9 +67,17 @@ heatmap = heatmap.T
 
 sns.set_style("darkgrid")
 fig, ax = plt.subplots(figsize=(16, 10))
-sns.heatmap(heatmap, cmap="YlGnBu", annot=True, cbar_kws=dict(use_gridspec=False, location="top", pad=0.05, shrink=0.3),
-            square=True)
+ax = sns.heatmap(heatmap, cmap="YlGnBu", annot=True,
+                 cbar_kws=dict(use_gridspec=False, location="bottom", pad=0.1, shrink=0.3,
+                               label='Rank of re-identification risk'),
+                 square=True)
+
+# fix cbar ticks
+cbar = ax.collections[0].colorbar
+cbar.ax.tick_params(axis='both', which='both', length=0)
+
 plt.xlabel("")
 plt.ylabel("")
 plt.xticks(rotation=30)
-# plt.savefig(f'Plots/bodega5.pdf')
+# plt.show()
+plt.savefig(f'Plots/bodega50.pdf', bbox_inches='tight')
