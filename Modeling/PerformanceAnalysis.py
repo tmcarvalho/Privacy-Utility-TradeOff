@@ -321,7 +321,7 @@ all_results_max['model'] = np.where(all_results_max['model'] == 'Bag', 'Bagging'
 all_results_max['model'] = np.where(all_results_max['model'] == 'RF', 'Random Forest', all_results_max['model'])
 all_results_max['model'] = np.where(all_results_max['model'] == 'NN', 'Neural Network', all_results_max['model'])
 all_results_max['model'] = np.where(all_results_max['model'] == 'XGB', 'XGBoost', all_results_max['model'])
-all_results_max['model'] = np.where(all_results_max['model'] == 'LogR', 'Logistic Regresison', all_results_max['model'])
+all_results_max['model'] = np.where(all_results_max['model'] == 'LogR', 'Logistic Regression', all_results_max['model'])
 
 
 def custom_key(str):
