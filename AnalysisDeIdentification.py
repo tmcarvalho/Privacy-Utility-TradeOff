@@ -5,7 +5,7 @@ import matplotlib.gridspec as gs
 import seaborn as sns
 from mpl_toolkits.axes_grid1 import make_axes_locatable
 from mpl_toolkits.axes_grid1.colorbar import colorbar
-from venn import venn
+import venn
 
 # %% load actual data
 ds = np.load('Data/DS_clean2.npy', allow_pickle=True)
@@ -20,9 +20,9 @@ def sizes(transf, comb):
     size_c = 0
     max_comb = 0
     for i in range(len(transf)):
-        size += len(transf[i])  # 1146 transformed datasets
+        size += len(transf[i])  # 1074 transformed datasets
         size_c += len(comb[i])
-        if len(transf[i]) == 31:  # 19 dataset
+        if len(transf[i]) == 31:  # 18 datasets
             max_comb += 1
             print(i)
     return size, size_c, max_comb
@@ -142,18 +142,18 @@ def assign_comb(comb_dict, item):
         if e == 'sup':
             comb_dict['Suppression'].add(el)
         if e == 'globalrec':
-            comb_dict['GlobalRec'].add(el)
+            comb_dict['Global Recoding'].add(el)
         if e == 'topbot':
-            comb_dict['Top&Bottom'].add(el)
+            comb_dict['Top & Bottom Coding'].add(el)
         if e == 'noise':
             comb_dict['Noise'].add(el)
         if e == 'round':
-            comb_dict['Round'].add(el)
+            comb_dict['Rounding'].add(el)
 
     return comb_dict
 
 
-comb_dict = {'Suppression': set(), 'Noise': set(), 'Round': set(), 'Top&Bottom': set(), 'GlobalRec': set()}
+comb_dict = {'Suppression': set(), 'Noise': set(), 'Rounding': set(), 'Top & Bottom Coding': set(), 'Global Recoding': set()}
 comb = combs.copy()
 for i in range(0, len(comb)):
     comb[i] = [xs + (str(i),) for xs in comb[i]]
@@ -171,25 +171,25 @@ for i in range(0, len(comb)):
                 comb_dict = assign_comb(comb_dict, item)
         if 'round' in item:
             if len(item) == 1:
-                comb_dict['Round'].add(item[0])
+                comb_dict['Rounding'].add(item[0])
             else:
                 comb_dict = assign_comb(comb_dict, item)
         if 'topbot' in item:
             if len(item) == 1:
-                comb_dict['Top&Bottom'].add(item[0])
+                comb_dict['Top & Bottom Coding'].add(item[0])
             else:
                 comb_dict = assign_comb(comb_dict, item)
         if 'globalrec' in item:
             if len(item) == 1:
-                comb_dict['GlobalRec'].add(item[0])
+                comb_dict['Global Recoding'].add(item[0])
             else:
                 comb_dict = assign_comb(comb_dict, item)
 
-names = ['Suppression', 'Noise', 'Rounding', 'Top&Bottom', 'Globar Recoding']
-fig = plt.figure(figsize=(10, 10))
+# names = ['Suppression', 'Noise', 'Rounding', 'Top & Bottom', 'Global Recoding']
+fig = plt.figure(figsize=(11, 11))
 ax = fig.add_subplot()
-venn(comb_dict, legend_loc="best", ax=ax)
-plt.show()
+venn.venn(comb_dict, legend_loc="upper right", ax=ax)
+# plt.show()
 fig = ax.get_figure()
-# fig.savefig("Plots/venn.pdf", dpi=300, bbox_inches='tight')
+fig.savefig("Plots/venn.svg", bbox_inches='tight')
 
