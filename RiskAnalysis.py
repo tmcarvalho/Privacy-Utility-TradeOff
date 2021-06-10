@@ -67,7 +67,7 @@ heatmap = heatmap.T
 
 sns.set_style("darkgrid")
 fig, ax = plt.subplots(figsize=(16, 10))
-ax = sns.heatmap(heatmap, cmap="YlGnBu", annot=True,
+ax = sns.heatmap(heatmap, cmap="YlGnBu", annot=True, annot_kws={"size": 12},
                  cbar_kws=dict(use_gridspec=False, location="bottom", pad=0.1, shrink=0.3,
                                label='Rank of re-identification risk'),
                  square=True)
@@ -79,5 +79,6 @@ cbar.ax.tick_params(axis='both', which='both', length=0)
 plt.xlabel("")
 plt.ylabel("")
 plt.xticks(rotation=30)
+sns.set(font_scale=1.1)
 # plt.show()
 plt.savefig(f'Plots/bodega50.pdf', bbox_inches='tight')
