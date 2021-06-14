@@ -284,17 +284,17 @@ plt.show()
 # sol_30.to_csv('Data/sol_30.csv', sep='\t', index=False)
 sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
 
-all_results['comparisson'] = 'All datasets'
-sol_30['comparisson'] = '18 datasets'
+all_results['comparison'] = 'All datasets'
+sol_30['comparison'] = '18 datasets'
 
-two_comparissons = pd.concat([all_results, sol_30])
+two_comparisons = pd.concat([all_results, sol_30])
 
-two_comparissons_melt = two_comparissons.melt(id_vars=['solution', 'model', 'comparisson'],
+two_comparisons_melt = two_comparisons.melt(id_vars=['solution', 'model', 'comparison'],
                                               value_vars=['mean_test_f1_weighted_perdif'],
                                               var_name='sol', value_name='values')
 
 sns.set_style("darkgrid")
-g = sns.catplot(x='values', y='solution', hue='comparisson', col='model', data=two_comparissons_melt,
+g = sns.catplot(x='values', y='solution', hue='comparison', col='model', data=two_comparisons_melt,
                 kind='box', palette='colorblind',
                 height=9, aspect=0.28, col_wrap=5, legend=False).set(xscale='symlog')
 (g.set_axis_labels("Weighted Fscore", "")
@@ -310,11 +310,11 @@ plt.show()
 # plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
 
 # %% table with rank - performance
-all_results_max = two_comparissons.groupby(['ds', 'model', 'solution', 'comparisson'])[
+all_results_max = two_comparisons.groupby(['ds', 'model', 'solution', 'comparison'])[
     'mean_test_f1_weighted'].max().reset_index()
-all_results_max = two_comparissons.groupby(['model', 'solution', 'comparisson'])[
+all_results_max = two_comparisons.groupby(['model', 'solution', 'comparison'])[
     'mean_test_f1_weighted'].mean().reset_index()
-all_results_max['rank'] = all_results_max.groupby(['model', 'comparisson'])['mean_test_f1_weighted'].rank(
+all_results_max['rank'] = all_results_max.groupby(['model', 'comparison'])['mean_test_f1_weighted'].rank(
     ascending=False).astype(int)
 
 all_results_max['model'] = np.where(all_results_max['model'] == 'Bag', 'Bagging', all_results_max['model'])
@@ -339,7 +339,7 @@ row = sorted(set(row), key=custom_key)
 
 
 def facet_heatmap(data, color, **kws):
-    data = data.pivot_table(index=['comparisson'], columns='solution', values='rank')
+    data = data.pivot_table(index=['comparison'], columns='solution', values='rank')
     data = data.reindex(row, axis=1)
     # pass kwargs to heatmap
     sns.heatmap(data, square=True, **kws)
