@@ -16,12 +16,12 @@ _StatisticalTests_: apply Benavoli test to the results.
 
 Run the following command to put on the queue the files that will be evaluated.
 ```
-python3 Modeling/task.py  --input_folder "Data/Final_results/AllinputFiles"
+python3 Modeling/task.py  --input_folder "Data/Final_results/AllinputFiles/Originals"
 ```
 
 The next command is for running the evaluation.
 ```
-python3 Modeling/worker.py  --input_folder "Data/Final_results/AllinputFiles" --output_folder "Data/Final_results/AlloutputFiles"
+python3 Modeling/worker.py  --input_folder "Data/Final_results/AllinputFiles" --output_folder "Data/Final_results/AlloutputFiles/Originals"
 ```
 
 To average the performance, just run the script.

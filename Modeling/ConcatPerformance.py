@@ -4,18 +4,29 @@ from os import walk
 import numpy as np
 import pandas as pd
 
+# %%
+# paths of input and output folders
 master_folder_transf = 'Data/Final_results/AlloutputFiles'
-_, folders_transf, _ = next(walk(master_folder_transf))
+_, _, files_transf = next(walk(master_folder_transf))
+master_folder_orig = 'Data/Final_results/AllinputFiles'
+_, _, files_orig = next(walk(master_folder_orig))
 
-# split files into original and transformed folders
-for folder in folders_transf:
-    _, _, files = next(walk(f'{master_folder_transf}/{folder}'))
-    if "_" not in folder:
-        shutil.move(os.path.join(f'{master_folder_transf}/{folder}'), f'{master_folder_transf}/Originals')
-    else:
-        shutil.move(os.path.join(f'{master_folder_transf}/{folder}'), f'{master_folder_transf}/Transformed')
 
-# percentage difference
+# move files into original and transformed folders
+def split_folder(master_folder, files):
+    for file in files:
+        # _, _, files = next(walk(f'{master_folder}/{file}'))
+        if "_" not in file:
+            shutil.move(os.path.join(f'{master_folder}/{file}'), f'{master_folder}/Originals')
+        else:
+            shutil.move(os.path.join(f'{master_folder}/{file}'), f'{master_folder}/Transformed')
+
+
+split_folder(master_folder_transf, files_transf)
+split_folder(master_folder_orig, files_orig)
+
+# %%
+# paths to results
 orig_folder = 'Data/Final_results/AlloutputFiles/Originals'
 transf_folder = 'Data/Final_results/AlloutputFiles/Transformed'
 _, org_folders, _ = next(walk(orig_folder))
@@ -66,7 +77,7 @@ def concatenate(flag, master_folder, folder):
         return rf_avg, bag_avg, xgb_avg, logr_avg, nn_avg
 
 
-# split files into original and transformed folders
+# concatenate the 5 repetitions and calculate the percentage difference
 metrics = ['gmean', 'acc', 'bal_acc', 'f1', 'f1_weighted']
 for t_folder in transf_folders:
     for o_folder in org_folders:
