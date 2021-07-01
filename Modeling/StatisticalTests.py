@@ -35,32 +35,32 @@ def metric_solution(df, col):
     R = df[df['solution'] == 'R'][col].reset_index(drop=True)
     S = df[df['solution'] == 'S'][col].reset_index(drop=True)
     T = df[df['solution'] == 'T'][col].reset_index(drop=True)
-    GR = df[df['solution'] == 'G, R'][col].reset_index(drop=True)
-    GS = df[df['solution'] == 'G, S'][col].reset_index(drop=True)
-    GN = df[df['solution'] == 'G, N'][col].reset_index(drop=True)
-    GT = df[df['solution'] == 'G, T'][col].reset_index(drop=True)
-    NR = df[df['solution'] == 'N, R'][col].reset_index(drop=True)
-    NS = df[df['solution'] == 'N, S'][col].reset_index(drop=True)
-    NT = df[df['solution'] == 'N, T'][col].reset_index(drop=True)
-    RS = df[df['solution'] == 'R, S'][col].reset_index(drop=True)
-    RT = df[df['solution'] == 'R, T'][col].reset_index(drop=True)
-    ST = df[df['solution'] == 'S, T'][col].reset_index(drop=True)
-    GNR = df[df['solution'] == 'G, N, R'][col].reset_index(drop=True)
-    GNS = df[df['solution'] == 'G, N, S'][col].reset_index(drop=True)
-    GNT = df[df['solution'] == 'G, N, T'][col].reset_index(drop=True)
-    GRS = df[df['solution'] == 'G, R, S'][col].reset_index(drop=True)
-    GRT = df[df['solution'] == 'G, R, T'][col].reset_index(drop=True)
-    GST = df[df['solution'] == 'G, S, T'][col].reset_index(drop=True)
-    NRS = df[df['solution'] == 'N, R, S'][col].reset_index(drop=True)
-    NRT = df[df['solution'] == 'N, R, T'][col].reset_index(drop=True)
-    NST = df[df['solution'] == 'N, S, T'][col].reset_index(drop=True)
-    RST = df[df['solution'] == 'R, S, T'][col].reset_index(drop=True)
-    GNRS = df[df['solution'] == 'G, N, R, S'][col].reset_index(drop=True)
-    GNRT = df[df['solution'] == 'G, N, R, T'][col].reset_index(drop=True)
-    GNST = df[df['solution'] == 'G, N, S, T'][col].reset_index(drop=True)
-    GRST = df[df['solution'] == 'G, R, S, T'][col].reset_index(drop=True)
-    NRST = df[df['solution'] == 'N, R, S, T'][col].reset_index(drop=True)
-    GNRST = df[df['solution'] == 'G, N, R, S, T'][col].reset_index(drop=True)
+    GR = df[df['solution'] == 'GR'][col].reset_index(drop=True)
+    GS = df[df['solution'] == 'GS'][col].reset_index(drop=True)
+    GN = df[df['solution'] == 'GN'][col].reset_index(drop=True)
+    GT = df[df['solution'] == 'GT'][col].reset_index(drop=True)
+    NR = df[df['solution'] == 'NR'][col].reset_index(drop=True)
+    NS = df[df['solution'] == 'NS'][col].reset_index(drop=True)
+    NT = df[df['solution'] == 'NT'][col].reset_index(drop=True)
+    RS = df[df['solution'] == 'RS'][col].reset_index(drop=True)
+    RT = df[df['solution'] == 'RT'][col].reset_index(drop=True)
+    ST = df[df['solution'] == 'ST'][col].reset_index(drop=True)
+    GNR = df[df['solution'] == 'GNR'][col].reset_index(drop=True)
+    GNS = df[df['solution'] == 'GNS'][col].reset_index(drop=True)
+    GNT = df[df['solution'] == 'GNT'][col].reset_index(drop=True)
+    GRS = df[df['solution'] == 'GRS'][col].reset_index(drop=True)
+    GRT = df[df['solution'] == 'GRT'][col].reset_index(drop=True)
+    GST = df[df['solution'] == 'GST'][col].reset_index(drop=True)
+    NRS = df[df['solution'] == 'NRS'][col].reset_index(drop=True)
+    NRT = df[df['solution'] == 'NRT'][col].reset_index(drop=True)
+    NST = df[df['solution'] == 'NST'][col].reset_index(drop=True)
+    RST = df[df['solution'] == 'RST'][col].reset_index(drop=True)
+    GNRS = df[df['solution'] == 'GNRS'][col].reset_index(drop=True)
+    GNRT = df[df['solution'] == 'GNRT'][col].reset_index(drop=True)
+    GNST = df[df['solution'] == 'GNST'][col].reset_index(drop=True)
+    GRST = df[df['solution'] == 'GRST'][col].reset_index(drop=True)
+    NRST = df[df['solution'] == 'NRST'][col].reset_index(drop=True)
+    GNRST = df[df['solution'] == 'GNRST'][col].reset_index(drop=True)
 
     transfs = [G, N, R, S, T, GR, GS, GN, GT, NR, NS, NT, RS, RT,
                ST, GNR, GNS, GNT, GRS, GRT, GST, NRS, NRT, NST, RST, GNRS,
@@ -85,34 +85,49 @@ def assign_hyperband(df, transfs_name):
     return solution_res
 
 
-transfs_name = ['G', 'N', 'R', 'S', 'T', 'G, N', 'G, R', 'G, S',
-                'G, T', 'N, R', 'N, S', 'N, T', 'R, S', 'R, T',
-                'S, T', 'G, N, R', 'G, N, S', 'G, N, T',
-                'G, R, S', 'G, R, T', 'G, S, T', 'N, R, S',
-                'N, R, T', 'N, S, T', 'R, S, T', 'G, N, R, S',
-                'G, N, R, T', 'G, N, S, T', 'G, R, S, T',
-                'N, R, S, T', 'G, N, R, S, T']
+transfs_name = ['G', 'N', 'R', 'S', 'T', 'GN', 'GR', 'GS',
+                'GT', 'NR', 'NS', 'NT', 'RS', 'RT',
+                'ST', 'GNR', 'GNS', 'GNT', 'GRS', 'GRT', 'GST', 'NRS',
+                'NRT', 'NST', 'RST', 'GNRS','GNRT', 'GNST', 'GRST',
+                'NRST', 'GNRST']
 
 
 # %%
-def ploting(res, bbox, file_name):
-    res = res[res['Probability'] > 0.0099]
-    if res.Result.nunique() != 3:
-        palette = ['tab:blue', 'orange']
-    else:
-        palette = ['tab:blue', 'orange', 'tab:green']
+def ploting(res1, res2, bbox, file_name):
+    def proc(df):
+        df = df[df['Probability'] > 0.0099]
+        if df.Result.nunique() != 3:
+            palette = ['tab:blue', 'orange']
+        else:
+            palette = ['tab:blue', 'orange', 'tab:green']
+        return df, palette
+
+    res1, pl1 = proc(res1)
+    res2, pl2 = proc(res2)
     sns.set_style("darkgrid")
-    fig, ax = plt.subplots(figsize=(8, 3))
-    g = sns.histplot(res, x='Solution', hue='Result', weights='Probability', edgecolor='none',
-                     multiple='stack', palette=palette, shrink=0.8)
-    g.set_ylabel('Probability')
-    g.set_xlabel('')
+    # fig, ax = plt.subplots(figsize=(8, 3))
+    fig, (ax1, ax2) = plt.subplots(2, 1, figsize=(8, 4))
+    sns.histplot(res1, x='Solution', hue='Result', weights='Probability', edgecolor='none',
+                     multiple='stack', palette=pl1, shrink=0.8, ax=ax1, legend=False)
+    ax1.set_ylabel('Probability')
+    ax1.set_xlabel('')
+    ax1.margins(x=0.02)
+    # ax1.set_xticklabels(ax1.get_xticklabels(), rotation=30)
+
+    g = sns.histplot(res2, x='Solution', hue='Result', weights='Probability', edgecolor='none',
+                 multiple='stack', palette=pl1, shrink=0.8, ax=ax2)
+    ax2.set_ylabel('Probability')
+    ax2.set_xlabel('')
     # fix the legend
     bbox = bbox
-    move_legend(g, bbox, "upper center", ax)
+    move_legend(g, bbox, "upper center", ax2)
     sns.set(font_scale=0.8)
-    ax.margins(x=0.02)
-    plt.xticks(rotation=30)
+    ax2.margins(x=0.02)
+    # plt.xticks(rotation=30)
+    # ax2.set_xticklabels(ax2.get_xticklabels(), rotation=30)
+    for ax in fig.axes:
+        ax.tick_params(axis='x', labelrotation=30)
+
     plt.yticks(np.arange(0, 1.25, 0.25))
     plt.axhline(y=0.5, color='lightgrey', linestyle='-', linewidth=0.8)
     plt.tight_layout()
@@ -121,15 +136,18 @@ def ploting(res, bbox, file_name):
 
 
 # %%
-def all_func(df, var, bbox, file_name):
-    transfs = metric_solution(df, var)
+def all_func(df1, df2, var, bbox, file_name):
+    transfs = metric_solution(df1, var)
+    transfs2 = metric_solution(df2, var)
 
     for i in range(0, len(transfs)):
         transfs[i] = BayesianSignTest(transfs[i], -1, 1)
+        transfs2[i] = BayesianSignTest(transfs2[i], -1, 1)
 
     solution_res = assign_hyperband(transfs, transfs_name)
+    solution_res2 = assign_hyperband(transfs2, transfs_name)
 
-    ploting(solution_res, bbox=bbox, file_name=file_name)
+    ploting(solution_res, solution_res2, bbox=bbox, file_name=file_name)
 
 
 # %% Best performance for each solution
@@ -137,44 +155,24 @@ def all_func(df, var, bbox, file_name):
 transf_diff = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds/test_results_max_solution.csv',
                           sep='\t')
 
-all_func(transf_diff, 'f1_weighted_perdif', bbox=(0.5, -.25), file_name='prob_solutions_baselineOrig_CV')
-
-
-# Without CV
 transf_diff_no_CV = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds/test_results_no_CV.csv',
                                 sep='\t')
 
-transf_diff_no_CV = transf_diff_no_CV.groupby(['ds', 'solution'])['f1_weighted_perdif'].max().reset_index()
+# all_func(transf_diff, 'f1_weighted_perdif', bbox=(0.5, -.25), file_name='prob_solutions_baselineOrig_CV')
+# Without CV
+transf_diff_no_CV_v1 = transf_diff_no_CV.groupby(['ds', 'solution'])['f1_weighted_perdif'].max().reset_index()
 
-all_func(transf_diff_no_CV, 'f1_weighted_perdif', bbox=(0.5, -.25), file_name='prob_solutions_baselineOrig_test')
+all_func(transf_diff, transf_diff_no_CV_v1, 'f1_weighted_perdif', bbox=(0.5, -.35), file_name='prob_solutions_baselineOrig')
 
 # %% Best solution as baseline for each dataset
-# With CV
-transf_diff_sol = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds'
-                              '/test_results_max_solution_diff_bestsol.csv', sep='\t')
-
-all_func(transf_diff_sol, 'f1_weighted_perdif_bestsol', bbox=(0.5, -.25), file_name='prob_solutions_baselineTransf_CV')
-
-# Without CV
-transf_diff_sol_no_CV = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds'
-                                    '/test_results_no_CV_diff_bestsol.csv', sep='\t')
-
-transf_diff_sol_no_CV = transf_diff_sol_no_CV.groupby(['ds', 'solution'])[
+transf_diff_no_CV_v2 = transf_diff_no_CV.groupby(['ds', 'solution'])[
     'f1_weighted_perdif_bestsol'].max().reset_index()
 
-all_func(transf_diff_sol_no_CV, 'f1_weighted_perdif_bestsol', bbox=(0.5, -.25), file_name='prob_solutions_baselineTransf_test')
+all_func(transf_diff, transf_diff_no_CV_v2, 'f1_weighted_perdif_bestsol', bbox=(0.5, -.25), file_name='prob_solutions_baselineTransf')
 
 
 # %% Best protection as baseline for each dataset
-# With CV
-transf_diff_sol_priv = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds'
-                                   '/test_results_diff_bestsol_priv.csv', sep='\t')
+transf_diff_no_CV_v3 = transf_diff_no_CV.groupby(['ds', 'solution'])[
+    'f1_weighted_perdif_bestsol_priv'].max().reset_index()
 
-all_func(transf_diff_sol_priv, 'f1_weighted_perdif_bestsol_priv', bbox=(0.5, -.25), file_name='prob_solutions_baselinePriv_CV')
-
-
-# Without CV
-transf_diff_sol_priv = pd.read_csv('Data/Final_results/AlloutputFiles/Transformed/Testing_18ds'
-                                   '/test_results_no_CV_diff_bestsol_priv.csv', sep='\t')
-
-all_func(transf_diff_sol_priv, 'f1_weighted_perdif_bestsol_priv', bbox=(0.5, -.25), file_name='prob_solutions_baselinePriv_test')
+all_func(transf_diff, transf_diff_no_CV_v3, 'f1_weighted_perdif_bestsol_priv', bbox=(0.5, -.25), file_name='prob_solutions_baselinePriv')

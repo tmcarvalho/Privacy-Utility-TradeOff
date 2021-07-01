@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 
 # %%
-# paths of input and output folders
+# path of input and output folders
 master_folder_transf = 'Data/Final_results/AlloutputFiles'
 _, _, files_transf = next(walk(master_folder_transf))
 master_folder_orig = 'Data/Final_results/AllinputFiles'
@@ -26,7 +26,7 @@ split_folder(master_folder_transf, files_transf)
 split_folder(master_folder_orig, files_orig)
 
 # %%
-# paths to results
+# path to output results
 orig_folder = 'Data/Final_results/AlloutputFiles/Originals'
 transf_folder = 'Data/Final_results/AlloutputFiles/Transformed'
 _, org_folders, _ = next(walk(orig_folder))
@@ -67,11 +67,11 @@ def concatenate(flag, master_folder, folder):
     nn_avg = pd.concat([df for df in five_iter_nn_lst])
 
     if flag == 0:
-        rf_avg.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_rf_avg.csv', sep='\t', index=False)
-        bag_avg.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_bag_avg.csv', sep='\t', index=False)
-        xgb_avg.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_xgb_avg.csv', sep='\t', index=False)
-        logr_avg.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_logr_avg.csv', sep='\t', index=False)
-        nn_avg.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_nn_avg.csv', sep='\t', index=False)
+        rf_avg.to_csv(f'{master_folder}/{folder}/{folder}_rf_avg.csv', sep='\t', index=False)
+        bag_avg.to_csv(f'{master_folder}/{folder}/{folder}_bag_avg.csv', sep='\t', index=False)
+        xgb_avg.to_csv(f'{master_folder}/{folder}/{folder}_xgb_avg.csv', sep='\t', index=False)
+        logr_avg.to_csv(f'{master_folder}/{folder}/{folder}_logr_avg.csv', sep='\t', index=False)
+        nn_avg.to_csv(f'{master_folder}/{folder}/{folder}_nn_avg.csv', sep='\t', index=False)
 
     else:
         return rf_avg, bag_avg, xgb_avg, logr_avg, nn_avg
@@ -88,20 +88,21 @@ for t_folder in transf_folders:
             # for each CV calculate the percentage difference
             for metric in metrics:
                 # 100 * (Sc - Sb) / Sb
-                t_rf['mean_test_' + metric + '_perdif'] = 100 * (t_rf['mean_test_' + metric] - o_rf[
-                    'mean_test_' + metric]) / o_rf['mean_test_' + metric]
+                max_rf = o_rf['mean_test_' + metric].max()
+                max_bag = o_bag['mean_test_' + metric].max()
+                max_xgb = o_xgb['mean_test_' + metric].max()
+                max_logr = o_logr['mean_test_' + metric].max()
+                max_nn = o_nn['mean_test_' + metric].max()
 
-                t_bag['mean_test_' + metric + '_perdif'] = 100 * (t_bag['mean_test_' + metric] - o_bag[
-                    'mean_test_' + metric]) / o_bag['mean_test_' + metric]
+                t_rf['mean_test_' + metric + '_perdif'] = 100 * (t_rf['mean_test_' + metric] - max_rf) / max_rf
 
-                t_xgb['mean_test_' + metric + '_perdif'] = 100 * (t_xgb['mean_test_' + metric] - o_xgb[
-                    'mean_test_' + metric]) / o_xgb['mean_test_' + metric]
+                t_bag['mean_test_' + metric + '_perdif'] = 100 * (t_bag['mean_test_' + metric] - max_bag) / max_bag
 
-                t_logr['mean_test_' + metric + '_perdif'] = 100 * (t_logr['mean_test_' + metric] - o_logr[
-                    'mean_test_' + metric]) / o_logr['mean_test_' + metric]
+                t_xgb['mean_test_' + metric + '_perdif'] = 100 * (t_xgb['mean_test_' + metric] - max_xgb) / max_xgb
 
-                t_nn['mean_test_' + metric + '_perdif'] = 100 * (t_nn['mean_test_' + metric] - o_nn[
-                    'mean_test_' + metric]) / o_nn['mean_test_' + metric]
+                t_logr['mean_test_' + metric + '_perdif'] = 100 * (t_logr['mean_test_' + metric] - max_logr) / max_logr
+
+                t_nn['mean_test_' + metric + '_perdif'] = 100 * (t_nn['mean_test_' + metric] - max_nn) / max_nn
 
             t_rf.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_rf_avg.csv', sep='\t', index=False)
             t_bag.to_csv(f'{transf_folder}/{t_folder}/{t_folder}_bag_avg.csv', sep='\t', index=False)
@@ -112,12 +113,25 @@ for t_folder in transf_folders:
 
 # concatenate the 5 iterations of original datasets
 for folder in org_folders:
-    concatenate(0, orig_folder, folder)
+    if folder != 'Testing_18ds':
+        concatenate(0, orig_folder, folder)
 
+"""
 # remove csv files
-# _, transf_folders, _ = next(walk(transf_folder))
-# for t_folder in transf_folders:
-#     _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
-#     for file in files:
-#         if file.endswith(".csv"):
-#             os.remove(os.path.join(f'{transf_folder}/{t_folder}', file))
+def delete_csv(master_folder, folders):
+    try:
+        for folder in folders:
+            _, _, files = next(walk(f'{master_folder}/{folder}'))
+            if folder != 'Testing_18ds':
+                for file in files:
+                    if file.endswith(".csv"):
+                        os.remove(os.path.join(f'{master_folder}/{folder}', file))
+            else:
+                continue
+    except:
+        print(folder)
+
+
+delete_csv(orig_folder, org_folders)
+delete_csv(transf_folder, transf_folders)
+"""

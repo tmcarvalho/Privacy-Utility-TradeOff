@@ -25,14 +25,19 @@ for idx, comb in enumerate(combs):
 
 
 # %%
-def join_res(flag, files, master_folder, folder):
+def join_res(flag, master_folder, folder):
+    '''
+    Concatenate each algorithm results
+    :param flag: 0 - transformed folder; 1- original folder
+    :param master_folder: initial path
+    :param folder: each folder from master_folder
+    :return: dataframe with concatenated results and specified model
+    '''
     rf_lst = bag_lst = xgb_lst = logr_lst = nn_lst = []
     r = b = x = l = n = 0
+    _, _, files = next(walk(f'{master_folder}/{folder}'))
     for file in files:
-        if (flag == 0) and ('_diff' in file):
-            f = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
-            return f
-        elif (flag != 0) and ('csv' in file) and ('_diff' not in file):
+        if (flag != 0) and ('csv' in file) and ('_diff' not in file):
             if 'rf' in file:
                 rf = pd.read_csv(f'{master_folder}/{folder}/{file}', sep='\t')
                 rf['model'] = "RF"
@@ -84,70 +89,12 @@ def join_res(flag, files, master_folder, folder):
         return res
 
 
-# %% plot the 5 solutions together
-for t_folder in transf_folders:
-    if (str(str(any(lst for lst in lst_all_solutions)) + '_') and 'transf30') in t_folder:
-        _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
-        sol30 = join_res(files, t_folder)
-
-ax = sns.boxplot(x='model', y='mean_test_f1_perdif', data=sol30)
-plt.xlabel('')
-plt.ylabel('F1 percentage difference', fontsize=11)
-plt.title('18 datasets with all solutions', fontsize=16)
-plt.ylim(-150, 500)
-plt.show()
-# fig.tight_layout()
-# fig.savefig('boxplot1.pdf',  bbox_inches='tight')
-
-
-# %% plot all solutions in a single plot
-for t_folder in transf_folders:
-    _, _, files = next(walk(f'{transf_folder}/{t_folder}'))
-    all_solutions = join_res(files, t_folder)
-
-ax = sns.boxplot(x='model', y='mean_test_f1_weighted_perdif', data=all_solutions)
-ax.set_yscale('symlog')
-plt.xlabel('')
-plt.ylabel('F1 percentage difference', fontsize=11)
-plt.title('All solutions', fontsize=16)
-# plt.ylim(-150, 500)
-plt.show()
-
-
-# %%
-def ploting(data, transf_name):
-    all_solutions_melt = data.melt(id_vars=['model'], value_vars=['mean_test_bal_acc_perdif',
-                                                                  'mean_test_gmean_perdif',
-                                                                  'mean_test_f1_weighted_perdif'],
-                                   var_name='metrics', value_name='values')
-
-    fig, axs = plt.subplots(1, 1, figsize=(12, 8))
-    ax = sns.boxplot(x='model', y='values', hue='metrics', data=all_solutions_melt, ax=axs)
-    ax.set_yscale('symlog')
-    plt.xlabel('')
-    plt.ylabel('Percentage difference', fontsize=11)
-    plt.title(transf_name, fontsize=16)
-    legend_labels, _ = ax.get_legend_handles_labels()
-    ax.legend(legend_labels, ['Balanced Accuracy', 'G-mean', 'F1-weighted'],
-              # bbox_to_anchor=(1.05, 1),
-              loc='lower center',
-              borderaxespad=-6,
-              ncol=3,
-              title='Measures')
-    # plt.legend(title='Measures', loc='best', bbox_to_anchor=(1, 1), ncol=1)
-    plt.show()
-    figure = ax.get_figure()
-    figure.savefig(f'Plots/{transf_name}.png', dpi=400)
-
-
-# ploting(all_solutions, 'All_solutions')
-
 # %%
 # Each solution in ONE plot
 def each_transf(flag, transf, master_folder, folders):
     """
     Concatenate all results and assign dataset name
-    :param flag: 0 - transformed folder; 1- original folder; other - testing results
+    :param flag: 0 - transformed folder; 1- original folder
     :param transf: list with original and transformed indexes
     :param master_folder: folder that indicates the initial path
     :param folders: each folder from master_folder
@@ -158,25 +105,14 @@ def each_transf(flag, transf, master_folder, folders):
         if flag == 0:
             for t in transf:
                 if f'ds{t[0]}_transf{t[1]}' == folder:
-                    _, _, files = next(walk(f'{master_folder}/{folder}'))
-                    solution = join_res(1, files, master_folder, folder)
+                    solution = join_res(1, master_folder, folder)
                     solution['ds'] = f'ds{t[0]}_transf{t[1]}'
                     sol = pd.concat([sol, solution])
-        elif flag == 1:
-            _, _, files = next(walk(f'{master_folder}/{folder}'))
-            solution = join_res(1, files, master_folder, folder)
+        else:
+            solution = join_res(1, master_folder, folder)
             nr = int(int(re.search(r'\d+', folder)[0]))
             solution['ds'] = f'ds{nr}'
             sol = pd.concat([sol, solution])
-
-        else:
-            for t in transf:
-                if f'ds{t[0]}_transf{t[1]}' == folder:
-                    print(f'ds{t[0]}_transf{t[1]}')
-                    _, _, files = next(walk(f'{master_folder}/{folder}'))
-                    solution = join_res(0, files, master_folder, folder)
-                    solution['ds'] = f'ds{t[0]}_transf{t[1]}'
-                    sol = pd.concat([sol, solution])
 
     return sol
 
@@ -222,7 +158,7 @@ def lst_ds_(transf_name, lst_all_solutions):
 def add_solution_name(flag, lst_sol, master_folder, folders):
     """
     Add solution name and concatenate all results
-    :param flag: 0 - transformed folder; 1- original folder; other - testing
+    :param flag: 0 - transformed folder; 1- original folder
     :param lst_sol: list with indexes of the 18 datasets that contains all solutions
     :param master_folder: folder that indicates the initial path
     :param folders: each folder from master_folder
@@ -236,58 +172,74 @@ def add_solution_name(flag, lst_sol, master_folder, folders):
             tr_res['solution'] = t
             df = pd.concat([df, tr_res])
 
-    elif flag == 1:
+    else:
         tr_res = each_transf(1, [], master_folder, folders)
         df = pd.concat([df, tr_res])
-
-    else:
-        for t in transfs:
-            lst = lst_ds_(t, lst_sol)
-            tr_res = each_transf(2, lst, master_folder, folders)
-            tr_res['solution'] = t
-            df = pd.concat([df, tr_res])
 
     return df
 
 
 # transformed results
-# all_results = add_solution_name(0, [], transf_folder, transf_folders)
+all_results = add_solution_name(0, [], transf_folder, transf_folders)
+all_results = all_results.reset_index(drop=True)
+for i in range(0, len(all_results)):
+    # remove comma from transformation name
+    all_results.loc[i, 'solution'] = all_results.loc[i, 'solution'].replace(', ', '')
 # all_results.to_csv('Data/all_solutions.csv', sep='\t', index=False)
+
 # baseline results
-# original_results = add_solution_name(1, [], org_folder, org_folders)
+original_results = add_solution_name(1, [], org_folder, org_folders)
 # original_results.to_csv('Data/baseline_results.csv', sep='\t', index=False)
-# testing results
-# testing_results = add_solution_name(2, [], transf_folder, transf_folders)
-# testing_results.to_csv('Data/testing_results.csv', sep='\t', index=False)
+
 
 # %%
-all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
+def ploting(data, transf_name):
+    all_solutions_melt = data.melt(id_vars=['model'], value_vars=['mean_test_bal_acc_perdif',
+                                                                  'mean_test_gmean_perdif',
+                                                                  'mean_test_f1_weighted_perdif'],
+                                   var_name='metrics', value_name='values')
 
-all_results_melt = all_results.melt(id_vars=['solution', 'model'], value_vars=['mean_test_f1_weighted_perdif'],
-                                    var_name='sol', value_name='values')
+    sns.set_style("darkgrid")
+    fig, axs = plt.subplots(1, 1, figsize=(12, 8))
+    ax = sns.boxplot(x='model', y='values', hue='metrics', data=all_solutions_melt, ax=axs)
+    ax.set_yscale('symlog')
+    plt.xlabel('')
+    plt.ylabel('Percentage difference', fontsize=14)
+    plt.title(transf_name, fontsize=18)
+    legend_labels, _ = ax.get_legend_handles_labels()
+    ax.legend(legend_labels, ['Balanced Accuracy', 'G-mean', 'F1-weighted'],
+              # bbox_to_anchor=(1.05, 1),
+              loc='lower center',
+              borderaxespad=-7,
+              ncol=3,
+              title='Measures')
+    # plt.legend(title='Measures', loc='best', bbox_to_anchor=(1, 1), ncol=1)
+    sns.set(font_scale=1.5)
+    plt.show()
+    figure = ax.get_figure()
+    figure.savefig(f'Plots/{transf_name}.png', bbox_inches='tight')
 
-ticks = [-10 ** 2, -10 ** 1, -10, 0, 10, 10 ** 1, 10 ** 2]
-labels = [i for i in ticks]
-plt.figure(figsize=(40, 20))
-g = sns.FacetGrid(data=all_results_melt, col='model', col_wrap=5, sharex=False, height=10, aspect=0.35)
-g.map(sns.boxplot, 'values', 'solution', color='orange', width=.5).set(xscale='symlog')
-g.set_titles('{col_name}')
-g.set_axis_labels('Weighted Fscore', '')
-g.set(xticks=ticks, xticklabels=labels)
-plt.gca().invert_xaxis()
-plt.tight_layout()
-plt.show()
-# plt.savefig(f'Plots/bodega2.pdf', bbox_inches='tight')
+
+# %% plot each solution
+# all_results = pd.read_csv('Data/all_solutions.csv', sep='\t')
+grp_ds = all_results.groupby('solution')
+for grp_name, df_group in grp_ds:
+    ploting(df_group, df_group['solution'].unique()[0])
+
 
 # %% plot all solutions with just the 18 datasets
-# sol_30 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
-# sol_30.to_csv('Data/sol_30.csv', sep='\t', index=False)
-sol_30 = pd.read_csv('Data/sol_30.csv', sep='\t')
+sol18 = add_solution_name(0, lst_all_solutions, transf_folder, transf_folders)
+sol18 = sol18.reset_index(drop=True)
+for i in range(0, len(sol18)):
+    sol18.loc[i, 'solution'] = sol18.loc[i, 'solution'].replace(', ', '')
+
+# sol18.to_csv('Data/sol18.csv', sep='\t', index=False)
+# sol18 = pd.read_csv('Data/sol18.csv', sep='\t')
 
 all_results['comparison'] = 'All datasets'
-sol_30['comparison'] = '18 datasets'
+sol18['comparison'] = '18 datasets'
 
-two_comparisons = pd.concat([all_results, sol_30])
+two_comparisons = pd.concat([all_results, sol18])
 
 two_comparisons_melt = two_comparisons.melt(id_vars=['solution', 'model', 'comparison'],
                                               value_vars=['mean_test_f1_weighted_perdif'],
@@ -296,18 +248,18 @@ two_comparisons_melt = two_comparisons.melt(id_vars=['solution', 'model', 'compa
 sns.set_style("darkgrid")
 g = sns.catplot(x='values', y='solution', hue='comparison', col='model', data=two_comparisons_melt,
                 kind='box', palette='colorblind',
-                height=9, aspect=0.28, col_wrap=5, legend=False).set(xscale='symlog')
+                height=14, aspect=0.26, col_wrap=5, legend=False).set(xscale='symlog')
 (g.set_axis_labels("Weighted Fscore", "")
  .set_titles("{col_name}")
  .set(xlim=(-10 ** 2, 10 ** 2))
  )
 g.add_legend(loc='lower center', ncol=2, bbox_to_anchor=(0.5, -0.05))
 g.fig.subplots_adjust(top=0.9)  # adjust the Figure in rp
-g.fig.suptitle('Percentage difference of weighted Fscore', fontsize=14)
+# g.fig.suptitle('Percentage difference of weighted Fscore', fontsize=18)
 # plt.legend(bbox_to_anchor=(0.5, -0.1), loc='lower center', ncol=2, borderaxespad=0.)
 plt.tight_layout()
 plt.show()
-# plt.savefig(f'Plots/bodega30.pdf', bbox_inches='tight')
+# plt.savefig(f'Plots/Percentage Difference of Fscore (all vs 18).pdf', bbox_inches='tight')
 
 # %% table with rank - performance
 all_results_max = two_comparisons.groupby(['ds', 'model', 'solution', 'comparison'])[
@@ -347,7 +299,7 @@ def facet_heatmap(data, color, **kws):
 
 sns.set_style("darkgrid")
 fig, ax = plt.subplots(figsize=(20, 10))
-g = sns.FacetGrid(all_results_max, row="model", aspect=8)
+g = sns.FacetGrid(all_results_max, row="model", aspect=8.5)
 
 cbar_ax = g.fig.add_axes([0.3, 0.05, .4, .02])
 g = g.map_dataframe(facet_heatmap, annot=True, annot_kws={"size": 20}, cmap='YlGnBu', cbar_ax=cbar_ax, cbar_kws=dict(
@@ -355,7 +307,7 @@ g = g.map_dataframe(facet_heatmap, annot=True, annot_kws={"size": 20}, cmap='YlG
 g.set_titles("{row_name}")
 # g.fig.subplots_adjust(bottom=.2)
 g.set_xticklabels(rotation=30)
-sns.set(font_scale=2)
+sns.set(font_scale=2.2)
 # plt.tight_layout()
-# plt.show()
-plt.savefig(f'Plots/bodega60.svg', bbox_inches='tight')
+plt.show()
+# plt.savefig(f'Plots/Performance rank.svg', bbox_inches='tight')
